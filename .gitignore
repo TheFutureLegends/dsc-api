@@ -20,4 +20,4 @@ yarn.lock
 *-lock.json
 
 # config file
-/src/config/*.config.js
+src/config/db.config.js
