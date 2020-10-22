@@ -1,6 +1,8 @@
 import express from "express";
 import middleware from "../src/middleware/index.js";
 import {
+  getAllPosts,
+  getLatestPost,
   createPost,
   updatePost,
   deletePost,
@@ -8,34 +10,25 @@ import {
 
 const router = express.Router();
 
-// router.get("/", allAccess);
+router.get("/", getAllPosts);
 
-// router.get("/user", [middleware.authJwt.verifyToken], userBoard);
+router.get("/latest", getLatestPost);
 
 router.post(
   "/",
-  [
-    middleware.authJwt.verifyToken,
-    middleware.authJwt.isAuthor,
-  ],
+  [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
   createPost
 );
 
 router.put(
   "/:id",
-  [
-    middleware.authJwt.verifyToken,
-    middleware.authJwt.isAuthor,
-  ],
+  [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
   updatePost
 );
 
 router.delete(
   "/:id",
-  [
-    middleware.authJwt.verifyToken,
-    middleware.authJwt.isAuthor,
-  ],
+  [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
   deletePost
 );
 

@@ -11,7 +11,5 @@ export const adminBoard = (req, res) => {
 };
 
 export const moderatorBoard = (req, res) => {
-  console.log(req);
-
   return res.status(200).send("Moderator Content.");
 };
