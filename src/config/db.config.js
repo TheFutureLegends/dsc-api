@@ -1,5 +1,5 @@
 var dbConfig = {
-  PREFIX: "mongodb+srv",
+  PREFIX: process.env.PREFIX || "mongodb",
   USERNAME: "admin",
   PASSWORD: "wYIv0fY4FwPGmO0A",
   HOST: "dsc.fyw2j.mongodb.net",

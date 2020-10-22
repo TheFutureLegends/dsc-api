@@ -38,9 +38,20 @@ app.use("/api/posts", postRouter);
 // Connect to MongoDB Atlas
 const Role = db.role;
 
+// Define MongoDB Atlas variables
+const prefix = process.env.PREFIX || dbConfig.PREFIX;
+
+const username = process.env.USERNAME || dbConfig.USERNAME;
+
+const password = process.env.PASSWORD || dbConfig.PASSWORD;
+
+const host = process.env.HOST || dbConfig.HOST;
+
+const database = process.env.DB || dbConfig.DB;
+
 db.mongoose
   .connect(
-    `${dbConfig.PREFIX}://${dbConfig.USERNAME}:${dbConfig.PASSWORD}@${dbConfig.HOST}/${dbConfig.DB}?retryWrites=true&w=majority`,
+    `${prefix}://${username}:${password}@${host}/${database}?retryWrites=true&w=majority`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -78,6 +89,4 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
-  
-  console.log(process.env.PASSWORD);
 });
