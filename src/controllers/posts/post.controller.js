@@ -26,16 +26,21 @@ const getAllPosts = async (req, res) => {
 const getLatestPost = async (req, res) => {
   const query = req.query;
 
-  let limit = null;
+  // Sort by column if provided
+  // Default: createdAt column
+  let column = query.sortBy ? query.sortBy : "createdAt";
 
+  // If there is query of limit
+  // Get corresponding number of posts
+  let limit = query.limit ? parseInt(query.limit) : null;
+
+  // Determine order of columns when sort if provided - Ascending or Descending
+  // Ascending = 0 || Descending = -1
+  // Default: Descending
   let order = query.asc ? (query.asc == "true" ? -1 : 0) : -1;
 
-  if (query.limit) {
-    limit = parseInt(query.limit);
-  }
-
   const post = await Post.find({})
-    .sort([[query.sortBy, order]])
+    .sort([[column, order]])
     .limit(limit);
 
   return res.status(200).send(post);
