@@ -1,5 +1,21 @@
 # RMIT Developer Student Club Website API
 
-## LIVE DOMAIN:
+## Package
+
+- bcryptjs
+- body-parser
+- cookie-parser
+- cors
+- dotenv
+- express
+- joi
+- jsonwebtoken
+- moment-timezone
+- mongoose
+- multer
+- path
+- slugify
+
+## Live Domain:
 
 `https://rmit-dsc-api.herokuapp.com`
