@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
+    "start:prod": "node .",
     "lint": "./node_modules/.bin/eslint --init",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -36,10 +37,13 @@
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "joi": "^17.2.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.9",
+    "multer": "^1.4.2",
+    "path": "^0.12.7",
     "slugify": "^1.4.5"
   }
 }

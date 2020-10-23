@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-// Authentication import
-import authConfig from "../config/auth.config.js";
+// Import model
 import db from "../models/index.js";
 
 const User = db.user;
@@ -100,8 +99,8 @@ export const signin = (req, res) => {
         });
       }
 
-      var token = jwt.sign({ id: user.id }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn, // 24 hours
+      var token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
+        expiresIn: process.env.TOKEN_EXPIRATION_TIME,
       });
 
       var authorities = [];
@@ -116,7 +115,7 @@ export const signin = (req, res) => {
         roles: authorities,
         accessToken: {
           token: token,
-          expiresIn: authConfig.expiresIn,
+          expiresIn: process.env.TOKEN_EXPIRATION_TIME,
         },
       });
     });
