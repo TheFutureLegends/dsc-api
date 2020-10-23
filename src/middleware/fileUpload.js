@@ -1,22 +1,26 @@
 import multer from "multer";
 import slugify from "slugify";
+import moment from "moment-timezone";
 
-// Define upload storage
+// Define storage
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/images/upload/");
+  destination: function (req, file, cb) {
+    cb(null, "./public/upload/");
   },
-  filename: (req, file, cb) => {
-    cb(null, slugify(new Date().toISOString() + file.originalname));
+  filename: function (req, file, cb) {
+    const nDate = moment().tz("Asia/Ho_Chi_Minh").format("MM-DD-YYYY-HH-mm-ss");
+
+    cb(null, nDate + "-" + slugify(file.originalname));
   },
 });
 
+// Filter file mime
 const fileFilter = (req, file, cb) => {
-  // Reject file if not image
+  // reject a file if not image
   if (
-    file.mimeType === "image/jpeg" ||
-    file.mimeType === "image/png" ||
-    file.mimeType === "image/jpg"
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg"
   ) {
     cb(null, true);
   } else {

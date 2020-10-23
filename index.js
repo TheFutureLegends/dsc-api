@@ -3,14 +3,19 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 
-// MongoDB config
-import dbConfig from "./src/config/db.config.js";
+// Import model
 import db from "./src/models/index.js";
 
 // Router path
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import postRouter from "./routes/post.routes.js";
+
+// Development purpose only
+import moment from "moment-timezone";
+import multer from "multer";
+import slugify from "slugify";
+import middleware from "./src/middleware/index.js";
 
 if (process.env.NODE_ENV != "production") {
   dotenv.config();
@@ -41,16 +46,16 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 
-app.post("/upload", (req, res) => {
-  // if (!req.files) {
-  //   return res.status(500).send({ msg: "file is not found" });
-  // }
+app.get("/timezone", (req, res) => {
+  const timezone = moment()
+    .tz("Asia/Ho_Chi_Minh")
+    .format("MM-DD-YYYY-HH:mm:ss");
 
-  // const myFile = req.files.file;
+  return res.status(200).send(timezone);
+});
 
-  // const pathName = path.dirname(global.__basedir);
-
-  return res.status(200).send("ABC");
+app.post("/upload", middleware.fileUpload.single("postImage"), (req, res) => {
+  return res.status(200).send("File uploaded!");
 });
 
 // Import Role model

@@ -2,6 +2,7 @@ import Joi from "joi";
 import slugify from "slugify";
 
 import db from "../../models/index.js";
+import middleware from "../../middleware/index.js";
 
 const Post = db.post;
 
