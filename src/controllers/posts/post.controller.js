@@ -47,6 +47,16 @@ const getLatestPost = async (req, res) => {
   return res.status(200).send(post);
 };
 
+// Below is only authorized for author role
+
+const displayOwnPosts = async (req, res) => {
+  const posts = await Post.find({
+    author: req.userId,
+  });
+
+  return res.status(200).send(posts);
+};
+
 const createPost = (req, res) => {
   const { error } = schema.validate(req.body);
 
@@ -96,4 +106,11 @@ const deletePost = async (req, res) => {
   return res.status(200).send("Post Deleted Successfully");
 };
 
-export { getAllPosts, getLatestPost, createPost, updatePost, deletePost };
+export {
+  getAllPosts,
+  getLatestPost,
+  displayOwnPosts,
+  createPost,
+  updatePost,
+  deletePost,
+};

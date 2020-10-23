@@ -1,8 +1,8 @@
 import express from "express";
 import middleware from "../src/middleware/index.js";
 import {
-  getAllPosts,
   getLatestPost,
+  displayOwnPosts,
   createPost,
   updatePost,
   deletePost,
@@ -10,9 +10,15 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllPosts);
+// router.get("/", getAllPosts);
 
 router.get("/latest", getLatestPost);
+
+router.get(
+  "/display",
+  [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
+  displayOwnPosts
+);
 
 router.post(
   "/",
