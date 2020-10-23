@@ -3,8 +3,11 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 
-// Import model
+// Import model & seeder
 import db from "./src/models/index.js";
+import roleSeeder from "./src/seeders/role.seeder.js";
+import userSeeder from "./src/seeders/user.seeder.js";
+import postSeeder from "./src/seeders/post.seeder.js";
 
 // Router path
 import authRouter from "./routes/auth.routes.js";
@@ -12,9 +15,6 @@ import userRouter from "./routes/user.routes.js";
 import postRouter from "./routes/post.routes.js";
 
 // Development purpose only
-import moment from "moment-timezone";
-import multer from "multer";
-import slugify from "slugify";
 import middleware from "./src/middleware/index.js";
 
 if (process.env.NODE_ENV != "production") {
@@ -46,21 +46,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 
-app.get("/timezone", (req, res) => {
-  const timezone = moment()
-    .tz("Asia/Ho_Chi_Minh")
-    .format("MM-DD-YYYY-HH:mm:ss");
-
-  return res.status(200).send(timezone);
-});
-
 app.post("/upload", middleware.fileUpload.single("postImage"), (req, res) => {
   return res.status(200).send("File uploaded!");
 });
-
-// Import Role model
-// to populate initial Role
-const Role = db.role;
 
 // Define MongoDB URI
 const DB_URI =
@@ -76,29 +64,14 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
-    initial();
+    roleSeeder();
+    userSeeder();
+    // postSeeder();
   })
   .catch((err) => {
     console.error("Connection error", err);
     process.exit();
   });
-
-function initial() {
-  Role.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
-      db.ROLES.forEach((role) => {
-        new Role({
-          name: role,
-        }).save((err) => {
-          if (err) {
-            console.log("error", err);
-          }
-          console.log(`added ${role} to roles collection`);
-        });
-      });
-    }
-  });
-}
 
 // PORT define
 const PORT = process.env.PORT || process.env.APP_PORT;

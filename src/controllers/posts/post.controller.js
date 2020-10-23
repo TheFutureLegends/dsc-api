@@ -88,7 +88,11 @@ const updatePost = async (req, res) => {
   return res.status(200).send("Post Updated Successfully");
 };
 
-const deletePost = (req, res) => {
+const deletePost = async (req, res) => {
+  await Post.findOneAndDelete({
+    _id: req.params.id,
+    author: req.userId,
+  });
   return res.status(200).send("Post Deleted Successfully");
 };
 
