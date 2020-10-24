@@ -65,6 +65,14 @@ const getLatestPost = async (req, res) => {
   return res.status(200).send(post);
 };
 
+const getSinglePost = async (req, res) => {
+  const post = await Post.find({
+    slug: req.params.slug,
+  });
+
+  return res.status(200).send(post);
+};
+
 // Below is only authorized for author role
 
 const displayOwnPosts = async (req, res) => {
@@ -132,6 +140,7 @@ const deletePost = async (req, res) => {
 export {
   getAllPosts,
   getLatestPost,
+  getSinglePost,
   displayOwnPosts,
   createPost,
   updatePost,

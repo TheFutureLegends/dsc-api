@@ -13,33 +13,32 @@ const schema = Joi.object({
   description: Joi.string().required(),
 });
 
-// const getAllPosts = async (req, res) => {
-//   // destructure page and limit and set default values
-//   const { page = 1, limit = 10 } = req.query;
+const getAllCategories = async (req, res) => {
+  // destructure page and limit and set default values
+  const { page = 1, limit = 10 } = req.query;
 
-//   try {
-//     // execute query with page and limit values
-//     const posts = await Post.find()
-//       .limit(limit * 1)
-//       .skip((page - 1) * limit)
-//       .exec();
+  try {
+    // execute query with page and limit values
+    const categories = await Category.find()
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
 
-//     // get total documents in the Post collection
-//     const count = await Post.countDocuments();
+    // get total documents in the Post collection
+    const count = await Category.countDocuments();
 
-//     return res.json({
-//       posts,
-//       totalPages: Math.ceil(count / limit),
-//       currentPage: page,
-//     });
+    return res.json({
+      categories,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
 
-//     // return response with posts, total pages, and current page
-//   } catch (err) {
-//     console.error("Error: ", err.message);
-//   }
-
-//   return res.status(200).send("ABC");
-// };
+    // return response with posts, total pages, and current page
+  } catch (err) {
+    console.error("Error: ", err.message);
+    return res.status(500).send({ message: err.message });
+  }
+};
 
 // const getLatestPost = async (req, res) => {
 //   const query = req.query;
@@ -66,15 +65,15 @@ const schema = Joi.object({
 //   return res.status(200).send(post);
 // };
 
-// Below is only authorized for author role
+const getCategorry = async (req, res) => {
+  const category = await Category.find({
+    slug: req.params.slug,
+  });
 
-// const displayOwnPosts = async (req, res) => {
-//   const posts = await Post.find({
-//     author: req.userId,
-//   });
+  return res.status(200).send(category);
+};
 
-//   return res.status(200).send(posts);
-// };
+// Below is only authorized for moderator role
 
 const createCategory = async (req, res) => {
   // Validate input
@@ -130,4 +129,10 @@ const deleteCategory = async (req, res) => {
   return res.status(200).send("Post Deleted Successfully");
 };
 
-export { createCategory, updateCategory, deleteCategory };
+export {
+  getAllCategories,
+  getCategorry,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+};

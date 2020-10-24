@@ -3,6 +3,7 @@ import middleware from "../src/middleware/index.js";
 import {
   getAllPosts,
   getLatestPost,
+  getSinglePost,
   displayOwnPosts,
   createPost,
   updatePost,
@@ -14,6 +15,8 @@ const router = express.Router();
 router.get("/", getAllPosts);
 
 router.get("/latest", getLatestPost);
+
+router.get("/:slug", getSinglePost);
 
 router.get(
   "/display",
@@ -28,13 +31,13 @@ router.post(
 );
 
 router.put(
-  "/:id",
+  "/update/:id",
   [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
   updatePost
 );
 
 router.delete(
-  "/:id",
+  "/delete/:id",
   [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
   deletePost
 );

@@ -2,24 +2,20 @@ import express from "express";
 import middleware from "../src/middleware/index.js";
 import {
   //   getAllPosts,
-  //   getLatestPost,
-  //   displayOwnPosts,
+  getAllCategories,
+  getCategorry,
   createCategory,
   updateCategory,
-  // deletePost,
+  deleteCategory,
 } from "../src/controllers/categories/category.controller.js";
 
 const router = express.Router();
 
 // router.get("/", getAllPosts);
 
-// router.get("/latest", getLatestPost);
+router.get("/", getAllCategories);
 
-// router.get(
-//   "/display",
-//   [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
-//   displayOwnPosts
-// );
+router.get("/:slug", getCategorry);
 
 router.post(
   "/",
@@ -28,15 +24,15 @@ router.post(
 );
 
 router.put(
-  "/:id",
+  "/update/:id",
   [middleware.authJwt.verifyToken, middleware.authJwt.isModerator],
   updateCategory
 );
 
-// router.delete(
-//   "/:id",
-//   [middleware.authJwt.verifyToken, middleware.authJwt.isModerator],
-//   deletePost
-// );
+router.delete(
+  "/delete/:id",
+  [middleware.authJwt.verifyToken, middleware.authJwt.isModerator],
+  deleteCategory
+);
 
 export default router;
