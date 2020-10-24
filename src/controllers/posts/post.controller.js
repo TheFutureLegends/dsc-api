@@ -11,17 +11,32 @@ const schema = Joi.object({
   description: Joi.string().required(),
 });
 
-const allAccess = (req, res) => {
-  return res.status(200).send("Public Content.");
-};
-
 const getAllPosts = async (req, res) => {
-  // Sort Ascending = 0 || Otherwise = -1
-  const post = await Post.find({})
-    .sort([["createdAt", -1]])
-    .limit(null);
+  // destructure page and limit and set default values
+  const { page = 1, limit = 10 } = req.query;
 
-  return res.status(200).send(post);
+  try {
+    // execute query with page and limit values
+    const posts = await Post.find()
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    // get total documents in the Posts collection
+    const count = await Post.countDocuments();
+
+    return res.json({
+      posts,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
+
+    // return response with posts, total pages, and current page
+  } catch (err) {
+    console.error("Error: ", err.message);
+  }
+
+  return res.status(200).send("ABC");
 };
 
 const getLatestPost = async (req, res) => {
