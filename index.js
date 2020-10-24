@@ -42,6 +42,10 @@ app.use(function (req, res, next) {
 });
 
 // Router define
+app.get("/", (req, res) => {
+  res.redirect("/api/posts");
+});
+
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
