@@ -24,6 +24,12 @@
 | `/api/auth/signin` | Login | `username` `password` | POST |
 | `/api/auth/signup` | Register | `username` `email` `password` | POST |
 
+### Categories
+| Api name | Description | Role needed | Method |
+| `/api/categories` | Create new category | **Moderator** | POST |
+| `/api/categories/:id` | Update existing category | **Moderator** | PUT |
+| `/api/categories/:id` | Delete existing category | **Moderator** | DELETE |
+
 ### Post
 | Api name | Description | Role needed | Method |
 | -------- | ----------- | ----------- | ------ |
