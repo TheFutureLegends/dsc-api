@@ -25,13 +25,13 @@
 | `/api/auth/signup` | Register    | `username` `email` `password` | POST   |
 
 ### Categories
-| Api name                     | Description                | Role needed   | Method |
-| ---------------------------- | -------------------------- | ------------- | ------ |
-| `/api/categories`            | Get all categories         | x             | GET    |
-| `/api/categories/:slug`      | Get category based on slug | x             | GET    |
-| `/api/categories`            | Create new category        | **Moderator** | POST   |
-| `/api/categories/update/:id` | Update existing category   | **Moderator** | PUT    |
-| `/api/categories/delete/:id` | Delete existing category   | **Moderator** | DELETE |
+| Api name                          | Description                        | Role needed   | Method |
+| --------------------------------- | ---------------------------------- | ------------- | ------ |
+| `/api/categories?limit=10&page=1` | Get all categories with pagination | x             | GET    |
+| `/api/categories/:slug`           | Get category based on slug         | x             | GET    |
+| `/api/categories`                 | Create new category                | **Moderator** | POST   |
+| `/api/categories/update/:id`      | Update existing category           | **Moderator** | PUT    |
+| `/api/categories/delete/:id`      | Delete existing category           | **Moderator** | DELETE |
 
 ### Post
 | Api name                                               | Description                   | Role needed | Method |
