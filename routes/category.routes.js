@@ -3,7 +3,7 @@ import middleware from "../src/middleware/index.js";
 import {
   //   getAllPosts,
   getAllCategories,
-  getCategorry,
+  getSingleCategory,
   createCategory,
   updateCategory,
   deleteCategory,
@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.get("/", getAllCategories);
 
-router.get("/:slug", getCategorry);
+router.get("/:slug", getSingleCategory);
 
 router.post(
   "/",

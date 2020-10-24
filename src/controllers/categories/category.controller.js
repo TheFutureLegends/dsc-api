@@ -65,7 +65,7 @@ const getAllCategories = async (req, res) => {
 //   return res.status(200).send(post);
 // };
 
-const getCategorry = async (req, res) => {
+const getSingleCategory = async (req, res) => {
   const category = await Category.find({
     slug: req.params.slug,
   });
@@ -131,7 +131,7 @@ const deleteCategory = async (req, res) => {
 
 export {
   getAllCategories,
-  getCategorry,
+  getSingleCategory,
   createCategory,
   updateCategory,
   deleteCategory,
