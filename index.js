@@ -65,7 +65,7 @@ db.mongoose
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     roleSeeder();
-    userSeeder();
+    // userSeeder();
     // postSeeder();
   })
   .catch((err) => {
