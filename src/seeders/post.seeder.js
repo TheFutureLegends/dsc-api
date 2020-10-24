@@ -1,8 +1,11 @@
 import faker from "faker";
 import slugify from "slugify";
+import Category from "../models/category.model.js";
 import db from "../models/index.js";
 
 const User = db.user;
+
+const Categorry = db.category;
 
 const Post = db.post;
 
@@ -21,25 +24,43 @@ const postSeeder = () => {
           imageURL: faker.image.imageUrl(),
         });
 
-        User.estimatedDocumentCount((err, count) => {
+        Category.estimatedDocumentCount((err, count) => {
           if (!err) {
             // Get a random entry
             var random = Math.floor(Math.random() * count);
 
-            User.findOne()
+            Category.findOne()
               .skip(random)
               .exec((err, result) => {
                 // Assign random user to author
-                post.author = result._id;
+                post.category = {
+                  _id: result._id,
+                  title: result.title,
+                  slug: result.slug,
+                };
 
-                post.save((err) => {
-                  if (err) {
-                    console.error("error: ", err);
+                User.estimatedDocumentCount((err, count) => {
+                  if (!err) {
+                    // Get a random entry
+                    var random = Math.floor(Math.random() * count);
+
+                    User.findOne()
+                      .skip(random)
+                      .exec((err, result) => {
+                        // Assign random user to author
+                        post.author = result._id;
+
+                        post.save((err) => {
+                          if (err) {
+                            console.error("error: ", err);
+                          }
+
+                          console.log(
+                            `Finish seeding post with title ${post.title} to collection`
+                          );
+                        });
+                      });
                   }
-
-                  console.log(
-                    `Finish seeding post with title ${post.title} to collection`
-                  );
                 });
               });
           }

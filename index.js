@@ -6,8 +6,8 @@ import dotenv from "dotenv";
 // Import model & seeder
 import db from "./src/models/index.js";
 import roleSeeder from "./src/seeders/role.seeder.js";
-// import userSeeder from "./src/seeders/user.seeder.js";
-// import postSeeder from "./src/seeders/post.seeder.js";
+import userSeeder from "./src/seeders/user.seeder.js";
+import postSeeder from "./src/seeders/post.seeder.js";
 
 // Router path
 import authRouter from "./routes/auth.routes.js";
@@ -44,8 +44,37 @@ app.use((req, res, next) => {
 
 // Router define
 app.get("/", (req, res) => {
+  // if (process.env.NODE_ENV != "production") {
+  //   // Development only
+  //   const Post = db.post;
+
+  //   Post.remove(
+  //     {
+  //       createdAt: {
+  //         $gte: "2020-10-24T07:53:37.580+00:00",
+  //       },
+  //     },
+  //     (err, result) => {
+  //       if (err) {
+  //         console.error("Error: ", err);
+  //       } else {
+  //         console.log("Delete all posts");
+  //       }
+  //     }
+  //   );
+  // }
+
   res.redirect("/api/posts");
 });
+
+// app.get("/seed", (req, res) => {
+//   roleSeeder();
+//   userSeeder();
+//   postSeeder();
+//   categorySeeder();
+
+//   return res.status(200).send("Seed url is called");
+// });
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
@@ -70,12 +99,6 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
-    if (process.env.NODE_ENV != "production") {
-      roleSeeder();
-      // userSeeder();
-      // postSeeder();
-      // categorySeeder();
-    }
   })
   .catch((err) => {
     console.error("Connection error", err);

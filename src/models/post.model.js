@@ -17,8 +17,8 @@ const Post = mongoose.model(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
       },
-      slug: String,
       title: String,
+      slug: String,
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
@@ -26,11 +26,11 @@ const Post = mongoose.model(
     },
     createdAt: {
       type: mongoose.Schema.Types.Date,
-      default: moment().tz("Asia/Ho_Chi_Minh").format("MM-DD-YYYY HH-mm-ss"),
+      default: Date.now(),
     },
     updatedAt: {
       type: mongoose.Schema.Types.Date,
-      default: moment().tz("Asia/Ho_Chi_Minh").format("MM-DD-YYYY HH-mm-ss"),
+      default: Date.now(),
     },
   })
 );

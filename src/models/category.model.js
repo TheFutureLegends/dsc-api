@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import moment from "moment-timezone";
 
 const Category = mongoose.model(
   "Category",
@@ -14,14 +15,8 @@ const Category = mongoose.model(
       default: null,
       ref: "Category",
     },
-    createdAt: {
-      type: mongoose.Schema.Types.Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: mongoose.Schema.Types.Date,
-      default: Date.now,
-    },
+    createdAt: Date,
+    updatedAt: Date,
   })
 );
 

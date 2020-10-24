@@ -1,5 +1,6 @@
 import Joi from "joi";
 import slugify from "slugify";
+import moment from "moment-timezone";
 
 import db from "../../models/index.js";
 import middleware from "../../middleware/index.js";
@@ -75,7 +76,7 @@ const schema = Joi.object({
 //   return res.status(200).send(posts);
 // };
 
-const createCategory = (req, res) => {
+const createCategory = async (req, res) => {
   // Validate input
   const { error } = schema.validate(req.body);
 
@@ -85,15 +86,17 @@ const createCategory = (req, res) => {
     title: req.body.title,
     slug: slugify(req.body.title.toLowerCase()),
     description: req.body.description,
+    createdAt: moment().tz("Asia/Ho_Chi_Minh").format("MM-DD-YYYY HH:mm:ss"),
+    updatedAt: moment().tz("Asia/Ho_Chi_Minh").format("MM-DD-YYYY HH:mm:ss"),
   });
 
-  category.save((err, category) => {
+  await category.save((err, result) => {
     if (err) {
       return res.status(500).send({ message: err });
     }
   });
 
-  return res.status(200).send("Category Created Successfully");
+  return res.status(201).send("New category has been created!");
 };
 
 const updateCategory = async (req, res) => {
@@ -110,6 +113,7 @@ const updateCategory = async (req, res) => {
       title: req.body.title,
       slug: slugify(req.body.title.toLowerCase()),
       description: req.body.description,
+      updatedAt: moment().tz("Asia/Ho_Chi_Minh").format("MM-DD-YYYY HH-mm-ss"),
     },
     {
       new: true,
@@ -119,12 +123,11 @@ const updateCategory = async (req, res) => {
   return res.status(200).send("Post Updated Successfully");
 };
 
-const deletePost = async (req, res) => {
-  await Post.findOneAndDelete({
+const deleteCategory = async (req, res) => {
+  await Category.findOneAndDelete({
     _id: req.params.id,
-    author: req.userId,
   });
   return res.status(200).send("Post Deleted Successfully");
 };
 
-export { createCategory, updateCategory };
+export { createCategory, updateCategory, deleteCategory };
