@@ -6,6 +6,8 @@ const Post = mongoose.model(
     title: String,
     slug: String,
     description: String,
+    imageURL: String,
+    // img: { data: Buffer, contentType: String }
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

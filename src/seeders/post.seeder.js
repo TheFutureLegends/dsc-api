@@ -18,6 +18,7 @@ const postSeeder = () => {
           title: title,
           slug: slugify(title.replace(/\.+$/, " ")),
           description: faker.lorem.paragraphs(),
+          imageURL: faker.image.imageUrl(),
         });
 
         User.estimatedDocumentCount((err, count) => {
