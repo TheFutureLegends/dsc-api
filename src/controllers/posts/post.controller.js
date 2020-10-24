@@ -6,6 +6,7 @@ import middleware from "../../middleware/index.js";
 
 const Post = db.post;
 
+// Define backend validation
 const schema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().required(),
@@ -22,7 +23,7 @@ const getAllPosts = async (req, res) => {
       .skip((page - 1) * limit)
       .exec();
 
-    // get total documents in the Posts collection
+    // get total documents in the Post collection
     const count = await Post.countDocuments();
 
     return res.json({
@@ -44,10 +45,12 @@ const getLatestPost = async (req, res) => {
 
   // Sort by column if provided
   // Default: createdAt column
+  // Default: createdAt
   let column = query.sortBy ? query.sortBy : "createdAt";
 
   // If there is query of limit
   // Get corresponding number of posts
+  // Default: null
   let limit = query.limit ? parseInt(query.limit) : null;
 
   // Determine order of columns when sort if provided - Ascending or Descending
@@ -73,10 +76,12 @@ const displayOwnPosts = async (req, res) => {
 };
 
 const createPost = (req, res) => {
+  // Validate input
   const { error } = schema.validate(req.body);
 
   if (error) return res.status(400).send(error.details[0].message);
 
+  // Add to model
   const post = new Post({
     title: req.body.title,
     slug: slugify(req.body.title.toLowerCase()),
@@ -94,10 +99,13 @@ const createPost = (req, res) => {
 };
 
 const updatePost = async (req, res) => {
+  // Validate input
   const { error } = schema.validate(req.body);
 
   if (error) return res.status(400).send(error.details[0].message);
 
+  // Find post that has same id and same author
+  // Update it with input
   await Post.findOneAndUpdate(
     { _id: req.params.id, author: req.userId },
     {
