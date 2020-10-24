@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 // Import model & seeder
 import db from "./src/models/index.js";
-// import roleSeeder from "./src/seeders/role.seeder.js";
+import roleSeeder from "./src/seeders/role.seeder.js";
 // import userSeeder from "./src/seeders/user.seeder.js";
 // import postSeeder from "./src/seeders/post.seeder.js";
 
