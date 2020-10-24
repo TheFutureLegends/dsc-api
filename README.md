@@ -19,6 +19,10 @@
 ## Api
 
 ### Authentication
+| Api name | Description | Input needed | Method |
+| -------- | ----------- | ----------- | ------ |
+| `/api/auth/signin` | Login | `username` `password` | GET |
+
 
 ### Post
 | Api name | Description | Role needed | Method |
@@ -29,6 +33,6 @@
 | `/api/posts/:id` | Update existing post | **Author** | PUT |
 | `/api/posts/:id` | Delete existing post | **Author** | DELETE |
 
-## Live Domain:
+## Api Domain:
 
 `https://rmit-dsc-api.herokuapp.com`
