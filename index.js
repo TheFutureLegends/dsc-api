@@ -12,6 +12,7 @@ import roleSeeder from "./src/seeders/role.seeder.js";
 // Router path
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import categoryRouter from "./routes/category.routes.js";
 import postRouter from "./routes/post.routes.js";
 
 // Development purpose only
@@ -32,7 +33,7 @@ app.use(
 app.use("/static", express.static("public")); //to access the files in public folder
 app.use(bodyParser.json());
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Headers",
     "x-access-token, Origin, Content-Type, Accept"
@@ -48,6 +49,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/categories", categoryRouter);
 app.use("/api/posts", postRouter);
 
 app.post("/upload", middleware.fileUpload.single("postImage"), (req, res) => {
@@ -68,9 +70,12 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
-    roleSeeder();
-    // userSeeder();
-    // postSeeder();
+    if (process.env.NODE_ENV != "production") {
+      roleSeeder();
+      // userSeeder();
+      // postSeeder();
+      // categorySeeder();
+    }
   })
   .catch((err) => {
     console.error("Connection error", err);
