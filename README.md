@@ -21,8 +21,8 @@
 ### Authentication
 | Api name | Description | Input needed | Method |
 | -------- | ----------- | ----------- | ------ |
-| `/api/auth/signin` | Login | `username` `password` | GET |
-
+| `/api/auth/signin` | Login | `username` `password` | POST |
+| `/api/auth/signup` | Register | `username` `email` `password` | POST |
 
 ### Post
 | Api name | Description | Role needed | Method |
