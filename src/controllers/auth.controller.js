@@ -1,14 +1,31 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import Joi from "joi";
 
 // Import model
 import db from "../models/index.js";
+import Joi from "joi";
 
 const User = db.user;
 
 const Role = db.role;
 
+const schema = Joi.object({
+  username: Joi.string().alphanum().min(3).max(30).required(),
+
+  email: Joi.string().email().required(),
+
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+
+  confirm_password: Joi.ref("password"),
+});
+
 export const signup = (req, res) => {
+  // Validate input
+  const { error } = schema.validate(req.body);
+
+  if (error) return res.status(400).send(error.details[0].message);
+
   const user = new User({
     username: req.body.username,
     email: req.body.email,
