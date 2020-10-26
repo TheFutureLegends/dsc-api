@@ -63,5 +63,6 @@
 
 ## Development
 
-| Field | Current | Future |
-| `image` | String | `{data: Buffer, contentType: string, mimeType: 'image/jpg'}` |
+| Field   | Current | Future change                                                |
+| ------- | ------- | ------------------------------------------------------------ |
+| `image` | String  | `{data: Buffer, contentType: string, mimeType: 'image/jpg'}` |
