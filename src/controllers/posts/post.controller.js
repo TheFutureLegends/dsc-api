@@ -47,7 +47,7 @@ const getLatestPost = async (req, res) => {
   // If there is query of limit
   // Get corresponding number of posts
   // Default: null
-  let limit = query.limit ? parseInt(query.limit) : null;
+  let limit = query.limit ? parseInt(query.limit) : 10;
 
   // Determine order of columns when sort if provided - Ascending or Descending
   // Ascending = 0 || Descending = -1
