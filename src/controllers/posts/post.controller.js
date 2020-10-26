@@ -76,6 +76,7 @@ const getLatestPost = async (req, res) => {
           slug: value.slug,
           description: value.description,
           visit: value.visit,
+          image: value.image,
           category: {
             title: value.category.title,
             slug: value.category.slug,
