@@ -70,6 +70,7 @@ const getLatestPost = async (req, res) => {
 
       const result = [];
 
+      // posts is an array of object
       posts.forEach((value, index) => {
         result.push({
           title: value.title,
@@ -96,12 +97,34 @@ const getLatestPost = async (req, res) => {
     });
 };
 
-const getSinglePost = async (req, res) => {
-  const post = await Post.find({
+const getPost = async (req, res) => {
+  Post.findOne({
     slug: req.params.slug,
-  });
+  }).exec((err, value) => {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
 
-  return res.status(200).send(post);
+    const post = {
+      title: value.title,
+      slug: value.slug,
+      description: value.description,
+      visit: value.visit,
+      image: value.image,
+      category: {
+        title: value.category.title,
+        slug: value.category.slug,
+      },
+      author: {
+        username: value.author.username,
+        avatar: value.author.avatar,
+      },
+      createdAt: value.createdAt,
+      updatedAt: value.updatedAt,
+    };
+
+    return res.status(200).send({ post });
+  });
 };
 
 // Below is only authorized for author role
@@ -208,7 +231,7 @@ const deletePost = async (req, res) => {
 export {
   getAllPosts,
   getLatestPost,
-  getSinglePost,
+  getPost,
   displayOwnPosts,
   showPost,
   createPost,

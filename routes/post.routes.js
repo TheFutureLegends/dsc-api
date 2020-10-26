@@ -3,7 +3,7 @@ import middleware from "../src/middleware/index.js";
 import {
   getAllPosts,
   getLatestPost,
-  getSinglePost,
+  getPost,
   displayOwnPosts,
   showPost,
   createPost,
@@ -15,9 +15,9 @@ const router = express.Router();
 
 router.get("/", getAllPosts);
 
-router.get("/latest", getLatestPost);
+router.get("/:slug", getPost);
 
-router.get("/:slug", getSinglePost);
+router.get("/latest", getLatestPost);
 
 router.get(
   "/display",

@@ -60,3 +60,8 @@
 ## Api Domain:
 
 `https://rmit-dsc-api.herokuapp.com`
+
+## Development
+
+| Field | Current | Future |
+| `image` | String | `{data: Buffer, contentType: string, mimeType: 'image/jpg'}` |
