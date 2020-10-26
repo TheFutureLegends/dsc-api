@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const University = mongoose.model(
-  "University",
+const Club = mongoose.model(
+  "Club",
   new mongoose.Schema({
     name: String,
     slug: {
@@ -9,6 +9,14 @@ const University = mongoose.model(
       index: true,
     },
     description: String,
+    university: {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "University",
+      },
+      name: String,
+      slug: String,
+    },
     createdAt: {
       type: mongoose.Schema.Types.Date,
       default: Date.now(),
@@ -20,4 +28,4 @@ const University = mongoose.model(
   })
 );
 
-export default University;
+export default Club;
