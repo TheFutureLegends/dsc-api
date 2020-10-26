@@ -11,7 +11,7 @@ const db = {};
 
 db.mongoose = mongoose;
 
-db.university = University;
+// db.university = University;
 
 db.user = User;
 
