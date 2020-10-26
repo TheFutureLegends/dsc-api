@@ -16,7 +16,7 @@ router.get("/", getAllPosts);
 
 router.get("/latest", getLatestPost);
 
-router.get("/:slug", getSinglePost);
+router.get("/detail/:slug", getSinglePost);
 
 router.get(
   "/display",

@@ -35,9 +35,9 @@ const getAllPosts = async (req, res) => {
     // return response with posts, total pages, and current page
   } catch (err) {
     console.error("Error: ", err.message);
-  }
 
-  return res.status(200).send("ABC");
+    return res.status(500).send({ message: err });
+  }
 };
 
 const getLatestPost = async (req, res) => {
