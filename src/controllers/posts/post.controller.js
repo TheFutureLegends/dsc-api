@@ -60,11 +60,13 @@ const getLatestPost = async (req, res) => {
   // Default: Descending
   let order = query.asc ? (query.asc == "true" ? -1 : 0) : -1;
 
-  const post = await Post.find({})
+  const posts = await Post.find({})
     .sort([[column, order]])
     .limit(limit);
 
-  return res.status(200).send(post);
+  return res.status(200).send({
+    posts,
+  });
 };
 
 const getSinglePost = async (req, res) => {
