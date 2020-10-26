@@ -2,6 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+import fs from "fs";
+import markdown from "markdown-js";
 
 // Import model & seeder
 import db from "./src/models/index.js";
@@ -47,7 +49,6 @@ app.get("/", (req, res) => {
   // if (process.env.NODE_ENV != "production") {
   //   // Development only
   //   const Post = db.post;
-
   //   Post.remove(
   //     {
   //       createdAt: {
@@ -64,7 +65,11 @@ app.get("/", (req, res) => {
   //   );
   // }
 
-  res.redirect("/api/posts");
+  var str = fs.readFileSync("README.md", "utf8");
+
+  var result = markdown.makeHtml(str);
+
+  return res.status(200).send(result);
 });
 
 // app.get("/seed", (req, res) => {

@@ -15,6 +15,8 @@
 - multer
 - path
 - slugify
+- fs
+- markdown-js
 
 ## Api
 
