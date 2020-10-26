@@ -15,8 +15,14 @@ const Category = mongoose.model(
       default: null,
       ref: "Category",
     },
-    createdAt: Date,
-    updatedAt: Date,
+    createdAt: {
+      type: mongoose.Schema.Types.Date,
+      default: Date.now(),
+    },
+    updatedAt: {
+      type: mongoose.Schema.Types.Date,
+      default: Date.now(),
+    },
   })
 );
 

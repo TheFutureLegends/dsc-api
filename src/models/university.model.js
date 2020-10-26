@@ -10,8 +10,14 @@ const University = mongoose.model(
       index: true,
     },
     description: String,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
+    createdAt: {
+      type: mongoose.Schema.Types.Date,
+      default: Date.now(),
+    },
+    updatedAt: {
+      type: mongoose.Schema.Types.Date,
+      default: Date.now(),
+    },
   })
 );
 
