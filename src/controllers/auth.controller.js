@@ -4,7 +4,6 @@ import Joi from "joi";
 
 // Import model
 import db from "../models/index.js";
-import Joi from "joi";
 
 const User = db.user;
 
@@ -20,11 +19,21 @@ const schema = Joi.object({
   confirm_password: Joi.ref("password"),
 });
 
-export const signup = (req, res) => {
+export const signup = async (req, res) => {
   // Validate input
   const { error } = schema.validate(req.body);
 
   if (error) return res.status(400).send(error.details[0].message);
+
+  const existed_user = await User.find({
+    email: req.body.email,
+  });
+
+  if (existed_user) {
+    return res
+      .status(400)
+      .send({ message: "Email has already taken. Please choose another!" });
+  }
 
   const user = new User({
     username: req.body.username,
