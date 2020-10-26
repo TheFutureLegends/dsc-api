@@ -4,24 +4,17 @@ import Joi from "joi";
 
 // Import model
 import db from "../models/index.js";
+import validationRules from "../validations/index.js";
 
 const User = db.user;
 
 const Role = db.role;
 
-const schema = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-
-  email: Joi.string().email().required(),
-
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
-
-  confirm_password: Joi.ref("password"),
-});
-
 export const signup = async (req, res) => {
   // Validate input
-  const { error } = schema.validate(req.body);
+  const { error } = validationRules.authValidation.registerSchema.validate(
+    req.body
+  );
 
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -99,6 +92,12 @@ export const signup = async (req, res) => {
 };
 
 export const signin = (req, res) => {
+  const { error } = validationRules.authValidation.loginSchema.validate(
+    req.body
+  );
+
+  if (error) return res.status(400).send(error.details[0].message);
+
   User.findOne({
     username: req.body.username,
   })
