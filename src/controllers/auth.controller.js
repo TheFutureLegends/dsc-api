@@ -22,7 +22,7 @@ export const signup = async (req, res) => {
     email: req.body.email,
   });
 
-  if (existed_user) {
+  if (existed_user[0]) {
     return res
       .status(400)
       .send({ message: "Email has already taken. Please choose another!" });

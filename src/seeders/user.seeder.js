@@ -16,6 +16,7 @@ const userSeeder = () => {
           username: faker.internet.userName(),
           email: faker.internet.email(),
           password: bcrypt.hashSync("123456789", 8),
+          avatar: faker.image.imageUrl(),
         });
 
         Role.find(

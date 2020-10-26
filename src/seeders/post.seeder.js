@@ -21,7 +21,8 @@ const postSeeder = () => {
           title: title,
           slug: slugify(title.replace(/\.+$/, " ")),
           description: faker.lorem.paragraphs(),
-          imageURL: faker.image.imageUrl(),
+          visit: faker.random.number(),
+          image: faker.image.imageUrl(),
         });
 
         Category.estimatedDocumentCount((err, count) => {
@@ -48,7 +49,11 @@ const postSeeder = () => {
                       .skip(random)
                       .exec((err, result) => {
                         // Assign random user to author
-                        post.author = result._id;
+                        post.author = {
+                          _id: result._id,
+                          username: result.username,
+                          avatar: result.avatar,
+                        };
 
                         post.save((err) => {
                           if (err) {

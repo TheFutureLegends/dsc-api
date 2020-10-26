@@ -10,8 +10,8 @@ const Post = mongoose.model(
       index: true,
     },
     description: String,
-    imageURL: String,
-    // img: { data: Buffer, contentType: String }
+    image: String,
+    // image: { data: Buffer, contentType: String }
     category: {
       _id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -20,9 +20,15 @@ const Post = mongoose.model(
       title: String,
       slug: String,
     },
+    visit: Number,
     author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      username: String,
+      avatar: String,
+      // avatar: { data: Buffer, contentType: String }
     },
     createdAt: {
       type: mongoose.Schema.Types.Date,

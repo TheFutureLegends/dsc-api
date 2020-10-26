@@ -6,6 +6,8 @@ import middleware from "../../middleware/index.js";
 
 const Post = db.post;
 
+const User = db.user;
+
 // Define backend validation
 const schema = Joi.object({
   title: Joi.string().required(),
@@ -94,16 +96,27 @@ const createPost = (req, res) => {
     title: req.body.title,
     slug: slugify(req.body.title.toLowerCase()),
     description: req.body.description,
-    author: req.userId,
   });
 
-  post.save((err, post) => {
+  User.findById(req.userId).exec((err, user) => {
     if (err) {
-      return res.status(500).send({ message: err });
+      return res.status(500).send("Invalid user");
     }
-  });
 
-  return res.status(200).send("Post Created Successfully");
+    post.author = {
+      _id: user._id,
+      username: user.username,
+      avatar: user.avatar,
+    };
+
+    post.save((err, post) => {
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
+    });
+
+    return res.status(200).send("Post Created Successfully");
+  });
 };
 
 const updatePost = async (req, res) => {
@@ -115,7 +128,12 @@ const updatePost = async (req, res) => {
   // Find post that has same id and same author
   // Update it with input
   await Post.findOneAndUpdate(
-    { _id: req.params.id, author: req.userId },
+    {
+      _id: req.params.id,
+      author: {
+        _id: req.userId,
+      },
+    },
     {
       title: req.body.title,
       slug: slugify(req.body.title.toLowerCase()),
@@ -132,7 +150,9 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
   await Post.findOneAndDelete({
     _id: req.params.id,
-    author: req.userId,
+    author: {
+      _id: req.userId,
+    },
   });
   return res.status(200).send("Post Deleted Successfully");
 };

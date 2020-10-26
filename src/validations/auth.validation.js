@@ -14,6 +14,8 @@ const registerSchema = Joi.object({
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
 
   confirm_password: Joi.ref("password"),
+
+  roles: Joi.array(),
 });
 
 const authValidation = {
