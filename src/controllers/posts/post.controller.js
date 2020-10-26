@@ -85,6 +85,21 @@ const displayOwnPosts = async (req, res) => {
   return res.status(200).send(posts);
 };
 
+const showPost = async (req, res) => {
+  await Post.find({
+    slug: req.params.slug,
+    author: {
+      _id: req.userId,
+    },
+  }).exec((err, post) => {
+    if (err) {
+      return res.status(500).send({ message: "Cannot find post" });
+    }
+
+    return res.status(200).send(post);
+  });
+};
+
 const createPost = (req, res) => {
   // Validate input
   const { error } = schema.validate(req.body);
@@ -100,7 +115,7 @@ const createPost = (req, res) => {
 
   User.findById(req.userId).exec((err, user) => {
     if (err) {
-      return res.status(500).send("Invalid user");
+      return res.status(500).send({ message: "Invalid user" });
     }
 
     post.author = {
@@ -115,7 +130,7 @@ const createPost = (req, res) => {
       }
     });
 
-    return res.status(200).send("Post Created Successfully");
+    return res.status(200).send({ message: "Post Created Successfully" });
   });
 };
 
@@ -123,7 +138,7 @@ const updatePost = async (req, res) => {
   // Validate input
   const { error } = schema.validate(req.body);
 
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send({ message: error.details[0].message });
 
   // Find post that has same id and same author
   // Update it with input
@@ -144,7 +159,7 @@ const updatePost = async (req, res) => {
     }
   );
 
-  return res.status(200).send("Post Updated Successfully");
+  return res.status(200).send({ message: "Post Updated Successfully" });
 };
 
 const deletePost = async (req, res) => {
@@ -154,7 +169,7 @@ const deletePost = async (req, res) => {
       _id: req.userId,
     },
   });
-  return res.status(200).send("Post Deleted Successfully");
+  return res.status(200).send({ message: "Post Deleted Successfully" });
 };
 
 export {
@@ -162,6 +177,7 @@ export {
   getLatestPost,
   getSinglePost,
   displayOwnPosts,
+  showPost,
   createPost,
   updatePost,
   deletePost,

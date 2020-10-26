@@ -5,6 +5,7 @@ import {
   getLatestPost,
   getSinglePost,
   displayOwnPosts,
+  showPost,
   createPost,
   updatePost,
   deletePost,
@@ -16,12 +17,18 @@ router.get("/", getAllPosts);
 
 router.get("/latest", getLatestPost);
 
-router.get("/detail/:slug", getSinglePost);
+router.get("/:slug", getSinglePost);
 
 router.get(
   "/display",
   [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
   displayOwnPosts
+);
+
+router.get(
+  "/show/:slug",
+  [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
+  showPost
 );
 
 router.post(
