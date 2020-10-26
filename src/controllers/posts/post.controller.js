@@ -58,7 +58,7 @@ const getLatestPost = async (req, res) => {
   // Determine order of columns when sort if provided - Ascending or Descending
   // Ascending = 0 || Descending = -1
   // Default: Descending
-  let order = query.asc ? (query.asc == "true" ? -1 : 0) : -1;
+  let order = query.asc ? (query.asc == "true" ? 0 : -1) : 0;
 
   const posts = await Post.find({})
     .sort([[column, order]])
