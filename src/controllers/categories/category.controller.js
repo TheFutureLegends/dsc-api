@@ -7,6 +7,8 @@ import middleware from "../../middleware/index.js";
 
 const Category = db.category;
 
+const Post = db.post;
+
 // Define backend validation
 const schema = Joi.object({
   title: Joi.string().required(),
@@ -66,11 +68,51 @@ const getAllCategories = async (req, res) => {
 // };
 
 const getSingleCategory = async (req, res) => {
-  const category = await Category.find({
+  Category.findOne({
     slug: req.params.slug,
-  });
+  }).exec((err, category) => {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
 
-  return res.status(200).send(category);
+    // Define category array
+    const c_array = [
+      {
+        title: category.title,
+        slug: category.slug,
+        description: category.description,
+      },
+    ];
+
+    // Define post array
+    const p_array = [];
+
+    Post.find({
+      "category._id": category._id,
+    }).exec((err, posts) => {
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
+
+      posts.forEach((value, index) => {
+        p_array.push({
+          title: value.title,
+          slug: value.slug,
+          description: value.description,
+          image: value.image,
+          visit: value.visit,
+          author: {
+            username: value.author.username,
+            avatar: value.author.avatar,
+          },
+          createdAt: value.createdAt,
+          updatedAt: value.updatedAt,
+        });
+      });
+
+      return res.status(200).send({ category: c_array, posts: p_array });
+    });
+  });
 };
 
 // Below is only authorized for moderator role

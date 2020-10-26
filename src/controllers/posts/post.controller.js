@@ -1,18 +1,12 @@
-import Joi from "joi";
 import slugify from "slugify";
 
 import db from "../../models/index.js";
+import validationRules from "../../validations/index.js";
 import middleware from "../../middleware/index.js";
 
 const Post = db.post;
 
 const User = db.user;
-
-// Define backend validation
-const schema = Joi.object({
-  title: Joi.string().required(),
-  description: Joi.string().required(),
-});
 
 const getAllPosts = async (req, res) => {
   // destructure page and limit and set default values
@@ -66,13 +60,39 @@ const getLatestPost = async (req, res) => {
     column = "category.title";
   }
 
-  const posts = await Post.find({})
+  Post.find({})
     .sort([[column, order]])
-    .limit(limit);
+    .limit(limit)
+    .exec((err, posts) => {
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
 
-  return res.status(200).send({
-    posts,
-  });
+      const result = [];
+
+      posts.forEach((value, index) => {
+        result.push({
+          title: value.title,
+          slug: value.slug,
+          description: value.description,
+          visit: value.visit,
+          category: {
+            title: value.category.title,
+            slug: value.category.slug,
+          },
+          author: {
+            username: value.author.username,
+            avatar: value.author.avatar,
+          },
+          createdAt: value.createdAt,
+          updatedAt: value.updatedAt,
+        });
+      });
+
+      return res.status(200).send({
+        posts: result,
+      });
+    });
 };
 
 const getSinglePost = async (req, res) => {
@@ -110,7 +130,9 @@ const showPost = async (req, res) => {
 
 const createPost = (req, res) => {
   // Validate input
-  const { error } = schema.validate(req.body);
+  const { error } = validationRules.postValidation.postSchema.validate(
+    req.body
+  );
 
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -144,7 +166,9 @@ const createPost = (req, res) => {
 
 const updatePost = async (req, res) => {
   // Validate input
-  const { error } = schema.validate(req.body);
+  const { error } = validationRules.postValidation.postSchema.validate(
+    req.body
+  );
 
   if (error) return res.status(400).send({ message: error.details[0].message });
 
