@@ -15,9 +15,9 @@ const router = express.Router();
 
 router.get("/", getAllPosts);
 
-router.get("/:slug", getPost);
-
 router.get("/latest", getLatestPost);
+
+router.get("/:slug", getPost);
 
 router.get(
   "/display",

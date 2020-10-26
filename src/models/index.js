@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 import University from "./university.model.js";
 import Club from "./club.model.js";
 import User from "./user.model.js";
