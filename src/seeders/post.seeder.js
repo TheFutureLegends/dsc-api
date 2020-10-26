@@ -1,11 +1,10 @@
 import faker from "faker";
 import slugify from "slugify";
-import Category from "../models/category.model.js";
 import db from "../models/index.js";
 
 const User = db.user;
 
-const Categorry = db.category;
+const Category = db.category;
 
 const Post = db.post;
 
@@ -19,7 +18,7 @@ const postSeeder = () => {
 
         const post = new Post({
           title: title,
-          slug: slugify(title.replace(/\.+$/, " ")),
+          slug: slugify(title.toLowerCase().replace(/\.+$/, " ")),
           description: faker.lorem.paragraphs(),
           visit: faker.random.number(),
           image: faker.image.imageUrl(),

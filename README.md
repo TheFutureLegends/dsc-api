@@ -25,6 +25,13 @@
 | `/api/auth/signin` | Login       | `username` `password`                            | POST   |
 | `/api/auth/signup` | Register    | `username` `email` `password` `confirm_password` | POST   |
 
+### Users
+
+| Api name               | Description                   | Return data        | Required logged in | Method |
+| ---------------------- | ----------------------------- | ------------------ | ------------------ | ------ |
+| `/api/users/:username` | Get user                      |                    | x                  | GET    |
+| `/api/users/profile`   | Get profile of logged in user | `username` `email` | **Yes**            | GET    |
+
 ### Categories
 
 | Api name                          | Description                        | Role needed   | Method |
@@ -43,6 +50,8 @@
 | `/api/posts/latest?sortBy=createdAt&limit=10&asc=true` | Get all latest post           | x           | GET    |
 | `/api/posts/:slug`                                     | Get single post based on slug | x           | POST   |
 | `/api/posts`                                           | Create new post               | **Author**  | POST   |
+| `/api/posts/display`                                   | Display all posts that owned  | **Author**  | GET    |
+| `/api/posts/show/:slug`                                | Show existing post            | **Author**  | GET    |
 | `/api/posts/update/:id`                                | Update existing post          | **Author**  | PUT    |
 | `/api/posts/delete/:id`                                | Delete existing post          | **Author**  | DELETE |
 
