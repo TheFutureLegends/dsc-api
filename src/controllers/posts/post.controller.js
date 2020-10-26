@@ -60,6 +60,12 @@ const getLatestPost = async (req, res) => {
   // Default: Descending
   let order = query.asc ? (query.asc == "true" ? 0 : -1) : 0;
 
+  if (column == "author") {
+    column = "author.username";
+  } else if (column == "category") {
+    column = "category.title";
+  }
+
   const posts = await Post.find({})
     .sort([[column, order]])
     .limit(limit);
