@@ -92,11 +92,11 @@ export const signup = async (req, res) => {
 };
 
 export const signin = (req, res) => {
-  const { error } = validationRules.authValidation.loginSchema.validate(
-    req.body
-  );
+  // const { error } = validationRules.authValidation.loginSchema.validate(
+  //   req.body
+  // );
 
-  if (error) return res.status(400).send(error.details[0].message);
+  // if (error) return res.status(400).send(error.details[0].message);
 
   User.findOne({
     username: req.body.username,

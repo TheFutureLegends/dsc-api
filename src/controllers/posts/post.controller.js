@@ -132,11 +132,17 @@ const getPost = async (req, res) => {
 // Below is only authorized for author role
 
 const displayOwnPosts = async (req, res) => {
-  const posts = await Post.find({
-    author: req.userId,
-  });
+  Post.find({
+    author: {
+      _id: req.userId,
+    },
+  }).exec((err, post) => {
+    if (err) {
+      return res.status(500).send({ message: err });
+    }
 
-  return res.status(200).send(posts);
+    return res.status(200).send(post);
+  });
 };
 
 const showPost = async (req, res) => {

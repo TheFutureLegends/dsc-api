@@ -17,8 +17,6 @@ router.get("/", getAllPosts);
 
 router.get("/latest", getLatestPost);
 
-router.get("/:slug", getPost);
-
 router.get(
   "/display",
   [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
@@ -48,5 +46,7 @@ router.delete(
   [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
   deletePost
 );
+
+router.get("/:slug", getPost);
 
 export default router;

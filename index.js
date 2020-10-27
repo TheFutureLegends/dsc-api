@@ -72,14 +72,11 @@ app.get("/", (req, res) => {
   return res.status(200).send(result);
 });
 
-// app.get("/seed", (req, res) => {
-//   roleSeeder();
-//   userSeeder();
-//   postSeeder();
-//   categorySeeder();
+app.get("/seed", (req, res) => {
+  postSeeder();
 
-//   return res.status(200).send("Seed url is called");
-// });
+  return res.status(200).send("Seed url is called");
+});
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
