@@ -105,8 +105,6 @@ const getPost = async (req, res) => {
       return res.status(500).send({ message: err });
     }
 
-    console.log(value);
-
     const post = {
       title: value.title,
       slug: value.slug,
