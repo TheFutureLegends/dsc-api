@@ -20,5 +20,6 @@ yarn-error.log*
 yarn.lock
 *-lock.json
 
-# config file
+# development file
+routes/development.routes.js
 src/config/db.config.js

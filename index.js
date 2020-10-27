@@ -7,9 +7,6 @@ import markdown from "markdown-js";
 
 // Import model & seeder
 import db from "./src/models/index.js";
-// import roleSeeder from "./src/seeders/role.seeder.js";
-// import userSeeder from "./src/seeders/user.seeder.js";
-// import postSeeder from "./src/seeders/post.seeder.js";
 
 // Router path
 import authRouter from "./routes/auth.routes.js";
@@ -18,7 +15,7 @@ import categoryRouter from "./routes/category.routes.js";
 import postRouter from "./routes/post.routes.js";
 
 // Development purpose only
-import middleware from "./src/middleware/index.js";
+import developmentRouter from "./routes/development.routes.js";
 
 if (process.env.NODE_ENV != "production") {
   dotenv.config();
@@ -72,20 +69,13 @@ app.get("/", (req, res) => {
   return res.status(200).send(result);
 });
 
-app.get("/seed", (req, res) => {
-  postSeeder();
-
-  return res.status(200).send("Seed url is called");
-});
-
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/posts", postRouter);
 
-app.post("/upload", middleware.fileUpload.single("postImage"), (req, res) => {
-  return res.status(200).send("File uploaded!");
-});
+// Development only
+// app.use("/development", developmentRouter);
 
 // Define MongoDB URI
 const DB_URI =
