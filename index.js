@@ -87,6 +87,7 @@ const DB_URI =
 
 db.mongoose
   .connect(`${DB_URI}`, {
+    useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
