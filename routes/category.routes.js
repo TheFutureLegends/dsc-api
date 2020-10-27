@@ -1,7 +1,6 @@
 import express from "express";
 import middleware from "../src/middleware/index.js";
 import {
-  //   getAllPosts,
   getAllCategories,
   getSingleCategory,
   createCategory,
@@ -11,11 +10,7 @@ import {
 
 const router = express.Router();
 
-// router.get("/", getAllPosts);
-
 router.get("/", getAllCategories);
-
-router.get("/:slug", getSingleCategory);
 
 router.post(
   "/",
@@ -34,5 +29,7 @@ router.delete(
   [middleware.authJwt.verifyToken, middleware.authJwt.isModerator],
   deleteCategory
 );
+
+router.get("/:slug", getSingleCategory);
 
 export default router;
