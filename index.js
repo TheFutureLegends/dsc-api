@@ -15,7 +15,7 @@ import categoryRouter from "./routes/category.routes.js";
 import postRouter from "./routes/post.routes.js";
 
 // Development purpose only
-import developmentRouter from "./routes/development.routes.js";
+// import developmentRouter from "./routes/development.routes.js";
 
 if (process.env.NODE_ENV != "production") {
   dotenv.config();
