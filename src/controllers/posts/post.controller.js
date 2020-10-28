@@ -3,6 +3,7 @@ import slugify from "slugify";
 import db from "../../models/index.js";
 import validationRules from "../../validations/index.js";
 import middleware from "../../middleware/index.js";
+import util from "../../utils/functions.util.js";
 
 const Post = db.post;
 
@@ -13,17 +14,44 @@ const getAllPosts = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
 
   try {
+    // initialize post array
+    const p_array = [];
+
     // execute query with page and limit values
-    const posts = await Post.find()
+    Post.find()
       .limit(limit * 1)
       .skip((page - 1) * limit)
-      .exec();
+      .exec((err, value) => {
+        if (err) {
+          return res.status(500).send({ message: err });
+        }
+
+        value.forEach((value, index) => {
+          p_array.push({
+            title: value.title,
+            slug: value.slug,
+            description: value.description,
+            visit: value.visit,
+            image: value.image,
+            category: {
+              title: value.category.title,
+              slug: value.category.slug,
+            },
+            author: {
+              username: value.author.username,
+              avatar: value.author.avatar,
+            },
+            createdAt: util.formatDate(value.createdAt),
+            updatedAt: util.formatDate(value.updatedAt),
+          });
+        });
+      });
 
     // get total documents in the Post collection
     const count = await Post.countDocuments();
 
     return res.json({
-      posts,
+      posts: p_array,
       totalPages: Math.ceil(count / limit),
       currentPage: page,
     });
@@ -86,8 +114,8 @@ const getLatestPost = async (req, res) => {
             username: value.author.username,
             avatar: value.author.avatar,
           },
-          createdAt: value.createdAt,
-          updatedAt: value.updatedAt,
+          createdAt: util.formatDate(value.createdAt),
+          updatedAt: util.formatDate(value.updatedAt),
         });
       });
 
@@ -119,8 +147,8 @@ const getPost = async (req, res) => {
         username: value.author.username,
         avatar: value.author.avatar,
       },
-      createdAt: value.createdAt,
-      updatedAt: value.updatedAt,
+      createdAt: util.formatDate(value.createdAt),
+      updatedAt: util.formatDate(value.updatedAt),
     };
 
     return res.status(200).send({ post });

@@ -83,4 +83,42 @@ const getEvent = async (req, res) => {
   });
 };
 
-export { getAllEvents, getEvent };
+// Below functions are required with role moderator
+const displayEvent = async (req, res) => {
+  Event.find({
+    author: {
+      _id: req.userId,
+    },
+  }).exec((err, events) => {
+    if (err) {
+      console.error("Error: ", err);
+      return res.status(500).send({ message: err });
+    }
+
+    const e_array = [];
+
+    events.forEach((value, index) => {
+      e_array.push({
+        title: value.title,
+        slug: value.slug,
+        description: value.description,
+        visit: value.visit,
+        image: value.image,
+        category: {
+          title: value.category.title,
+          slug: value.category.slug,
+        },
+        author: {
+          username: value.author.username,
+          avatar: value.author.avatar,
+        },
+        createdAt: value.createdAt,
+        updatedAt: value.updatedAt,
+      });
+    });
+
+    return res.status(200).send({ events: e_array });
+  });
+};
+
+export { getAllEvents, getEvent, displayEvent };

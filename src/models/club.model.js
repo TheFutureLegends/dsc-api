@@ -10,12 +10,8 @@ const Club = mongoose.model(
     },
     description: String,
     university: {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "University",
-      },
-      name: String,
-      slug: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "University",
     },
     createdAt: {
       type: mongoose.Schema.Types.Date,

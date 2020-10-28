@@ -4,7 +4,7 @@ const Role = db.role;
 
 const roleSeeder = () => {
   Role.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
+    if (!err && count < db.ROLES.length) {
       db.ROLES.forEach((role) => {
         new Role({
           name: role,

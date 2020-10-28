@@ -9,6 +9,8 @@ const University = mongoose.model(
       index: true,
     },
     description: String,
+    address: String,
+    campus: String,
     createdAt: {
       type: mongoose.Schema.Types.Date,
       default: Date.now(),

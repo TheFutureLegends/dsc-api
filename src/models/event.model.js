@@ -20,6 +20,14 @@ const Event = mongoose.model(
       slug: String,
     },
     visit: Number,
+    startAt: {
+      type: mongoose.Schema.Types.Date,
+      default: Date.now(),
+    },
+    endAt: {
+      type: mongoose.Schema.Types.Date,
+      default: Date.now(),
+    },
     author: {
       _id: {
         type: mongoose.Schema.Types.ObjectId,

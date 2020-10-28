@@ -1,6 +1,7 @@
 import faker from "faker";
 import slugify from "slugify";
 import db from "../models/index.js";
+import moment from "moment-timezone";
 
 const User = db.user;
 
@@ -22,6 +23,8 @@ const eventSeeder = () => {
           description: faker.lorem.paragraphs(),
           visit: faker.random.number(),
           image: faker.image.imageUrl(),
+          createdAt: "2020-10-28T17:00:00.000+07:00",
+          updatedAt: "2020-10-28T17:00:00.000+07:00",
         });
 
         Category.estimatedDocumentCount((catErr, categoriesCount) => {
