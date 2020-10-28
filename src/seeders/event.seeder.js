@@ -20,7 +20,7 @@ const eventSeeder = () => {
         const event = new Event({
           title: title,
           slug: slugify(title.toLowerCase().replace(/\.+$/, " ")),
-          description: faker.lorem.paragraphs(),
+          description: faker.lorem.paragraphs(10),
           visit: faker.random.number(),
           image: faker.image.imageUrl(),
           createdAt: "2020-10-28T17:00:00.000+07:00",

@@ -17,35 +17,30 @@ const getAllPosts = async (req, res) => {
     // initialize post array
     const p_array = [];
 
-    // execute query with page and limit values
-    Post.find()
+    const posts = await Post.find()
       .limit(limit * 1)
       .skip((page - 1) * limit)
-      .exec((err, value) => {
-        if (err) {
-          return res.status(500).send({ message: err });
-        }
+      .exec();
 
-        value.forEach((value, index) => {
-          p_array.push({
-            title: value.title,
-            slug: value.slug,
-            description: value.description,
-            visit: value.visit,
-            image: value.image,
-            category: {
-              title: value.category.title,
-              slug: value.category.slug,
-            },
-            author: {
-              username: value.author.username,
-              avatar: value.author.avatar,
-            },
-            createdAt: util.formatDate(value.createdAt),
-            updatedAt: util.formatDate(value.updatedAt),
-          });
-        });
+    posts.forEach((value, index) => {
+      p_array.push({
+        title: value.title,
+        slug: value.slug,
+        description: value.description,
+        visit: value.visit,
+        image: value.image,
+        category: {
+          title: value.category.title,
+          slug: value.category.slug,
+        },
+        author: {
+          username: value.author.username,
+          avatar: value.author.avatar,
+        },
+        createdAt: util.formatDate(value.createdAt),
+        updatedAt: util.formatDate(value.updatedAt),
       });
+    });
 
     // get total documents in the Post collection
     const count = await Post.countDocuments();

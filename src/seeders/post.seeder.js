@@ -19,7 +19,7 @@ const postSeeder = () => {
         const post = new Post({
           title: title,
           slug: slugify(title.toLowerCase().replace(/\.+$/, " ")),
-          description: faker.lorem.paragraphs(),
+          description: faker.lorem.paragraphs(10),
           visit: faker.random.number(),
           image: faker.image.imageUrl(),
         });
