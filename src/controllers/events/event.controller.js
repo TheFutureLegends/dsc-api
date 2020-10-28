@@ -1,4 +1,5 @@
 import slugify from "slugify";
+import moment from "moment-timezone";
 
 import db from "../../models/index.js";
 import validationRules from "../../validations/index.js";
@@ -21,27 +22,19 @@ const getAllEvents = async (req, res) => {
 
     const count = await Event.countDocuments();
 
-    const e_array = [];
+    const e_array = util.iterateObject(events);
 
-    events.forEach((value, index) => {
-      e_array.push({
-        title: value.title,
-        slug: value.slug,
-        description: value.description,
-        image: value.image,
-        visit: value.visit,
-        category: {
-          title: value.category.title,
-          slug: value.category.slug,
-        },
-        author: {
-          username: value.author.username,
-          avatar: value.author.avatar,
-        },
-        createdAt: util.formatDate(value.createdAt),
-        updatedAt: util.formatDate(value.updatedAt),
-      });
-    });
+    for (let index = 0; index < e_array.length; index++) {
+      const element = e_array[index];
+
+      element.startAt = moment(events[index].startAt)
+        .tz(process.env.TIMEZONE)
+        .format("DD-MMM-YYYY HH:mm:ss");
+
+      element.endAt = moment(events[index].endAt)
+        .tz(process.env.TIMEZONE)
+        .format("DD-MMM-YYYY HH:mm:ss");
+    }
 
     return res.json({
       events: e_array,

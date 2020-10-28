@@ -14,34 +14,13 @@ const getAllPosts = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
 
   try {
-    // initialize post array
-    const p_array = [];
-
     const posts = await Post.find()
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .populate(["category", "author"])
       .exec();
 
-    posts.forEach((value, index) => {
-      p_array.push({
-        title: value.title,
-        slug: value.slug,
-        description: value.description,
-        visit: value.visit,
-        image: value.image,
-        category: {
-          title: value.category.title,
-          slug: value.category.slug,
-        },
-        author: {
-          username: value.author.username,
-          avatar: value.author.avatar,
-        },
-        createdAt: util.formatDate(value.createdAt),
-        updatedAt: util.formatDate(value.updatedAt),
-      });
-    });
+    const p_array = util.iterateObject(posts);
 
     // get total documents in the Post collection
     const count = await Post.countDocuments();
@@ -93,28 +72,7 @@ const getLatestPost = async (req, res) => {
         return res.status(500).send({ message: err });
       }
 
-      const result = [];
-
-      // posts is an array of object
-      posts.forEach((value, index) => {
-        result.push({
-          title: value.title,
-          slug: value.slug,
-          description: value.description,
-          visit: value.visit,
-          image: value.image,
-          category: {
-            title: value.category.title,
-            slug: value.category.slug,
-          },
-          author: {
-            username: value.author.username,
-            avatar: value.author.avatar,
-          },
-          createdAt: util.formatDate(value.createdAt),
-          updatedAt: util.formatDate(value.updatedAt),
-        });
-      });
+      const result = util.iterateObject(posts);
 
       return res.status(200).send({
         posts: result,

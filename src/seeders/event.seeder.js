@@ -23,8 +23,10 @@ const eventSeeder = () => {
           description: faker.lorem.paragraphs(10),
           visit: faker.random.number(),
           image: faker.image.imageUrl(),
-          createdAt: "2020-10-28T17:00:00.000+07:00",
-          updatedAt: "2020-10-28T17:00:00.000+07:00",
+          startAt: moment.tz(process.env.TIMEZONE).format(),
+          endAt: moment.tz(process.env.TIMEZONE).add(7, "days").format(),
+          createdAt: moment.tz(process.env.TIMEZONE).format(),
+          updatedAt: moment.tz(process.env.TIMEZONE).format(),
         });
 
         Category.estimatedDocumentCount((categoriesError, categoriesCount) => {
