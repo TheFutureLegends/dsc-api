@@ -129,18 +129,20 @@ const displayOwnPosts = async (req, res) => {
 };
 
 const showPost = async (req, res) => {
-  await Post.find({
+  await Post.findOne({
     slug: req.params.slug,
     author: {
       _id: req.userId,
     },
-  }).exec((err, post) => {
-    if (err) {
-      return res.status(500).send({ message: "Cannot find post" });
-    }
+  })
+    .populate("category")
+    .exec((err, post) => {
+      if (err) {
+        return res.status(500).send({ message: "Cannot find post" });
+      }
 
-    return res.status(200).send(post);
-  });
+      return res.status(200).send(post);
+    });
 };
 
 const createPost = (req, res) => {

@@ -29,11 +29,11 @@ const getAllEvents = async (req, res) => {
 
       element.startAt = moment(events[index].startAt)
         .tz(process.env.TIMEZONE)
-        .format("DD-MMM-YYYY HH:mm:ss");
+        .format(process.env.TIMEZONE_FORMAT + " HH:mm:ss");
 
       element.endAt = moment(events[index].endAt)
         .tz(process.env.TIMEZONE)
-        .format("DD-MMM-YYYY HH:mm:ss");
+        .format(process.env.TIMEZONE_FORMAT + " HH:mm:ss");
     }
 
     return res.json({
@@ -42,9 +42,9 @@ const getAllEvents = async (req, res) => {
       currentPage: page,
     });
   } catch (error) {
-    console.error("Error: ", err.message);
+    console.error("Error: ", error.message);
 
-    return res.status(500).send({ message: err });
+    return res.status(500).send({ message: error });
   }
 };
 
@@ -72,8 +72,9 @@ const getEvent = async (req, res) => {
           username: value.author.username,
           avatar: value.author.avatar,
         },
+        startAt: util.formatDate(value.startAt),
+        endAt: util.formatDate(value.endAt),
         createdAt: util.formatDate(value.createdAt),
-        updatedAt: util.formatDate(value.updatedAt),
       };
 
       return res.status(200).send({ event });
@@ -92,30 +93,41 @@ const displayEvent = async (req, res) => {
       return res.status(500).send({ message: err });
     }
 
-    const e_array = [];
+    const e_array = util.iterateObject(events);
 
-    events.forEach((value, index) => {
-      e_array.push({
-        title: value.title,
-        slug: value.slug,
-        description: value.description,
-        visit: value.visit,
-        image: value.image,
-        category: {
-          title: value.category.title,
-          slug: value.category.slug,
-        },
-        author: {
-          username: value.author.username,
-          avatar: value.author.avatar,
-        },
-        createdAt: util.formatDate(value.createdAt),
-        updatedAt: util.formatDate(value.updatedAt),
-      });
-    });
+    for (let index = 0; index < e_array.length; index++) {
+      const element = e_array[index];
+
+      element.startAt = moment(events[index].startAt)
+        .tz(process.env.TIMEZONE)
+        .format(process.env.TIMEZONE_FORMAT + " HH:mm:ss");
+
+      element.endAt = moment(events[index].endAt)
+        .tz(process.env.TIMEZONE)
+        .format(process.env.TIMEZONE_FORMAT + " HH:mm:ss");
+    }
 
     return res.status(200).send({ events: e_array });
   });
 };
 
-export { getAllEvents, getEvent, displayEvent };
+const showEvent = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      slug: req.params.slug,
+      author: req.userId,
+    })
+      .populate("category")
+      .exec();
+
+    return res.status(200).json({
+      event,
+    });
+  } catch (error) {
+    console.error("Error: ", error.message);
+
+    return res.status(500).send({ message: error });
+  }
+};
+
+export { getAllEvents, getEvent, displayEvent, showEvent };
