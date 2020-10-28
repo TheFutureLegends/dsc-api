@@ -84,9 +84,7 @@ const getEvent = async (req, res) => {
 // Below functions are required with role moderator
 const displayEvent = async (req, res) => {
   Event.find({
-    author: {
-      _id: req.userId,
-    },
+    author: req.userId,
   }).exec((err, events) => {
     if (err) {
       console.error("Error: ", err);
