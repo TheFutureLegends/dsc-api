@@ -27,9 +27,9 @@ const eventSeeder = () => {
           updatedAt: "2020-10-28T17:00:00.000+07:00",
         });
 
-        Category.estimatedDocumentCount((catErr, categoriesCount) => {
-          if (catErr) {
-            console.error("ERROR:", catErr);
+        Category.estimatedDocumentCount((categoriesError, categoriesCount) => {
+          if (categoriesError) {
+            console.error("ERROR:", categoriesError);
             process.exit();
           }
 
@@ -43,11 +43,7 @@ const eventSeeder = () => {
                 process.exit();
               }
 
-              event.category = {
-                _id: categories._id,
-                title: categories.title,
-                slug: categories.slug,
-              };
+              event.category = categories._id;
 
               User.estimatedDocumentCount((userErr, usersCount) => {
                 if (!userErr) {
@@ -56,13 +52,9 @@ const eventSeeder = () => {
 
                   User.findOne()
                     .skip(random)
-                    .exec((err, result) => {
+                    .exec((err, user) => {
                       // Assign random user to author
-                      event.author = {
-                        _id: result._id,
-                        username: result.username,
-                        avatar: result.avatar,
-                      };
+                      event.author = user._id;
 
                       event.save((err) => {
                         if (err) {

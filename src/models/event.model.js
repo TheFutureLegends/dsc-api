@@ -10,14 +10,10 @@ const Event = mongoose.model(
     },
     description: String,
     image: String,
-    // image: { data: Buffer, contentType: String }
+    // image: { data: Buffer, contentType: String },
     category: {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Category",
-      },
-      title: String,
-      slug: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
     },
     visit: Number,
     startAt: {
@@ -29,12 +25,8 @@ const Event = mongoose.model(
       default: Date.now(),
     },
     author: {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-      username: String,
-      avatar: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       // avatar: { data: Buffer, contentType: String }
     },
     createdAt: {

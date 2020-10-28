@@ -44,25 +44,6 @@ app.use((req, res, next) => {
 
 // Router define
 app.get("/", (req, res) => {
-  // if (process.env.NODE_ENV != "production") {
-  //   // Development only
-  //   const Post = db.post;
-  //   Post.remove(
-  //     {
-  //       createdAt: {
-  //         $gte: "2020-10-24T07:53:37.580+00:00",
-  //       },
-  //     },
-  //     (err, result) => {
-  //       if (err) {
-  //         console.error("Error: ", err);
-  //       } else {
-  //         console.log("Delete all posts");
-  //       }
-  //     }
-  //   );
-  // }
-
   var str = fs.readFileSync("README.md", "utf8");
 
   var result = markdown.makeHtml(str);

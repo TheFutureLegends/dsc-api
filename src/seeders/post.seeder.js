@@ -32,12 +32,7 @@ const postSeeder = () => {
             Category.findOne()
               .skip(random)
               .exec((err, result) => {
-                // Assign random user to author
-                post.category = {
-                  _id: result._id,
-                  title: result.title,
-                  slug: result.slug,
-                };
+                post.category = result._id;
 
                 User.estimatedDocumentCount((err, count) => {
                   if (!err) {
@@ -46,13 +41,8 @@ const postSeeder = () => {
 
                     User.findOne()
                       .skip(random)
-                      .exec((err, result) => {
-                        // Assign random user to author
-                        post.author = {
-                          _id: result._id,
-                          username: result.username,
-                          avatar: result.avatar,
-                        };
+                      .exec((err, user) => {
+                        post.author = user._id;
 
                         post.save((err) => {
                           if (err) {

@@ -11,23 +11,14 @@ const Post = mongoose.model(
     description: String,
     image: String,
     // image: { data: Buffer, contentType: String }
-    category: {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Category",
-      },
-      title: String,
-      slug: String,
-    },
     visit: Number,
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
     author: {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-      username: String,
-      avatar: String,
-      // avatar: { data: Buffer, contentType: String }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     createdAt: {
       type: mongoose.Schema.Types.Date,

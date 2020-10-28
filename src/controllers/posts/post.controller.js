@@ -20,6 +20,7 @@ const getAllPosts = async (req, res) => {
     const posts = await Post.find()
       .limit(limit * 1)
       .skip((page - 1) * limit)
+      .populate(["category", "author"])
       .exec();
 
     posts.forEach((value, index) => {
@@ -86,6 +87,7 @@ const getLatestPost = async (req, res) => {
   Post.find({})
     .sort([[column, order]])
     .limit(limit)
+    .populate(["category", "author"])
     .exec((err, posts) => {
       if (err) {
         return res.status(500).send({ message: err });
@@ -123,31 +125,33 @@ const getLatestPost = async (req, res) => {
 const getPost = async (req, res) => {
   Post.findOne({
     slug: req.params.slug,
-  }).exec((err, value) => {
-    if (err) {
-      return res.status(500).send({ message: err });
-    }
+  })
+    .populate(["category", "author"])
+    .exec((err, value) => {
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
 
-    const post = {
-      title: value.title,
-      slug: value.slug,
-      description: value.description,
-      visit: value.visit,
-      image: value.image,
-      category: {
-        title: value.category.title,
-        slug: value.category.slug,
-      },
-      author: {
-        username: value.author.username,
-        avatar: value.author.avatar,
-      },
-      createdAt: util.formatDate(value.createdAt),
-      updatedAt: util.formatDate(value.updatedAt),
-    };
+      const post = {
+        title: value.title,
+        slug: value.slug,
+        description: value.description,
+        visit: value.visit,
+        image: value.image,
+        category: {
+          title: value.category.title,
+          slug: value.category.slug,
+        },
+        author: {
+          username: value.author.username,
+          avatar: value.author.avatar,
+        },
+        createdAt: util.formatDate(value.createdAt),
+        updatedAt: util.formatDate(value.updatedAt),
+      };
 
-    return res.status(200).send({ post });
-  });
+      return res.status(200).send({ post });
+    });
 };
 
 // Below is only authorized for author role
