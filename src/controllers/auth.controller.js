@@ -92,14 +92,14 @@ export const signup = async (req, res) => {
 };
 
 export const signin = (req, res) => {
-  // const { error } = validationRules.authValidation.loginSchema.validate(
-  //   req.body
-  // );
+  const { error } = validationRules.authValidation.loginSchema.validate(
+    req.body
+  );
 
-  // if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send(error.details[0].message);
 
   User.findOne({
-    username: req.body.username,
+    email: req.body.email,
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
@@ -109,7 +109,9 @@ export const signin = (req, res) => {
       }
 
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res
+          .status(404)
+          .send({ message: "Email or password does not match!" });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -120,7 +122,7 @@ export const signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password!",
+          message: "Email or password does not match!",
         });
       }
 

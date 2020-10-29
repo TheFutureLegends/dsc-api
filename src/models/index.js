@@ -28,10 +28,10 @@ db.event = Event;
 
 db.role = Role;
 
-db.ROLES = ["admin", "moderator", "author", "member", "user"];
+db.ROLES = ["super-admin", "admin", "moderator", "author", "member", "user"];
 
 db.UNIVERSITIES = ["RMIT University"];
 
-db.CLUBS = ["RMIT Developer Student Club", "RMIT Finance and Technology"]
+db.CLUBS = ["RMIT Developer Student Club", "RMIT Finance and Technology"];
 
 export default db;

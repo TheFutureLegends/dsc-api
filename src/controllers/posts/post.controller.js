@@ -44,7 +44,6 @@ const getLatestPost = async (req, res) => {
 
   // Sort by column if provided
   // Default: createdAt column
-  // Default: createdAt
   let column = query.sortBy ? query.sortBy : "createdAt";
 
   // If there is query of limit
