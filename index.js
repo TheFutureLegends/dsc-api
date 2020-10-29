@@ -16,7 +16,7 @@ import postRouter from "./routes/post.routes.js";
 import eventRouter from "./routes/event.routes.js";
 
 // Development purpose only
-import developmentRouter from "./routes/development.routes.js";
+// import developmentRouter from "./routes/development.routes.js";
 
 if (process.env.NODE_ENV != "production") {
   dotenv.config();
@@ -58,7 +58,7 @@ app.use("/api/posts", postRouter);
 app.use("/api/events", eventRouter);
 
 // Development only
-app.use("/development", developmentRouter);
+// app.use("/development", developmentRouter);
 
 // Define MongoDB URI
 const DB_URI =
