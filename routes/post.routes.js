@@ -32,6 +32,7 @@ router.get(
 router.post(
   "/",
   [middleware.authJwt.verifyToken, middleware.authJwt.isAuthor],
+  [middleware.fileUpload.single("image")],
   createPost
 );
 

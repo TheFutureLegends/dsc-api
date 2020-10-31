@@ -5,6 +5,7 @@ import db from "../../models/index.js";
 import validationRules from "../../validations/index.js";
 import middleware from "../../middleware/index.js";
 import util from "../../utils/functions.util.js";
+import Category from "../../models/category.model.js";
 
 const User = db.user;
 
@@ -58,24 +59,7 @@ const getEvent = async (req, res) => {
         return res.status(500).send({ message: err });
       }
 
-      const event = {
-        title: value.title,
-        slug: value.slug,
-        description: value.description,
-        visit: value.visit,
-        image: value.image,
-        category: {
-          title: value.category.title,
-          slug: value.category.slug,
-        },
-        author: {
-          username: value.author.username,
-          avatar: value.author.avatar,
-        },
-        startAt: util.formatDate(value.startAt),
-        endAt: util.formatDate(value.endAt),
-        createdAt: util.formatDate(value.createdAt),
-      };
+      const event = util.getObject(value);
 
       return res.status(200).send({ event });
     });
@@ -126,6 +110,32 @@ const showEvent = async (req, res) => {
 
     return res.status(500).send({ message: error });
   }
+};
+
+const createEvent = async (req, res) => {
+  // Validate input
+  const { error } = validationRules.postValidation.postSchema.validate(
+    req.body
+  );
+
+  if (error) return res.status(400).send(error.details[0].message);
+
+  // Add to model
+  const event = new Event({
+    title: req.body.title,
+    slug: slugify(req.body.title.toLowerCase()),
+    description: req.body.description,
+  });
+
+  const category = await Category.findOne({
+    slug: req.body.category,
+  }).exec();
+
+  event.category = category._id;
+
+  const author = await User.findById(req.userId).exec();
+
+  event.author = author._id;
 };
 
 export { getAllEvents, getEvent, displayEvent, showEvent };

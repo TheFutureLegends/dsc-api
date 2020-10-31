@@ -7,6 +7,8 @@ import util from "../../utils/functions.util.js";
 
 const Post = db.post;
 
+const Category = db.category;
+
 const User = db.user;
 
 const getAllPosts = async (req, res) => {
@@ -89,6 +91,8 @@ const getPost = async (req, res) => {
         return res.status(500).send({ message: err });
       }
 
+      console.log(value);
+
       const post = {
         title: value.title,
         slug: value.slug,
@@ -144,7 +148,7 @@ const showPost = async (req, res) => {
     });
 };
 
-const createPost = (req, res) => {
+const createPost = async (req, res) => {
   // Validate input
   const { error } = validationRules.postValidation.postSchema.validate(
     req.body
@@ -159,25 +163,25 @@ const createPost = (req, res) => {
     description: req.body.description,
   });
 
-  User.findById(req.userId).exec((err, user) => {
+  const user = await User.findById(req.userId).exec();
+
+  post.author = user._id;
+
+  const category = await Category.findOne({
+    slug: req.body.category,
+  }).exec();
+
+  post.category = category._id;
+
+  post.image = process.env.APP_URL + "/static/upload/" + req.file.filename;
+
+  post.save((err, post) => {
     if (err) {
-      return res.status(500).send({ message: "Invalid user" });
+      return res.status(500).send({ message: err });
     }
-
-    post.author = {
-      _id: user._id,
-      username: user.username,
-      avatar: user.avatar,
-    };
-
-    post.save((err, post) => {
-      if (err) {
-        return res.status(500).send({ message: err });
-      }
-    });
-
-    return res.status(200).send({ message: "Post Created Successfully" });
   });
+
+  return res.status(200).send({ message: "Post Created Successfully" });
 };
 
 const updatePost = async (req, res) => {
