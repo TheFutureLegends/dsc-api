@@ -15,11 +15,12 @@ const universitySeeder = () => {
     if (count < db.UNIVERSITIES.length) {
       db.UNIVERSITIES.forEach((value, index) => {
         const university = new University({
-          name: value,
-          slug: slugify(value.toLowerCase()),
+          name: value[0],
+          slug: slugify(value[0].toLowerCase()),
           description: faker.lorem.paragraphs(),
           address: faker.address.streetAddress(),
           campus: faker.lorem.word(),
+          mailDomain: value[1],
           createdAt: moment.tz(process.env.TIMEZONE).format(),
           updatedAt: moment.tz(process.env.TIMEZONE).format(),
         });
@@ -29,9 +30,7 @@ const universitySeeder = () => {
             console.log("error: ", err);
           }
 
-          console.log(
-            `University with name: ${value} is added to collections`
-          );
+          console.log(`University with name: ${value} is added to collections`);
         });
       });
     }

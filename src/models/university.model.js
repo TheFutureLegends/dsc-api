@@ -11,6 +11,7 @@ const University = mongoose.model(
     description: String,
     address: String,
     campus: String,
+    mailDomain: String,
     createdAt: {
       type: mongoose.Schema.Types.Date,
       default: Date.now(),

@@ -15,7 +15,7 @@ const Event = mongoose.model(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
     },
-    visit: Number,
+    location: String,
     startAt: {
       type: mongoose.Schema.Types.Date,
       default: Date.now(),
@@ -23,6 +23,10 @@ const Event = mongoose.model(
     endAt: {
       type: mongoose.Schema.Types.Date,
       default: Date.now(),
+    },
+    university: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "University",
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
