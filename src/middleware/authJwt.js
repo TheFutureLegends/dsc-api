@@ -23,6 +23,37 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+const isSuperAdmin = (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles },
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "super-admin") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require Admin Role!" });
+        return;
+      }
+    );
+  });
+};
+
 const isAdmin = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
@@ -116,11 +147,44 @@ const isAuthor = (req, res, next) => {
   });
 };
 
+const isMember = (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles },
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "member") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require Moderator Role!" });
+        return;
+      }
+    );
+  });
+};
+
 const authJwt = {
   verifyToken,
+  isSuperAdmin,
   isAdmin,
   isModerator,
   isAuthor,
+  isMember,
 };
 
 export default authJwt;

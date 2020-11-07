@@ -7,6 +7,10 @@ import Role from "./role.model.js";
 import Category from "./category.model.js";
 import Post from "./post.model.js";
 import Event from "./event.model.js";
+
+// Initialize Forum Model
+import Forum_Question from "./forum/question.forum.model.js";
+import Forum_Answer from "./forum/answer.forum.model.js";
 import Course from "./course.model.js";
 
 mongoose.Promise = global.Promise;
@@ -27,9 +31,15 @@ db.post = Post;
 
 db.event = Event;
 
+db.role = Role;
+
+// Initialize Forum Model
+
 db.course = Course;
 
-db.role = Role;
+db.question = Forum_Question;
+
+db.answer = Forum_Answer;
 
 db.ROLES = ["super-admin", "admin", "moderator", "author", "member", "user"];
 
@@ -43,14 +53,18 @@ var courses = [
   {
     university: "RMIT University",
     courses: [
-      ["COSC2634", "Building IT System"],
-      ["COSC2081", "Programming 1"],
-    ],
-  },
-  {
-    university: "Oxford University",
-    courses: [
-      ["COSC2101", "Software Engineering: Process and Tools"],
+      {
+        code: "COSC2634",
+        name: "Building IT System",
+        description:
+          "IT today is everywhere and is involved in many aspects of life, include mobile devices, electronic voting and robotic fish.",
+      },
+      {
+        code: "COSC2081",
+        name: "Programming 1",
+        description:
+          "This course introduce object-oriented programming using the Java programming language.",
+      },
     ],
   },
 ];
