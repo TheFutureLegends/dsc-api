@@ -136,37 +136,35 @@ const getLatestPost = async (req, res) => {
 };
 
 const getPost = async (req, res) => {
-  Post.findOne({
+  const post = await Post.findOne({
     slug: req.params.slug,
   })
     .populate(["category", "author"])
-    .exec((err, value) => {
-      if (err) {
-        return res.status(500).send({ message: err });
-      }
+    .exec();
 
-      console.log(value);
+  if (post) {
+    const result = {
+      title: post.title,
+      slug: post.slug,
+      description: post.description,
+      visit: post.visit,
+      image: post.image,
+      category: {
+        title: post.category.title,
+        slug: post.category.slug,
+      },
+      author: {
+        username: post.author.username,
+        avatar: post.author.avatar,
+      },
+      createdAt: util.formatDate(post.createdAt),
+      updatedAt: util.formatDate(post.updatedAt),
+    };
 
-      const post = {
-        title: value.title,
-        slug: value.slug,
-        description: value.description,
-        visit: value.visit,
-        image: value.image,
-        category: {
-          title: value.category.title,
-          slug: value.category.slug,
-        },
-        author: {
-          username: value.author.username,
-          avatar: value.author.avatar,
-        },
-        createdAt: util.formatDate(value.createdAt),
-        updatedAt: util.formatDate(value.updatedAt),
-      };
+    return res.status(200).send({ post: result });
+  }
 
-      return res.status(200).send({ post });
-    });
+  return res.status(404).send({ message: "Post is not found!" });
 };
 
 // Below is only authorized for author role
