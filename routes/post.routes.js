@@ -1,6 +1,7 @@
 import express from "express";
 import middleware from "../src/middleware/index.js";
 import {
+  getTopAuthors,
   getAllPosts,
   getLatestPost,
   getPost,
@@ -16,6 +17,8 @@ const router = express.Router();
 router.get("/", getAllPosts);
 
 router.get("/latest", getLatestPost);
+
+router.get("/top-author", getTopAuthors);
 
 router.get(
   "/display",

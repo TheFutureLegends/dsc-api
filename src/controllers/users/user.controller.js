@@ -32,16 +32,6 @@ const getProfile = async (req, res) => {
   return res.status(500).send({
     message: "Server error. Please reload browser!",
   });
-  // User.findById(req.userId).exec((err, result) => {
-  //   if (err) {
-  //     return res.status(400).send({ message: err });
-  //   }
-
-  //   return res.status(200).send({
-  //     username: result.username,
-  //     email: result.email,
-  //   });
-  // });
 };
 
 export { allAccess, userBoard, moderatorBoard, adminBoard, getProfile };

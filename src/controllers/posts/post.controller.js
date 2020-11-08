@@ -11,6 +11,60 @@ const Category = db.category;
 
 const User = db.user;
 
+const getTopAuthors = async (req, res) => {
+  const { limit = 5 } = req.query;
+
+  try {
+    const topAuthors = await Post.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "author",
+        },
+      },
+      {
+        $group: {
+          _id: "$author",
+          total_post: { $sum: 1 },
+          total_visit: { $sum: "$visit" },
+        },
+      },
+      {
+        $sort: {
+          total_visit: -1,
+        },
+      },
+      {
+        $limit: limit,
+      },
+    ]);
+
+    const result = [];
+
+    topAuthors.forEach((value, index) => {
+      value._id.forEach((author, key) => {
+        result.push({
+          author: {
+            username: author.username,
+            email: author.email,
+            avatar: author.avatar,
+          },
+          total_posts: value.total_post,
+          total_visits: value.total_visit
+        });
+      });
+    });
+
+    return res.status(200).send({ topAuthors: result });
+  } catch (error) {
+    console.error("Error: ", error.message);
+
+    return res.status(500).send({ message: error.message });
+  }
+};
+
 const getAllPosts = async (req, res) => {
   // destructure page and limit and set default values
   const { page = 1, limit = 10 } = req.query;
@@ -37,7 +91,7 @@ const getAllPosts = async (req, res) => {
   } catch (err) {
     console.error("Error: ", err.message);
 
-    return res.status(500).send({ message: err });
+    return res.status(500).send({ message: err.message });
   }
 };
 
@@ -56,7 +110,7 @@ const getLatestPost = async (req, res) => {
   // Determine order of columns when sort if provided - Ascending or Descending
   // Ascending = 0 || Descending = -1
   // Default: Descending
-  let order = query.asc ? (query.asc == "true" ? 0 : -1) : 0;
+  let order = query.asc ? (query.asc == "true" ? 1 : -1) : 1;
 
   if (column == "author") {
     column = "author.username";
@@ -225,6 +279,7 @@ const deletePost = async (req, res) => {
 };
 
 export {
+  getTopAuthors,
   getAllPosts,
   getLatestPost,
   getPost,
