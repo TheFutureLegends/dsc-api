@@ -2,20 +2,23 @@ import db from "../../models/index.js";
 
 const User = db.user;
 
-const allAccess = (req, res) => {
-  return res.status(200).send("Public Content.");
-};
+const checkRole = async (req, res) => {
+  const { role = "member" } = req.query;
 
-const userBoard = (req, res) => {
-  return res.status(200).send("User Content.");
-};
+  try {
+    const user = await User.findById(req.userId).populate("roles").exec();
 
-const adminBoard = (req, res) => {
-  return res.status(200).send("Admin Content.");
-};
+    user.roles.forEach((value, index) => {
+      if (value.name === role) {
+        return res.status(200).send({ status: true });
+      }
+    });
 
-const moderatorBoard = (req, res) => {
-  return res.status(200).send("Moderator Content.");
+    return res.status(403).send({ status: false });
+  } catch (error) {
+    console.error("ERROR: ", error.message);
+    return res.status(500).send({ message: error.message });
+  }
 };
 
 const getProfile = async (req, res) => {
@@ -34,4 +37,4 @@ const getProfile = async (req, res) => {
   });
 };
 
-export { allAccess, userBoard, moderatorBoard, adminBoard, getProfile };
+export { checkRole, getProfile };

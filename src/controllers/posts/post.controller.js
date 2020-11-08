@@ -170,6 +170,8 @@ const getPost = async (req, res) => {
 // Below is only authorized for author role
 
 const displayOwnPosts = async (req, res) => {
+  const { limit = 10, page = 1 } = req.query;
+
   const posts = await Post.find({
     author: {
       _id: req.userId,
