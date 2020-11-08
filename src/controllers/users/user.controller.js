@@ -2,6 +2,8 @@ import db from "../../models/index.js";
 
 const User = db.user;
 
+const Role = db.role;
+
 const checkRole = async (req, res) => {
   const { role = "member" } = req.query;
 
@@ -22,13 +24,20 @@ const checkRole = async (req, res) => {
 };
 
 const getProfile = async (req, res) => {
-  const user = await User.findById(req.userId).exec();
+  const user = await User.findById(req.userId).populate("roles").exec();
 
   if (user) {
+    var authorities = [];
+
+    for (let i = 0; i < user.roles.length; i++) {
+      authorities.push(user.roles[i].name.toLowerCase());
+    }
+
     return res.status(200).send({
       username: user.username,
       email: user.email,
       avatar: user.avatar,
+      roles: authorities,
     });
   }
 
@@ -37,4 +46,4 @@ const getProfile = async (req, res) => {
   });
 };
 
-export { checkRole, getProfile };
+export { getProfile };

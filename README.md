@@ -29,10 +29,10 @@
 
 ### Users
 
-| Api name               | Description                   | Return data        | Required logged in | Method |
-| ---------------------- | ----------------------------- | ------------------ | ------------------ | ------ |
-| `/api/users/:username` | Get user                      |                    | x                  | GET    |
-| `/api/users/profile`   | Get profile of logged in user | `username` `email` | **Yes**            | GET    |
+| Api name               | Description                   | Return data                | Required logged in | Method |
+| ---------------------- | ----------------------------- | -------------------------- | ------------------ | ------ |
+| `/api/users/:username` | Get user                      |                            | x                  | GET    |
+| `/api/users/profile`   | Get profile of logged in user | `username` `email` `roles` | **Yes**            | GET    |
 
 ### Categories
 
@@ -63,7 +63,7 @@
 | Api name                                                | Description                    | Role needed   | Method |
 | ------------------------------------------------------- | ------------------------------ | ------------- | ------ |
 | `/api/events?limit=10&page=1`                           | Get all events with pagination | x             | GET    |
-| `/api/events/latest?sortBy=createdAt&limit=10&asc=true` | Get all latest event           | x             | GET    |
+| `/api/events/latest?sortBy=createdAt&limit=10&asc=true` | Get all latest event           | x             | GET    | \*\*\*\* |
 | `/api/events/:slug`                                     | Get single post based on slug  | x             | GET    |
 | `/api/events`                                           | Create new post                | **Moderator** | POST   |
 | `/api/events/display`                                   | Display all events that owned  | **Moderator** | GET    |
