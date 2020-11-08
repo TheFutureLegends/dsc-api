@@ -52,7 +52,7 @@ const getTopAuthors = async (req, res) => {
             avatar: author.avatar,
           },
           total_posts: value.total_post,
-          total_visits: value.total_visit
+          total_visits: value.total_visit,
         });
       });
     });
@@ -172,34 +172,48 @@ const getPost = async (req, res) => {
 // Below is only authorized for author role
 
 const displayOwnPosts = async (req, res) => {
-  Post.find({
+  const posts = await Post.find({
     author: {
       _id: req.userId,
     },
-  }).exec((err, post) => {
-    if (err) {
-      return res.status(500).send({ message: err });
-    }
+  })
+    .populate(["author", "category"])
+    .exec();
 
-    return res.status(200).send(post);
-  });
+  const p_array = util.iterateObject(posts);
+
+  return res.status(200).send({ posts: p_array });
 };
 
 const showPost = async (req, res) => {
-  await Post.findOne({
+  const post = await Post.findOne({
     slug: req.params.slug,
     author: {
       _id: req.userId,
     },
   })
     .populate("category")
-    .exec((err, post) => {
-      if (err) {
-        return res.status(500).send({ message: "Cannot find post" });
-      }
+    .exec();
 
-      return res.status(200).send(post);
-    });
+  if (post) {
+    const result = {
+      title: post.title,
+      slug: post.slug,
+      description: post.description,
+      visit: post.visit,
+      image: post.image,
+      category: {
+        title: post.category.title,
+        slug: post.category.slug,
+      },
+      createdAt: util.formatDate(post.createdAt),
+      updatedAt: util.formatDate(post.updatedAt),
+    };
+
+    return res.status(200).send({ post: result });
+  }
+
+  return res.status(404).send({ message: "Post is not found!" });
 };
 
 const createPost = async (req, res) => {
