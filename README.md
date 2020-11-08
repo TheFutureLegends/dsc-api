@@ -60,16 +60,16 @@
 
 ### Event
 
-| Api name                                                | Description                    | Role needed | Method |
-| ------------------------------------------------------- | ------------------------------ | ----------- | ------ |
-| `/api/events?limit=10&page=1`                           | Get all events with pagination | x           | GET    |
-| `/api/events/latest?sortBy=createdAt&limit=10&asc=true` | Get all latest event           | x           | GET    |
-| `/api/events/:slug`                                     | Get single post based on slug  | x           | GET    |
-| `/api/events`                                           | Create new post                | **Author**  | POST   |
-| `/api/events/display`                                   | Display all events that owned  | **Author**  | GET    |
-| `/api/events/show/:slug`                                | Show existing post             | **Author**  | GET    |
-| `/api/events/update/:id`                                | Update existing post           | **Author**  | PUT    |
-| `/api/events/delete/:id`                                | Delete existing post           | **Author**  | DELETE |
+| Api name                                                | Description                    | Role needed   | Method |
+| ------------------------------------------------------- | ------------------------------ | ------------- | ------ |
+| `/api/events?limit=10&page=1`                           | Get all events with pagination | x             | GET    |
+| `/api/events/latest?sortBy=createdAt&limit=10&asc=true` | Get all latest event           | x             | GET    |
+| `/api/events/:slug`                                     | Get single post based on slug  | x             | GET    |
+| `/api/events`                                           | Create new post                | **Moderator** | POST   |
+| `/api/events/display`                                   | Display all events that owned  | **Moderator** | GET    |
+| `/api/events/show/:slug`                                | Show existing post             | **Moderator** | GET    |
+| `/api/events/update/:id`                                | Update existing post           | **Moderator** | PUT    |
+| `/api/events/delete/:id`                                | Delete existing post           | **Moderator** | DELETE |
 
 ## Api Domain:
 
