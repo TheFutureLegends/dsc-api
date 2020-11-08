@@ -25,6 +25,7 @@ const getProfile = async (req, res) => {
     return res.status(200).send({
       username: user.username,
       email: user.email,
+      avatar: user.avatar,
     });
   }
 
