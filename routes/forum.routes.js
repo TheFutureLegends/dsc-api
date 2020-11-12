@@ -6,6 +6,8 @@ import {
   filterQuestionByCourse,
 } from "../src/controllers/forum/forum.controller.js";
 
+import { createAnswer } from "../src/controllers/forum/answer.controller.js";
+
 const router = express.Router();
 
 router.get(
@@ -18,6 +20,13 @@ router.get(
   "/questions/filter",
   [middleware.authJwt.verifyToken, middleware.authJwt.isMember],
   filterQuestionByCourse
+);
+
+// Answer route
+router.post(
+  "/answer/create",
+  [middleware.authJwt.verifyToken, middleware.authJwt.isMember],
+  createAnswer
 );
 
 export default router;

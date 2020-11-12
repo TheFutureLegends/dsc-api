@@ -8,10 +8,10 @@ const Forum_Question = mongoose.model(
       type: mongoose.Schema.Types.ObjectId,
       ref: "University",
     },
-    course: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Course",
-    },
+    // course: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Course",
+    // },
     question: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Forum Question",

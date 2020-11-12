@@ -8,11 +8,11 @@ import util from "../../utils/functions.util.js";
 
 import { getUser } from "../../config/auth.config.js";
 
-const User = db.user;
-
 const Course = db.course;
 
 const Question = db.question;
+
+const Answer = db.answer;
 
 const getAllQuestions = async (req, res) => {
   const { limit = 10, page = 1 } = req.query;
@@ -58,15 +58,11 @@ const filterQuestionByCourse = async (req, res) => {
 };
 
 const createQuestion = async (req, res) => {
-  const { error } = validationRules.postValidation.postSchema.validate(
+  const { error } = validationRules.questionValidation.questionSchema.validate(
     req.body
   );
 
   if (error) return res.status(400).send(error.details[0].message);
 };
 
-export {
-  getAllQuestions,
-  filterQuestionByCourse,
-  createQuestion,
-};
+export { getAllQuestions, filterQuestionByCourse, createQuestion };

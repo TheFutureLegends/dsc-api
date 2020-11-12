@@ -7,8 +7,14 @@ const questionSchema = Joi.object({
   course_code: Joi.string().required(),
 });
 
+const answerSchema = Joi.object({
+  content: Joi.string().required(),
+  question_id: Joi.string().required(),
+});
+
 const questionValidation = {
   questionSchema,
+  answerSchema,
 };
 
 export default questionValidation;
