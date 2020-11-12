@@ -23,6 +23,12 @@ const Forum_Question = mongoose.model(
       enum: [true, false],
       default: false,
     },
+    answer: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Forum Answer",
+      },
+    ],
     createdAt: {
       type: mongoose.Schema.Types.Date,
       default: Date.now(),

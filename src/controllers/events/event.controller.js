@@ -23,7 +23,7 @@ const getAllEvents = async (req, res) => {
 
     const count = await Event.countDocuments();
 
-    const e_array = util.iterateObject(events);
+    const e_array = util.iteratePostAndEventObject(events);
 
     for (let index = 0; index < e_array.length; index++) {
       const element = e_array[index];
@@ -75,7 +75,7 @@ const displayEvent = async (req, res) => {
       return res.status(500).send({ message: err });
     }
 
-    const e_array = util.iterateObject(events);
+    const e_array = util.iteratePostAndEventObject(events);
 
     for (let index = 0; index < e_array.length; index++) {
       const element = e_array[index];

@@ -33,6 +33,7 @@ const getTopAuthors = async (req, res) => {
       },
       {
         $sort: {
+          // Descending visit
           total_visit: -1,
         },
       },
@@ -76,7 +77,7 @@ const getAllPosts = async (req, res) => {
       .populate(["category", "author"])
       .exec();
 
-    const p_array = util.iterateObject(posts);
+    const p_array = util.iteratePostAndEventObject(posts);
 
     // get total documents in the Post collection
     const count = await Post.countDocuments();
@@ -127,7 +128,7 @@ const getLatestPost = async (req, res) => {
         return res.status(500).send({ message: err });
       }
 
-      const result = util.iterateObject(posts);
+      const result = util.iteratePostAndEventObject(posts);
 
       return res.status(200).send({
         posts: result,
@@ -180,7 +181,7 @@ const displayOwnPosts = async (req, res) => {
     .populate(["author", "category"])
     .exec();
 
-  const p_array = util.iterateObject(posts);
+  const p_array = util.iteratePostAndEventObject(posts);
 
   return res.status(200).send({ posts: p_array });
 };

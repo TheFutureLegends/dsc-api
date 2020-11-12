@@ -10,9 +10,33 @@ const formatDate = (input) => {
   return date;
 };
 
+const iterateQuestionObject = (init) => {
+  const result = [];
+
+  init.forEach((value, index) => {
+    // push object to q_array
+    result.push({
+      title: value.title,
+      slug: value.slug,
+      content: value.content,
+      author: {
+        username: value.author.username,
+        avatar: value.author.avatar,
+      },
+      course: {
+        code: value.course.code,
+        name: value.course.name,
+      },
+      createdAt: util.formatDate(value.createdAt),
+    });
+  });
+
+  return result;
+};
+
 // @params: Array of Object
 // @return: Array
-const iterateObject = (init) => {
+const iteratePostAndEventObject = (init) => {
   const result = [];
 
   init.forEach((value, index) => {
@@ -60,7 +84,8 @@ const getObject = (value) => {
 
 const util = {
   formatDate,
-  iterateObject,
+  iterateQuestionObject,
+  iteratePostAndEventObject,
   getObject,
 };
 
