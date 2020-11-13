@@ -237,7 +237,7 @@ const createPost = async (req, res) => {
   post.author = user._id;
 
   const category = await Category.findOne({
-    slug: req.body.category,
+    slug: req.body.category.toLowerCase(),
   }).exec();
 
   post.category = category._id;
