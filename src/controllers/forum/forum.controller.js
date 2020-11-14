@@ -26,7 +26,11 @@ const getAllQuestions = async (req, res) => {
   })
     .limit(limit * 1)
     .skip((page - 1) * limit)
-    .populate(["author", "course"])
+    .populate(["author", "course", "answers"])
+    .populate({
+      path: "answers",
+      populate: { path: "author" },
+    })
     .exec();
 
   const q_array = util.iterateQuestionObject(questions);

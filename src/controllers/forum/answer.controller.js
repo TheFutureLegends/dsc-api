@@ -8,6 +8,8 @@ import util from "../../utils/functions.util.js";
 
 import { getUser } from "../../config/auth.config.js";
 
+const Question = db.question;
+
 const Answer = db.answer;
 
 const createAnswer = async (req, res) => {
@@ -30,6 +32,20 @@ const createAnswer = async (req, res) => {
     if (err) {
       return res.status(500).send({ message: err });
     }
+
+    console.log(answer._id);
+
+    Question.findByIdAndUpdate(
+      req.body.question_id,
+      {
+        $addToSet: { answers: [answer._id] },
+      },
+      (err, result) => {
+        if (err) {
+          return res.status(500).send({ message: err.message });
+        }
+      }
+    );
   });
 
   return res.status(200).send({ message: "You have posted an answer!" });

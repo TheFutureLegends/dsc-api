@@ -20,6 +20,11 @@ const Forum_Question = mongoose.model(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    status: {
+      type: Boolean,
+      enum: [true, false],
+      default: false,
+    },
     createdAt: {
       type: mongoose.Schema.Types.Date,
       default: Date.now(),

@@ -1,4 +1,8 @@
+import express from "express";
 import moment from "moment-timezone";
+import db from "../models/index.js";
+
+const Answer = db.answer;
 
 // @params: String
 // @return: String
@@ -11,11 +15,28 @@ const formatDate = (input) => {
 };
 
 const iterateQuestionObject = (init) => {
+  const answer_array = [];
+
   const result = [];
 
   init.forEach((value, index) => {
-    // push object to q_array
+    const answers = value.answers;
+
+    answers.forEach((answer, index) => {
+      answer_array.push({
+        id: answer._id,
+        content: answer.content,
+        status: answer.status,
+        author: {
+          username: answer.author.username,
+          avatar: answer.author.avatar,
+        },
+        createdAt: util.formatDate(answer.createdAt),
+      });
+    });
+
     result.push({
+      id: value._id,
       title: value.title,
       slug: value.slug,
       content: value.content,
@@ -27,6 +48,8 @@ const iterateQuestionObject = (init) => {
         code: value.course.code,
         name: value.course.name,
       },
+      answers: answer_array,
+      status: value.status,
       createdAt: util.formatDate(value.createdAt),
     });
   });
