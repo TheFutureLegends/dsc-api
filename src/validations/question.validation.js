@@ -4,7 +4,7 @@ import Joi from "joi";
 const questionSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
-  course_code: Joi.string().required(),
+  code: Joi.string().required(),
 });
 
 const answerSchema = Joi.object({

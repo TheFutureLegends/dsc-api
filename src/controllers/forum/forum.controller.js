@@ -1,4 +1,5 @@
 import slugify from "slugify";
+import ISODate from "isodate";
 import moment from "moment-timezone";
 
 import db from "../../models/index.js";
@@ -15,6 +16,8 @@ const Question = db.question;
 const Answer = db.answer;
 
 const getAllQuestions = async (req, res) => {
+  const q_array = [];
+
   const { limit = 10, page = 1 } = req.query;
 
   const user = await getUser(req.userId);
@@ -49,6 +52,7 @@ const getAllQuestions = async (req, res) => {
           },
         } /* using the 'author' value from lookup */,
         status: { $first: "$status" } /* using the 'status' value */,
+        createdAt: { $first: "$createdAt" } /* using the 'createdAt' value */,
         totalAnswers: { $sum: 1 } /* create a sum value */,
       },
     },
@@ -60,7 +64,22 @@ const getAllQuestions = async (req, res) => {
     },
   ]);
 
-  return res.status(200).send({ questions: questions });
+  questions.forEach((question, index) => {
+    q_array.push({
+      _id: question._id,
+      title: question.title,
+      slug: question.slug,
+      author: {
+        username: question.author.username[0],
+        avatar: question.author.avatar[0],
+      },
+      status: question.status,
+      createdAt: util.formatDate(question.createdAt),
+      totalAnswers: question.totalAnswers,
+    });
+  });
+
+  return res.status(200).send({ questions: q_array });
 };
 
 const filterQuestionByCourse = async (req, res) => {
@@ -119,6 +138,33 @@ const createQuestion = async (req, res) => {
   );
 
   if (error) return res.status(400).send(error.details[0].message);
+
+  const user = await getUser(req.userId);
+
+  const course = await Course.findOne({
+    code: req.body.code.toUpperCase(),
+  }).exec();
+
+  if (!course) {
+    return res.status(404).send({ message: "Course not found!" });
+  }
+
+  const question = new Question({
+    title: req.body.title,
+    slug: slugify(req.body.title.toLowerCase()),
+    content: req.body.content,
+    author: req.userId,
+    university: user.university,
+    course: course._id,
+  });
+
+  question.save((err, question) => {
+    if (err) {
+      return res.status(500).send({ message: err.message });
+    }
+  });
+
+  return res.status(201).send({ message: "New question has been created!" });
 };
 
 export {
