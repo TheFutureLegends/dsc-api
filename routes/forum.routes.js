@@ -4,6 +4,7 @@ import middleware from "../src/middleware/index.js";
 import {
   getAllQuestions,
   filterQuestionByCourse,
+  findQuestionById,
 } from "../src/controllers/forum/forum.controller.js";
 
 import { createAnswer } from "../src/controllers/forum/answer.controller.js";
@@ -20,6 +21,12 @@ router.get(
   "/questions/filter",
   [middleware.authJwt.verifyToken, middleware.authJwt.isMember],
   filterQuestionByCourse
+);
+
+router.get(
+  "/question/:id",
+  [middleware.authJwt.verifyToken, middleware.authJwt.isMember],
+  findQuestionById
 );
 
 // Answer route

@@ -43,13 +43,24 @@ db.answer = Forum_Answer;
 
 db.ROLES = ["super-admin", "admin", "moderator", "author", "member", "user"];
 
-// db.UNIVERSITIES = ["RMIT University"];
+db.UNIVERSITIES = [
+  ["RMIT University", "rmit.edu.vn"],
+  ["Ton Duc Thang University", "tdt.edu.vn"],
+  ["Bach Khoa University", "bk.edu.vn"],
+];
 
-db.UNIVERSITIES = [["RMIT University", "rmit.edu.vn"]];
+db.CLUBS = [
+  "Developer Student",
+  "Finance and Technology",
+  "Mass Multimedia",
+  "Kendo",
+  "Taekwondo",
+  "Karatedo",
+  "Dance",
+  "Basketball",
+];
 
-db.CLUBS = ["RMIT Developer Student Club", "RMIT Finance and Technology"];
-
-var courses = [
+db.COURSES = [
   {
     university: "RMIT University",
     courses: [
@@ -68,7 +79,5 @@ var courses = [
     ],
   },
 ];
-
-db.COURSES = courses;
 
 export default db;

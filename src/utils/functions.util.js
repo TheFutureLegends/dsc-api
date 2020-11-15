@@ -105,11 +105,52 @@ const getObject = (value) => {
   };
 };
 
+const getQuestionObject = (value) => {
+  const answer_array = [];
+
+  const answers = value.answers;
+
+  if (answers !== undefined || answers.length > 0) {
+    // array is not empty or does exist
+    answers.forEach((answer, index) => {
+      answer_array.push({
+        id: answer._id,
+        content: answer.content,
+        status: answer.status,
+        author: {
+          username: answer.author.username,
+          avatar: answer.author.avatar,
+        },
+        createdAt: util.formatDate(answer.createdAt),
+      });
+    });
+  }
+
+  return {
+    id: value._id,
+    title: value.title,
+    slug: value.slug,
+    content: value.content,
+    author: {
+      username: value.author.username,
+      avatar: value.author.avatar,
+    },
+    course: {
+      code: value.course.code,
+      name: value.course.name,
+    },
+    answers: answer_array,
+    status: value.status,
+    createdAt: util.formatDate(value.createdAt),
+  };
+};
+
 const util = {
   formatDate,
   iterateQuestionObject,
   iteratePostAndEventObject,
   getObject,
+  getQuestionObject,
 };
 
 export default util;
