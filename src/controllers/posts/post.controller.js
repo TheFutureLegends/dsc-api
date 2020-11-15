@@ -12,6 +12,8 @@ const Category = db.category;
 const User = db.user;
 
 const getTopAuthors = async (req, res) => {
+  // return res.send({ result: parseInt(req.query.limit) });
+
   const { limit = 5 } = req.query;
 
   try {
@@ -38,7 +40,7 @@ const getTopAuthors = async (req, res) => {
         },
       },
       {
-        $limit: limit,
+        $limit: parseInt(limit),
       },
     ]);
 
