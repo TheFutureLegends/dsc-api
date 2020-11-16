@@ -121,21 +121,19 @@ const getLatestPost = async (req, res) => {
     column = "category.title";
   }
 
-  Post.find({})
-    .sort([[column, order]])
-    .limit(limit)
-    .populate(["category", "author"])
-    .exec((err, posts) => {
-      if (err) {
-        return res.status(500).send({ message: err });
-      }
+  try {
+    const posts = await Post.find({})
+      .sort([[column, order]])
+      .limit(limit)
+      .populate(["category", "author"])
+      .exec();
 
-      const result = util.iteratePostAndEventObject(posts);
+    const result = util.iteratePostAndEventObject(posts);
 
-      return res.status(200).send({
-        posts: result,
-      });
-    });
+    return res.status(200).send({ posts: result });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
 };
 
 const getPost = async (req, res) => {
