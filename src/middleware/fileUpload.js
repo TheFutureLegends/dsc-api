@@ -1,11 +1,15 @@
 import multer from "multer";
 import slugify from "slugify";
 import moment from "moment-timezone";
+import fs from "fs";
 
 // Define storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./public/upload/");
+    const path = "./public/upload/";
+    fs.mkdirSync(path, { recursive: true });
+    return cb(null, path);
+    // cb(null, "./public/upload/");
   },
   filename: function (req, file, cb) {
     const nDate = moment().tz("Asia/Ho_Chi_Minh").format("MM-DD-YYYY-HH-mm-ss");
