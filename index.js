@@ -14,10 +14,11 @@ import userRouter from "./routes/user.routes.js";
 import categoryRouter from "./routes/category.routes.js";
 import postRouter from "./routes/post.routes.js";
 import eventRouter from "./routes/event.routes.js";
-import forumRouter from "./routes/forum.routes.js";
+// import forumRouter from "./routes/forum.routes.js";
+import commentRouter from "./routes/comment.routes.js";
 
 // Development purpose only
-// import developmentRouter from "./routes/development.routes.js";
+import developmentRouter from "./routes/development.routes.js";
 
 if (process.env.NODE_ENV != "production") {
   dotenv.config();
@@ -57,10 +58,11 @@ app.use("/api/users", userRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/events", eventRouter);
-app.use("/api/forum", forumRouter);
+// app.use("/api/forum", forumRouter);
+app.use("/api/comments", commentRouter);
 
 // Development only
-// app.use("/development", developmentRouter);
+app.use("/development", developmentRouter);
 
 // Define MongoDB URI
 const DB_URI =

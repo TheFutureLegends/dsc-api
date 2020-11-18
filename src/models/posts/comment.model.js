@@ -4,17 +4,15 @@ const Comment = mongoose.model(
   "Comment",
   new mongoose.Schema({
     content: String,
+    post_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    },
     parent: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
       default: null,
     },
-    // reply: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Comment",
-    //   },
-    // ],
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
