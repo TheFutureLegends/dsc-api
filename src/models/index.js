@@ -5,8 +5,11 @@ import Club from "./club.model.js";
 import User from "./user.model.js";
 import Role from "./role.model.js";
 import Category from "./category.model.js";
-import Post from "./post.model.js";
 import Event from "./event.model.js";
+
+// Initialize Post Model
+import Post from "./posts/post.model.js";
+import Comment from "./posts/comment.model.js";
 
 // Initialize Forum Model
 import Forum_Question from "./forum/question.forum.model.js";
@@ -27,11 +30,14 @@ db.user = User;
 
 db.category = Category;
 
-db.post = Post;
-
 db.event = Event;
 
 db.role = Role;
+
+// Initialize Post Model
+db.post = Post;
+
+db.comment = Comment;
 
 // Initialize Forum Model
 
