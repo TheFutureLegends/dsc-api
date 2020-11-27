@@ -8,6 +8,7 @@ import db from "./src/models/index.js";
 
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import categoryRouter from "./routes/category.routes.js";
 import postRouter from "./routes/post.routes.js";
 import commentRouter from "./routes/comment.routes.js";
 
@@ -40,18 +41,21 @@ app.use((req, res, next) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/categories", categoryRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/comments", commentRouter);
 
 // app.use("/development", developmentRouter);
 
 // Define MongoDB URI
-// const DB_URI =
-//   process.env.NODE_DB == "development"
-//     ? `${process.env.LOCAL_DB_URI}`
-//     : `${process.env.PRODUCTION_DB_URI}`;
+const DB_URI =
+  process.env.NODE_DB === "development"
+    ? `${process.env.LOCAL_DB_URI}`
+    : `${process.env.PRODUCTION_DB_URI}`;
 
-const DB_URI = `${process.env.PRODUCTION_DB_URI}`;
+// const DB_URI = `${process.env.PRODUCTION_DB_URI}`;
+
+// const DB_URI = `${process.env.LOCAL_DB_URI}`;
 
 db.mongoose
   .connect(`${DB_URI}`, {
