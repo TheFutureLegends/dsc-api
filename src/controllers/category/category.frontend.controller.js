@@ -8,9 +8,9 @@ const categoryClass = new categoryClasses();
 const getAllCategories = async (req, res) => {
   const { limit = 10, page = 1 } = req.query;
 
-  const categories = await Category.find({})
-    .limit(limit)
-    .skip((page - 1) * limit)
+  const categories = await Category.find()
+    .limit(parseInt(limit))
+    .skip((parseInt(page) - 1) * parseInt(limit))
     .exec();
 
   categoryClass.setCategoryArray = categories;
