@@ -1,7 +1,7 @@
 import express from "express";
 
 import middleware from "../src/middleware/index.js";
-import { signin, signup } from "../src/controllers/auth.controller.js";
+import { signin, signup } from "../src/controllers/auth/auth.controller.js";
 
 const router = express.Router();
 
