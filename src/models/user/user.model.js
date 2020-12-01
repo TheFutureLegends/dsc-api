@@ -19,16 +19,16 @@ const User = mongoose.model(
         ref: "Role",
       },
     ],
-    university: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "University",
-    },
-    club: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Club",
-      },
-    ],
+    // university: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "University",
+    // },
+    // club: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Club",
+    //   },
+    // ],
     createdAt: {
       type: mongoose.Schema.Types.Date,
       default: Date.now(),

@@ -7,8 +7,26 @@ class postClasses {
     return this._post;
   }
 
+  set setPostArray(postArray) {
+    this._post_array = postArray;
+  }
+
   set setPost(post) {
     this._post = post;
+  }
+
+  getPostArray() {
+    const result = [];
+
+    if (!utils.condition.isEmptyArray(this._post_array)) {
+      this._post_array.forEach((value, index) => {
+        this.setPost = value;
+
+        result.push(this.getPost());
+      });
+    }
+
+    return result;
   }
 
   getPost() {

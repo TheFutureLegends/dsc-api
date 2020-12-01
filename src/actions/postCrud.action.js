@@ -11,11 +11,12 @@ const createPost = (body, file, userId, categoryId) => {
     title: body.title,
     slug: slugify(body.title.toLowerCase()),
     description: body.description,
+    image: body.imageURL,
     author: userId,
     category: categoryId,
   });
 
-  post.image = process.env.APP_URL + "/static/upload/" + file.filename;
+  // post.image = process.env.APP_URL + "/static/upload/" + file.filename;
 
   post.save((err, post) => {
     if (err) {

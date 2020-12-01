@@ -56,20 +56,22 @@ const getAllPosts = async (req, res) => {
         .exec();
     }
 
-    const result = [];
+    postClass.setPostArray = posts;
 
-    posts.forEach((value, index) => {
-      postClass.setPost = value;
+    // const result = [];
 
-      result.push(postClass.getPost());
-    });
+    // posts.forEach((value, index) => {
+    //   postClass.setPost = value;
+
+    //   result.push(postClass.getPost());
+    // });
 
     // get total documents in the Post collection
     const count = await Post.countDocuments();
 
     // return response with posts, total pages, and current page
     return res.json({
-      posts: result,
+      posts: postClass.getPostArray(),
       totalPages: Math.ceil(count / limit),
       currentPage: page,
     });

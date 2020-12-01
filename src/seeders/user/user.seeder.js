@@ -79,28 +79,38 @@ const userSeeder = () => {
 
             user.roles = roles.map((role) => role._id);
 
-            University.findOne({
-              name: db.UNIVERSITIES[0],
-            }).exec((error, university) => {
-              user.university = university._id;
+            user.save((err) => {
+              if (err) {
+                console.log("error: ", err);
+              }
 
-              Club.findOne({
-                name: db.CLUBS[0],
-                university: university._id,
-              }).exec((error, club) => {
-                user.club = club._id;
-
-                user.save((err) => {
-                  if (err) {
-                    console.log("error: ", err);
-                  }
-
-                  console.log(
-                    `\nUser with username: ${user.username} is added to collections`
-                  );
-                });
-              });
+              console.log(
+                `\nUser with username: ${user.username} is added to collections`
+              );
             });
+
+            // University.findOne({
+            //   name: db.UNIVERSITIES[0],
+            // }).exec((error, university) => {
+            //   user.university = university._id;
+
+            //   Club.findOne({
+            //     name: db.CLUBS[0],
+            //     university: university._id,
+            //   }).exec((error, club) => {
+            //     user.club = club._id;
+
+            //     user.save((err) => {
+            //       if (err) {
+            //         console.log("error: ", err);
+            //       }
+
+            //       console.log(
+            //         `\nUser with username: ${user.username} is added to collections`
+            //       );
+            //     });
+            //   });
+            // });
           }
         );
       }
