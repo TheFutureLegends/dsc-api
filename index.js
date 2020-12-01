@@ -12,7 +12,7 @@ import categoryRouter from "./routes/category.routes.js";
 import postRouter from "./routes/post.routes.js";
 import commentRouter from "./routes/comment.routes.js";
 
-import developmentRouter from "./routes/development.routes.js";
+// import developmentRouter from "./routes/development.routes.js";
 
 if (process.env.NODE_ENV != "production") {
   dotenv.config();
@@ -45,7 +45,7 @@ app.use("/api/categories", categoryRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/comments", commentRouter);
 
-app.use("/development", developmentRouter);
+// app.use("/development", developmentRouter);
 
 // Define MongoDB URI
 // const DB_URI =

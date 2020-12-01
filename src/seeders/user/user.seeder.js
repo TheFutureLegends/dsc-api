@@ -33,28 +33,38 @@ const userSeeder = () => {
 
         admin.roles = roles.map((role) => role._id);
 
-        University.findOne({
-          name: db.UNIVERSITIES[0],
-        }).exec((error, university) => {
-          admin.university = university._id;
+        admin.save((err) => {
+          if (err) {
+            console.log("error: ", err);
+          }
 
-          Club.findOne({
-            name: db.CLUBS[0],
-            university: university._id,
-          }).exec((error, club) => {
-            admin.club = club._id;
-
-            admin.save((err) => {
-              if (err) {
-                console.log("error: ", err);
-              }
-
-              console.log(
-                `\nAdmin with username: ${admin.username} is added to collections`
-              );
-            });
-          });
+          console.log(
+            `\nAdmin with username: ${admin.username} is added to collections`
+          );
         });
+
+        // University.findOne({
+        //   name: db.UNIVERSITIES[0],
+        // }).exec((error, university) => {
+        //   admin.university = university._id;
+
+        //   Club.findOne({
+        //     name: db.CLUBS[0],
+        //     university: university._id,
+        //   }).exec((error, club) => {
+        //     admin.club = club._id;
+
+        //     admin.save((err) => {
+        //       if (err) {
+        //         console.log("error: ", err);
+        //       }
+
+        //       console.log(
+        //         `\nAdmin with username: ${admin.username} is added to collections`
+        //       );
+        //     });
+        //   });
+        // });
       });
 
       // Seed normal user
