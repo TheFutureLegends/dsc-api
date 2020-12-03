@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 import User from "./user/user.model.js";
 import Role from "./role/role.model.js";
 
-import University from "./university/university.model.js";
-import Club from "./club/club.model.js";
+// import University from "./university/university.model.js";
+// import Club from "./club/club.model.js";
 
 import Post from "./post/post.model.js";
 import Comment from "./comment/comment.model.js";
@@ -21,9 +21,9 @@ db.user = User;
 
 db.role = Role;
 
-db.university = University;
+// db.university = University;
 
-db.club = Club;
+// db.club = Club;
 
 db.post = Post;
 
