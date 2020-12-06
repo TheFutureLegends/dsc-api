@@ -8,6 +8,7 @@ import postBackend from "../src/controllers/post/post.backend.controller.js";
 
 const router = express.Router();
 
+// api/posts?latest=true&asc=false
 router.get("/", postFrontend.getAllPosts);
 
 router.get("/top-author", postFrontend.getTopAuthors);

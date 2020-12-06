@@ -46,22 +46,21 @@
 
 ### Post
 
-| Api name                | Query                                                                             | Params | Description                       | Role needed | Method |
-| ----------------------- | --------------------------------------------------------------------------------- | ------ | --------------------------------- | ----------- | ------ |
-| `/api/posts`            | `limit` ( defaul = 10 ), `page` ( defaul = 1 )                                    | x      | Get all posts with pagination     | x           | GET    |
-| `/api/posts/latest`     | `sortBy` ( defaul = createdAt ), `limit` ( defaul = 10 ), `asc` ( defaul = true ) | x      | Get all latest post               | x           | GET    |
-| `/api/posts/top-author` | `limit` ( defaul = 5 )                                                            | x      | Get top authors                   | x           | GET    |
-| `/api/posts/:slug`      | x                                                                                 | `slug` | Get single post based on slug     | x           | GET    |
-| `/api/posts`            | x                                                                                 | x      | Create new post                   | **Author**  | POST   |
-| `/api/posts/display`    | x                                                                                 | x      | Display all posts that owned      | **Author**  | GET    |
-| `/api/posts/show/:slug` | x                                                                                 | `slug` | Show logged in user existing post | **Author**  | GET    |
-| `/api/posts/update/:id` | x                                                                                 | `id`   | Update existing post              | **Author**  | PUT    |
-| `/api/posts/delete/:id` | x                                                                                 | `id`   | Delete existing post              | **Author**  | DELETE |
+| Api name                | Query                                                                                                                           | Params | Description                       | Role needed | Method |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------------------- | ----------- | ------ |
+| `/api/posts`            | `latest` (default = false) `limit` ( defaul = 10 ), `page` ( defaul = 1 ) `column` (default = createdAt) `asc` (default = true) | x      | Get all posts with pagination     | x           | GET    |
+| `/api/posts/top-author` | `limit` ( defaul = 5 )                                                                                                          | x      | Get top authors                   | x           | GET    |
+| `/api/posts/:slug`      | x                                                                                                                               | `slug` | Get single post based on slug     | x           | GET    |
+| `/api/posts`            | x                                                                                                                               | x      | Create new post                   | **Author**  | POST   |
+| `/api/posts/display`    | x                                                                                                                               | x      | Display all posts that owned      | **Author**  | GET    |
+| `/api/posts/show/:slug` | x                                                                                                                               | `slug` | Show logged in user existing post | **Author**  | GET    |
+| `/api/posts/update/:id` | x                                                                                                                               | `id`   | Update existing post              | **Author**  | PUT    |
+| `/api/posts/delete/:id` | x                                                                                                                               | `id`   | Delete existing post              | **Author**  | DELETE |
 
 ### Event
 
 | Api name                                                | Description                    | Role needed   | Method |
-| ------------------------------------------------------- | ------------------------------ | ------------- | ------ |
+| ------------------------------------------------------- | ------------------------------ | ------------- | ------ | -------- |
 | `/api/events?limit=10&page=1`                           | Get all events with pagination | x             | GET    |
 | `/api/events/latest?sortBy=createdAt&limit=10&asc=true` | Get all latest event           | x             | GET    | \*\*\*\* |
 | `/api/events/:slug`                                     | Get single post based on slug  | x             | GET    |
