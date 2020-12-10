@@ -10,6 +10,10 @@ const router = express.Router();
 
 router.get("/", categoryFrontend.getAllCategories);
 
-router.post("/create", categoryBackend.createCatetory);
+router.post(
+  "/create",
+  [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
+  categoryBackend.createCatetory
+);
 
 export default router;
