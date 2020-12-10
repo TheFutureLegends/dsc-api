@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 // Import model & seeder
+import dbConfig from "./src/config/dbConfig.js";
 import db from "./src/models/index.js";
 
 import authRouter from "./routes/auth.routes.js";
@@ -12,7 +13,7 @@ import categoryRouter from "./routes/category.routes.js";
 import postRouter from "./routes/post.routes.js";
 import commentRouter from "./routes/comment.routes.js";
 
-// import developmentRouter from "./routes/development.routes.js";
+import developmentRouter from "./routes/development.routes.js";
 
 if (process.env.NODE_ENV != "production") {
   dotenv.config();
@@ -45,7 +46,7 @@ app.use("/api/categories", categoryRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/comments", commentRouter);
 
-// app.use("/development", developmentRouter);
+app.use("/development", developmentRouter);
 
 // Define MongoDB URI
 // const DB_URI =
@@ -58,7 +59,7 @@ const DB_URI = `${process.env.PRODUCTION_DB_URI}`;
 // const DB_URI = `${process.env.LOCAL_DB_URI}`;
 
 db.mongoose
-  .connect(`${DB_URI}`, {
+  .connect(dbConfig(), {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -84,3 +85,5 @@ app.listen(PORT, () => {
  * Homepage (display post)
  * Chatbot (can interact with it)
  */
+
+export default app;

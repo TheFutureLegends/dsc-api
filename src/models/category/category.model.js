@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 
 const Category = mongoose.model(
   "Category",
@@ -24,5 +25,22 @@ const Category = mongoose.model(
     },
   })
 );
+
+// Sets the createdAt parameter equal to the current time
+Category.schema.pre("save", (next) => {
+  now = new Date();
+
+  this.slug = slugify(this.title.toLowerCase());
+
+  if (!this.createdAt) {
+    this.createdAt = now;
+  }
+
+  if (!this.updatedAt) {
+    this.updatedAt = now;
+  }
+
+  next();
+});
 
 export default Category;
