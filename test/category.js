@@ -14,6 +14,8 @@ let should = chai.should();
 
 let expect = chai.expect;
 
+let token;
+
 chai.use(chaiHttp);
 
 describe("Post", () => {
@@ -22,6 +24,23 @@ describe("Post", () => {
     Category.remove({}, (err) => {
       done();
     });
+
+    let user = {
+      email: "admin@admin.com",
+      password: "123456789",
+    };
+
+    chai
+      .request(app)
+      .post("/api/auth/signin")
+      .send(user)
+      .end((err, res) => {
+        res.should.have.status(200);
+
+        res.body.should.be.a("object");
+        
+        token = res.body.accessToken.token;
+      });
   });
 
   /*
@@ -58,6 +77,7 @@ describe("Post", () => {
       chai
         .request(app)
         .post("/api/categories/create")
+        .set("x-access-token", token)
         .send(category)
         .end((err, res) => {
           res.should.have.status(200);
