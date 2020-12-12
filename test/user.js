@@ -3,6 +3,8 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import db from "../src/models/index.js";
 import app from "../index.js";
+import faker from "faker";
+
 
 let should = chai.should();
 let expect = chai.expect;
@@ -28,8 +30,8 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
             res.should.have.status(200);
             res.body.should.be.a("object");
             token = res.body.accessToken.token;
+            done()
       });
-        done()
     });
 
     /*
@@ -39,16 +41,13 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
     describe("As a normal user, I want to see my profile," +
         "so that I can make sure I type in the right information.",() => {
 
-        it("it should show (GET) a user with the given id", (done) => {
-            const mockUserId = '100abcxyz'
+        it("it should show (GET) a user profile", (done) => {
             chai
                 .request(app)
-                .get("/api/categories/" + mockUserId)
+                .get("/api/users/profile")
+                .set("x-access-token", token)
                 .end((err, res) => {
                     res.should.have.status(200);
-
-                    expect(res.body.users).to.be.an.instanceof(Array);
-
                     res.body.should.be.a("object");
 
                     done();
@@ -63,8 +62,8 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
         "so that I can use the study-guide.", () => {
         it("it should create (POST) a new user", (done) => {
             let mockUser = {
-                username: "Tester6",
-                email: "tester6@tester.com",
+                username: faker.name.firstName(),
+                email: faker.internet.email(),
                 password: "testpassword"
             };
             chai

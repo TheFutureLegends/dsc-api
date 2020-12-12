@@ -48,13 +48,8 @@ describe("Let's run the unit test for CRUD Post feature", () => {
                 .get("/api/posts")
                 .end((err, res) => {
                   res.should.have.status(200);
-
                   expect(res.body.posts).to.be.an.instanceof(Array);
-
                   res.body.should.be.a("object");
-
-                  // res.body.length.should.be.eql(0);
-
                   done();
                 });
             });
@@ -82,8 +77,9 @@ describe("Let's run the unit test for CRUD Post feature", () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a("object");
-                    done();
                 });
+            done();
+
         });
     })
 

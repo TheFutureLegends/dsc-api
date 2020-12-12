@@ -20,19 +20,16 @@ describe("Let's run unit test for CRUD Categories feature !!", () => {
           email: "admin@admin.com",
           password: "123456789",
         };
-
         chai
           .request(app)
           .post("/api/auth/signin")
           .send(user)
           .end((err, res) => {
             res.should.have.status(200);
-
             res.body.should.be.a("object");
-
             token = res.body.accessToken.token;
+            done()
       });
-        done()
     });
 
     /*
