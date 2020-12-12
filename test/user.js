@@ -63,8 +63,8 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
         "so that I can use the study-guide.", () => {
         it("it should create (POST) a new user", (done) => {
             let mockUser = {
-                username: "Tester5",
-                email: "tester5@tester.com",
+                username: "Tester6",
+                email: "tester6@tester.com",
                 password: "testpassword"
             };
             chai
@@ -72,10 +72,10 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
                 .post("/api/auth/signup")
                 .send(mockUser)
                 .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a("object");
-                    done();
-                });
+                    res.should.have.status(201)
+                    res.body.should.be.a("object")
+                    done()
+                })
         })
     })
 });
