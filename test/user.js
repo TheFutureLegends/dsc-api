@@ -20,16 +20,13 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
           email: "admin@admin.com",
           password: "123456789",
         };
-
         chai
           .request(app)
           .post("/api/auth/signin")
           .send(user)
           .end((err, res) => {
             res.should.have.status(200);
-
             res.body.should.be.a("object");
-
             token = res.body.accessToken.token;
       });
         done()
@@ -64,16 +61,15 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
     describe("As an unregistered user," +
         " I want to register, " +
         "so that I can use the study-guide.", () => {
-        it("it should create a new user", (done) => {
+        it("it should create (POST) a new user", (done) => {
             let mockUser = {
-                name: "Tester",
-                email: "tester@tester.com",
+                username: "Tester5",
+                email: "tester5@tester.com",
                 password: "testpassword"
             };
             chai
                 .request(app)
-                .post("/api/users/create")
-                .set('x-access-token', token)
+                .post("/api/auth/signup")
                 .send(mockUser)
                 .end((err, res) => {
                     res.should.have.status(200);
