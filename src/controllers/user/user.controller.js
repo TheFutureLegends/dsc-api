@@ -118,6 +118,10 @@ const createUser = async (req, res) => {
     university._id,
     club_array
   );
+
+  return res
+    .status(userCondition.status)
+    .send({ message: userCondition.message });
 };
 
 const editUser = async (req, res) => {};

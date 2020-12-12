@@ -27,8 +27,7 @@ export const signup = async (req, res) => {
 
   user.save((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
-      return;
+      return res.status(500).send({ message: err });
     }
 
     if (req.body.roles) {
@@ -38,15 +37,13 @@ export const signup = async (req, res) => {
         },
         (err, roles) => {
           if (err) {
-            res.status(500).send({ message: err });
-            return;
+            return res.status(500).send({ message: err });
           }
 
           user.roles = roles.map((role) => role._id);
           user.save((err) => {
             if (err) {
-              res.status(500).send({ message: err });
-              return;
+              return res.status(500).send({ message: err });
             }
 
             return res
@@ -58,15 +55,13 @@ export const signup = async (req, res) => {
     } else {
       Role.findOne({ name: "user" }, (err, role) => {
         if (err) {
-          res.status(500).send({ message: err });
-          return;
+          return res.status(500).send({ message: err });
         }
 
         user.roles = [role._id];
         user.save((err) => {
           if (err) {
-            res.status(500).send({ message: err });
-            return;
+            return res.status(500).send({ message: err });
           }
 
           return res
@@ -95,8 +90,7 @@ export const signin = (req, res) => {
     .populate("roles", "-__v")
     .exec((err, user) => {
       if (err) {
-        res.status(500).send({ message: err });
-        return;
+        return res.status(500).send({ message: err });
       }
 
       if (!user) {
@@ -111,8 +105,7 @@ export const signin = (req, res) => {
       );
 
       if (!passwordIsValid) {
-        return res.status(401).send({
-          accessToken: null,
+        return res.status(404).send({
           message: "Email or password does not match!",
         });
       }
@@ -131,7 +124,7 @@ export const signin = (req, res) => {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
 
-      res.status(200).send({
+      return res.status(200).send({
         id: user._id,
         username: user.username,
         email: user.email,
