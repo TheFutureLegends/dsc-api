@@ -10,6 +10,8 @@ const router = express.Router();
 
 router.get("/", categoryFrontend.getAllCategories);
 
+router.get("/:category_name", categoryFrontend.getCategoryByName);
+
 router.post(
   "/create",
   [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
