@@ -6,9 +6,9 @@ const User = db.user;
 
 const Post = db.post;
 
-const University = db.university;
+// const University = db.university;
 
-const Club = db.club;
+// const Club = db.club;
 
 const userClass = new userClasses();
 
@@ -97,27 +97,7 @@ const readUser = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const club_array = [];
-
-  const { clubs } = req.body;
-
-  clubs.forEach(async (value, index) => {
-    const club = await Club.findOne({
-      slug: value.toLowerCase(),
-    }).exec();
-
-    club_array.push(club._id);
-  });
-
-  const university = await University.findOne({
-    slug: req.body.university.toLowerCase(),
-  }).exec();
-
-  const userCondition = userCrud.createUser(
-    req.body,
-    university._id,
-    club_array
-  );
+  const userCondition = userCrud.createUser(req.body);
 
   return res
     .status(userCondition.status)

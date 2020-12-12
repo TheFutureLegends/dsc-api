@@ -18,13 +18,13 @@ const readUser = (users) => {
   return result;
 };
 
-const createUser = (body, universityId, clubArrayId) => {
+const createUser = (body) => {
   const user = new User({
     username: body.username,
     email: body.email,
     password: bcrypt.hashSync(req.body.password, 8),
-    university: universityId,
-    club: clubArrayId,
+    // university: universityId,
+    // club: clubArrayId,
   });
 
   user.save((err, user) => {
