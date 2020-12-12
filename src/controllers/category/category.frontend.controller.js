@@ -18,8 +18,13 @@ const getAllCategories = async (req, res) => {
   return res.status(200).send({ categories: categoryClass.getCategoryArray() });
 };
 
+const getCategoryByName = async (req, res) => {
+  
+}
+
 const categoryFrontend = {
   getAllCategories,
+  getCategoryByName
 };
 
 export default categoryFrontend;
