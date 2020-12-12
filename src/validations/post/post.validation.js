@@ -4,7 +4,7 @@ import Joi from "joi";
 const postSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().required(),
-  imageURL: Joi.string(),
+  imageFile: Joi.string(),
   category: Joi.string().required(),
 });
 

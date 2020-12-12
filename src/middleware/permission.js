@@ -101,8 +101,7 @@ const isModerator = (req, res, next) => {
 const isAuthor = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
-      return;
+      return res.status(500).send({ message: err });
     }
 
     Role.find(

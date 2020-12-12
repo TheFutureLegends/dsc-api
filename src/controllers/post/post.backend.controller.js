@@ -40,7 +40,7 @@ const createPost = async (req, res) => {
 
   const postCondition = postCrud.createPost(
     req.body,
-    req.file,
+    // req.file,
     req.userId,
     category._id
   );
