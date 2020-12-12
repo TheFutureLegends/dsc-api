@@ -51,7 +51,7 @@ describe("Let's run unit test for CRUD Categories feature !!", () => {
         });
     });
     describe("/GET categories by name", () => {
-        it("it should show (GET) posts with the given name", (done) => {
+        it("it should show (GET) categories with the given name", (done) => {
             const mockCategory = 'Mock'
             chai
                 .request(app)
