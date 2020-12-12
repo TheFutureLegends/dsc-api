@@ -6,12 +6,19 @@ const Post = db.post;
 
 const postClass = new postClasses();
 
-const createPost = (body, file, userId, categoryId) => {
+/**
+ *
+ * @param {*} body
+ * @param {*} file
+ * @param {*} userId
+ * @param {*} categoryId
+ */
+const createPost = (body, userId, categoryId) => {
   const post = new Post({
     title: body.title,
     slug: slugify(body.title.toLowerCase()),
     description: body.description,
-    image: body.imageURL,
+    image: body.imageFile,
     author: userId,
     category: categoryId,
   });

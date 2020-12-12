@@ -22,7 +22,8 @@ const userSeeder = () => {
         username: "admin",
         email: "admin@admin.com",
         password: bcrypt.hashSync("123456789", 8),
-        avatar: faker.image.avatar(),
+        avatar:
+          "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png",
       });
 
       Role.find().exec((err, roles) => {
@@ -73,7 +74,8 @@ const userSeeder = () => {
           username: faker.internet.userName(),
           email: faker.internet.email(),
           password: bcrypt.hashSync("123456789", 8),
-          avatar: faker.image.avatar(),
+          avatar:
+            "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_avatar_child_kid-512.png",
         });
 
         Role.find(

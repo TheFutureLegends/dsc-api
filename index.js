@@ -48,16 +48,6 @@ app.use("/api/comments", commentRouter);
 
 // app.use("/development", developmentRouter);
 
-// Define MongoDB URI
-// const DB_URI =
-//   process.env.NODE_DB === "development"
-//     ? `${process.env.LOCAL_DB_URI}`
-//     : `${process.env.PRODUCTION_DB_URI}`;
-
-const DB_URI = `${process.env.PRODUCTION_DB_URI}`;
-
-// const DB_URI = `${process.env.LOCAL_DB_URI}`;
-
 db.mongoose
   .connect(dbConfig(), {
     useCreateIndex: true,

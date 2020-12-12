@@ -58,14 +58,6 @@ const getAllPosts = async (req, res) => {
 
     postClass.setPostArray = posts;
 
-    // const result = [];
-
-    // posts.forEach((value, index) => {
-    //   postClass.setPost = value;
-
-    //   result.push(postClass.getPost());
-    // });
-
     // get total documents in the Post collection
     const count = await Post.countDocuments();
 
@@ -152,8 +144,6 @@ const getPostDetail = async (req, res) => {
     })
       .populate(["author", "category"])
       .exec();
-
-    console.log(post);
 
     postClass.setPost = post;
 

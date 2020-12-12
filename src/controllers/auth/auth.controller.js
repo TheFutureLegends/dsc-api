@@ -17,20 +17,12 @@ export const signup = async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message);
 
-  const existed_user = await User.find({
-    email: req.body.email,
-  });
-
-  if (existed_user[0]) {
-    return res
-      .status(400)
-      .send({ message: "Email has already taken. Please choose another!" });
-  }
-
   const user = new User({
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
+    avatar:
+      "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
   });
 
   user.save((err, user) => {
@@ -125,15 +117,20 @@ export const signin = (req, res) => {
         });
       }
 
-      var token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
-        expiresIn: process.env.TOKEN_EXPIRATION_TIME,
-      });
+      var token = jwt.sign(
+        {
+          id: user.id,
+        },
+        process.env.TOKEN_SECRET,
+        { expiresIn: 60 * 60 }
+      );
 
       var authorities = [];
 
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
+
       res.status(200).send({
         id: user._id,
         username: user.username,

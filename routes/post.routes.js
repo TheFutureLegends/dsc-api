@@ -22,7 +22,7 @@ router.get(
 router.post(
   "/create",
   [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
-  [middleware.imageUpload.single("image")],
+  // [middleware.imageUpload.single("image")],
   postBackend.createPost
 );
 
