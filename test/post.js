@@ -68,9 +68,11 @@ describe("Let's run the unit test for CRUD Post feature", () => {
         "so that I can share my knowledge.", () => {
         it("it should create (POST) new post", (done) => {
             let post = {
-                title: "New post title 1",
-                description: "New post description 1",
-                author: "Tester"
+              title: "New post title 1",
+              description: "New post description 1",
+              imageFile:
+                    "https://i.pinimg.com/originals/f8/b6/9e/f8b69e6156999b84137f3f0a23701b75.jpg",
+              category:"web-deverlopment"
             };
             chai
                 .request(app)
