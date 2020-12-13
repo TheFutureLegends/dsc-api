@@ -44,7 +44,7 @@ router.get(
 router.post(
   "/create",
   [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
-  categoryBackend.createCatetory
+  categoryBackend.createCategory
 );
 
 /**
@@ -55,20 +55,21 @@ router.post(
  *   - status 200 (OK) - Object has key:message and data (data is an object)
  *   - status 404 (Not found) - Object has key: message and data (data is null)
  */
-router.get("/edit/:slug", [
-  middleware.authJwt.verifyToken,
-  middleware.permission.isAdmin,
-]);
+router.get(
+  "/edit/:slug",
+  [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
+  categoryBackend.editCategory
+);
 
 /**
  * Update specific category
  *
  * @params category_id
-  * @return
+ * @return
  *   - status 200 (OK) - Object has key:message and data (data is an array of object)
  *   - status 400 (Bad request) - Object has key: message and data (data is null)
  */
-router.patch("/update/:id",  [
+router.patch("/update/:slug", [
   middleware.authJwt.verifyToken,
   middleware.permission.isAdmin,
 ]);
@@ -79,7 +80,7 @@ router.patch("/update/:id",  [
  * @params category_id
  * @return status 204 (No content) - Object has key: message and value of string
  */
-router.delete("/delete/:id",  [
+router.delete("/delete/:id", [
   middleware.authJwt.verifyToken,
   middleware.permission.isAdmin,
 ]);

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import slugify from "slugify";
+import slug from "mongoose-slug-generator";
 
 const Category = mongoose.model(
   "Category",
@@ -8,6 +9,7 @@ const Category = mongoose.model(
     slug: {
       type: String,
       index: true,
+      slug: { type: String, slug: "title", unique: true },
     },
     description: String,
     parent: {
@@ -25,22 +27,5 @@ const Category = mongoose.model(
     },
   })
 );
-
-// Sets the createdAt parameter equal to the current time
-Category.schema.pre("save", (next) => {
-  now = new Date();
-
-  this.slug = slugify(this.title.toLowerCase());
-
-  if (!this.createdAt) {
-    this.createdAt = now;
-  }
-
-  if (!this.updatedAt) {
-    this.updatedAt = now;
-  }
-
-  next();
-});
 
 export default Category;

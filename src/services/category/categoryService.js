@@ -20,23 +20,24 @@ const readCategory = (categories) => {
 
     return {
       status: 200,
-      message: "Load category successfully!",
+      message: "Load categories successfully!",
       data: result,
     };
   } catch (error) {
     return {
       status: 400,
       message: error.message,
-      data: null
+      data: null,
     };
   }
 };
 
 const createCategory = (body) => {
-  //Creates a new book
+  //Creates a new category
+  // slug: utilities.converter.converStringToSlug(body.title),
   var category = new Category({
     title: body.title,
-    slug: utilities.converter.converStringToSlug(body.title),
+
     description: body.description,
   });
 
@@ -56,9 +57,28 @@ const createCategory = (body) => {
   };
 };
 
+const editCategory = (category) => {
+  categoryContainers.setIsAdmin = true;
+
+  categoryContainers.setCategory = category;
+
+  return {
+    status: 200,
+    message: "Load category successfully!",
+    data: categoryContainers.getCategory(),
+  };
+};
+
+const updateCategory = () => {};
+
+const deleteCategory = () => {};
+
 const categoryService = {
   readCategory,
   createCategory,
+  editCategory,
+  updateCategory,
+  deleteCategory,
 };
 
 export default categoryService;

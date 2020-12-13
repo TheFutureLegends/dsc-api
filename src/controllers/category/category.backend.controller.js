@@ -5,7 +5,7 @@ import utilities from "../../utilities/index.js";
 
 const Category = db.category;
 
-const createCatetory = (req, res) => {
+const createCategory = (req, res) => {
   const categoryService = service.categoryService.createCategory(req.body);
 
   return res
@@ -23,12 +23,28 @@ const readCategory = async (req, res) => {
     .send({ message: categoryService.message, data: categoryService.data });
 };
 
-const editCategory = (req, res) => {};
+const editCategory = async (req, res) => {
+  const category = await Category.findOne({
+    slug: req.params.slug,
+  }).exec();
+
+  const categoryService = service.categoryService.editCategory(category);
+
+  return res
+    .status(categoryService.status)
+    .send({ message: categoryService.message, data: categoryService.data });
+};
 
 const updateCategory = (req, res) => {};
 
 const deleteCategory = (req, res) => {};
 
-const categoryBackend = { createCatetory, readCategory };
+const categoryBackend = {
+  createCategory,
+  readCategory,
+  editCategory,
+  updateCategory,
+  deleteCategory,
+};
 
 export default categoryBackend;
