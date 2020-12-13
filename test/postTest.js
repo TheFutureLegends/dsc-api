@@ -14,7 +14,7 @@ const Post = db.post;
 
 chai.use(chaiHttp);
 
-describe("Let's run the unit test for CRUD PostTest feature", () => {
+describe("Let's run the unit test for CRUD Post feature", () => {
     //Before each test we empty the database
    beforeEach((done) => {
         let user = {
