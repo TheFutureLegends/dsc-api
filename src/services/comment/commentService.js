@@ -42,7 +42,12 @@ const readComment = (comments) => {
 
 const editComment = () => {};
 
-const updateComment = () => {};
+const updateComment = () => {
+  return {
+    status: 204,
+    message: "Comment Deleted Successfully!",
+  };
+};
 
 const deleteComment = (comment) => {
   comment.deleteOne((err, comment) => {

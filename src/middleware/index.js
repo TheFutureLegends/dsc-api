@@ -1,13 +1,13 @@
 import authJwt from "./authJwt.js";
 import verifySignUp from "./verifySignUp.js";
 import permission from "./permission.js";
-import imageUpload from "./imageUpload.js";
+import checkFileAndUpload from "./checkFileAndUpload.js";
 
 const middleware = {
   authJwt,
   verifySignUp,
   permission,
-  imageUpload,
+  checkFileAndUpload,
 };
 
 export default middleware;

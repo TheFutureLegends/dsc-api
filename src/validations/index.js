@@ -1,7 +1,7 @@
-import authValidation from "./auth/auth.validation.js";
+import authValidation from "./auth/authValidation.js";
 // import userValidation from "./user.validation.js";
-import postValidation from "./post/post.validation.js";
-import commentValidation from "./comment/comment.validation.js";
+import postValidation from "./post/postValidation.js";
+import commentValidation from "./comment/commentValidation.js";
 
 const validationRules = {
   authValidation,
