@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import slug from "mongoose-slug-generator";
+
+mongoose.plugin(slug);
 
 const Post = mongoose.model(
   "Post",
@@ -6,6 +9,8 @@ const Post = mongoose.model(
     title: String,
     slug: {
       type: String,
+      slug: "title",
+      unique: true,
       index: true,
     },
     description: String,
@@ -35,10 +40,10 @@ const Post = mongoose.model(
 );
 
 // Sets the createdAt parameter equal to the current time
-Post.schema.pre('save', next => {
+Post.schema.pre("save", (next) => {
   now = new Date();
 
-  if(!this.createdAt) {
+  if (!this.createdAt) {
     this.createdAt = now;
   }
 

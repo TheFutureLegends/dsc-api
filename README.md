@@ -3,49 +3,52 @@
 ## Package
 
 **Encode and decode password**
-- bcryptjs
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs)
 
 **For application to use body of request in POST - PUT method**
-- body-parser
+- [body-parser](https://www.npmjs.com/package/body-parser)
 
 **To set cookie and get cookie from request**
-- cookie-parser
+- [cookie-parser](https://www.npmjs.com/package/cookie-parser)
 
 **To authorize specific IP**
-- cors
+- [cors](https://www.npmjs.com/package/cors)
 
 **To define secure variable that will not available on public**
-- dotenv
+- [dotenv](https://www.npmjs.com/package/dotenv)
 
 **Core package to use express**
-- express
+- [express](https://www.npmjs.com/package/express)
 
 **To validate input of body**
-- joi
+- [joi](https://www.npmjs.com/package/joi)
 
 **To create and verify token from request header**
-- jsonwebtoken
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 
 **To recognize and converting corresponding timezone of user**
-- moment-timezone
+- [moment-timezone](https://www.npmjs.com/package/moment-timezone)
 
 **Core package to use MongoDB**
-- mongoose
+- [mongoose](https://www.npmjs.com/package/mongoose)
 
 **To check - verify - upload image file to server**
-- multer
+- [multer](https://www.npmjs.com/package/multer)
 
 **To get static path**
-- path
+- [path](https://www.npmjs.com/package/path)
 
 **Transform string to slug**
-- slugify
+- [slugify](https://www.npmjs.com/package/slugify)
+
+**Automatically generate slug from title when insert new data to MongoDB**
+- [mongoose-slug-generator](https://www.npmjs.com/package/mongoose-slug-generator)
 
 **To read file input**
-- fs
+- [fs](https://www.npmjs.com/package/fs)
 
 **To read markdown from description of database if have any**
-- markdown-js
+- [markdown-js](https://www.npmjs.com/package/markdown-js)
 
 ## Structure
 

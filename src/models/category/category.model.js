@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import slugify from "slugify";
 import slug from "mongoose-slug-generator";
+
+mongoose.plugin(slug);
 
 const Category = mongoose.model(
   "Category",
@@ -8,8 +9,8 @@ const Category = mongoose.model(
     title: String,
     slug: {
       type: String,
-      index: true,
-      slug: { type: String, slug: "title", unique: true },
+      slug: "title",
+      unique: true,
     },
     description: String,
     parent: {

@@ -33,7 +33,6 @@ const readPost = (posts) => {
 const createPost = (body, userId, categoryId) => {
   const post = new Post({
     title: body.title,
-    slug: utilities.converter.converStringToSlug(body.title),
     description: body.description,
     image: body.imageFile,
     author: userId,
@@ -60,11 +59,17 @@ const createPost = (body, userId, categoryId) => {
 const editPost = (post) => {
   postContainers.setPost = post;
 
-  return postContainers.getPost();
+  return {
+    status: 200,
+    message: "Load post successfully!",
+    data: postContainers.getPost(),
+  };
 };
 
 const updatePost = (post, body) => {
-  body.slug = utilities.converter.converStringToSlug(body.title);
+  if (body.title) {
+    body.slug = utilities.converter.converStringToSlug(body.title);
+  }
 
   post.updateOne(body, (err, post) => {
     if (err) {

@@ -1,4 +1,5 @@
 import db from "../../models/index.js";
+import utilities from "../../utilities/index.js";
 import postContainer from "../../containers/post/postContainer.js";
 
 const Post = db.post;
@@ -6,34 +7,58 @@ const Post = db.post;
 const postContainers = new postContainer();
 
 const getAllPosts = async (req, res) => {
+  /**
+   * Get query from URL
+   *
+   * See default in postRoutes.js
+   */
   const query = req.query;
 
+  /**
+   * Declare empty variables that can change
+   */
   let posts;
 
-  // Get query of latest
-  // Default: false
+  /**
+   * Get query of latest
+   *
+   * Default: false
+   */
   let latest = query.latest ? (query.latest == "true" ? true : false) : false;
 
-  // Sort by column if provided
-  // Default: createdAt column
+  /**
+   * Sort by column if provided
+   *
+   * Default: createdAt column
+   */
   let column = query.sortBy ? query.sortBy : "createdAt";
 
-  // If there is query of limit
-  // Get corresponding number of posts
-  // Default: null
-  let limit = query.limit ? parseInt(query.limit) : 10;
+  /**
+   * If there is query of limit
+   *
+   * Get corresponding number of posts
+   *
+   * Default: 10
+   */
+  let limit = query.limit
+    ? utilities.converter.convertStringToNumber(query.limit)
+    : 10;
 
-  // Determine order of columns when sort if provided - Ascending or Descending
-  // Ascending = 0 || Descending = -1
-  // Default: Descending
+  /**
+   * Determine order of columns when sort if provided - Ascending or Descending
+   *
+   * Ascending = 0 || Descending = -1
+   *
+   * Default: Descending
+   */
   let order = query.asc ? (query.asc == "true" ? 1 : -1) : 1;
 
-  // Get query of page
-  // Default 1
+  /**
+   * Get query of page
+   *
+   * Default 1
+   */
   let page = query.page ? query.page : 1;
-
-  // destructure page and limit and set default values
-  //   const { page = 1, limit = 10 } = req.query;
 
   if (column == "author") {
     column = "author.username";
@@ -56,35 +81,57 @@ const getAllPosts = async (req, res) => {
         .exec();
     }
 
+    /**
+     * Set posts get from query
+     *
+     * Convert to array of object with selected field
+     */
     postContainers.setPostArray = posts;
 
-    // get total documents in the Post collection
+    /**
+     * Get total documents in the Post collection
+     */
     const count = await Post.countDocuments();
 
-    // return response with posts, total pages, and current page
+    /**
+     * return response with posts, total pages, and current page
+     */
     return res.json({
       posts: postContainers.getPostArray(),
       totalPages: Math.ceil(count / limit),
       currentPage: page,
     });
   } catch (err) {
-    console.error("Error: ", err.message);
-
     return res.status(500).send({ message: err.message });
   }
 };
 
 const getTopAuthors = async (req, res) => {
+  /**
+   * Get query from URL
+   *
+   * See default in postRoutes.js
+   */
   const query = req.query;
 
-  // If there is query of limit
-  // Get corresponding number of posts
-  // Default: 10
-  let limit = query.limit ? parseInt(query.limit) : 10;
+  /**
+   * If there is query of limit
+   *
+   * Get corresponding number of posts
+   *
+   * Default: 10
+   */
+  let limit = query.limit
+    ? utilities.converter.convertStringToNumber(query.limit)
+    : 10;
 
-  // Determine order of columns when sort if provided - Ascending or Descending
-  // Ascending = 1 || Descending = -1
-  // Default: Descending
+  /**
+   * Determine order of columns when sort if provided - Ascending or Descending
+   *
+   * Ascending = 1 || Descending = -1
+   *
+   * Default: Descending
+   */
   let order = query.asc ? (query.asc == "true" ? 1 : -1) : 1;
 
   try {
@@ -106,12 +153,14 @@ const getTopAuthors = async (req, res) => {
       },
       {
         $sort: {
-          // Descending visit
+          /**
+           * Descending visit if not provided asc
+           */
           total_visit: order,
         },
       },
       {
-        $limit: parseInt(limit),
+        $limit: limit,
       },
     ]);
 
@@ -147,7 +196,7 @@ const getPostDetail = async (req, res) => {
 
     postContainers.setPost = post;
 
-    return res.status(200).send({ post: postClass.getPost() });
+    return res.status(200).send({ post: postContainers.getPost() });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }

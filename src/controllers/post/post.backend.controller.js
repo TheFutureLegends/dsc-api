@@ -56,37 +56,11 @@ const editPost = async (req, res) => {
       author: req.userId,
     }).exec();
 
-    return res.status(200).send(service.postService.editPost(post));
-  } catch (error) {
-    return res.status(500).send({ message: error.message });
-  }
-};
+    const postService = service.postService.editPost(post);
 
-const patchPost = async (req, res) => {
-  try {
-    const body = req.body;
-
-    if (body.category) {
-      const category = await Category.findOne({
-        slug: req.body.category.toLowerCase(),
-      }).exec();
-
-      body.category = category._id;
-    }
-
-    if (body.title) {
-      body.slug = slugify(body.title.toLowerCase());
-    }
-
-    await Post.findOneAndUpdate(
-      {
-        id: req.params.id,
-        author: req.userId,
-      },
-      body
-    );
-
-    return res.status(200).send({ message: "Update Successfully!" });
+    return res
+      .status(postService.status)
+      .send(postService.data);
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -101,21 +75,19 @@ const updatePost = async (req, res) => {
       author: req.userId,
     }).exec();
 
-    const category = await Category.findOne({
-      slug: req.body.category.toLowerCase(),
-    }).exec();
+    if (body.category) {
+      const category = await Category.findOne({
+        slug: body.category.toLowerCase(),
+      }).exec();
 
-    body.category = category._id;
+      body.category = category._id;
+    }
 
-    Post.findOneAndUpdate({
-      id: req.params.id,
-    });
-
-    const postCondition = service.postService.updatePost(post, body);
+    const postService = service.postService.updatePost(post, body);
 
     return res
-      .status(postCondition.status)
-      .send({ message: postCondition.message });
+      .status(postService.status)
+      .send({ message: postService.message });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -128,11 +100,11 @@ const deletePost = async (req, res) => {
       author: req.userId,
     }).exec();
 
-    const postCondition = service.postService.deletePost(post);
+    const postService = service.postService.deletePost(post);
 
     return res
-      .status(postCondition.status)
-      .send({ message: postCondition.message });
+      .status(postService.status)
+      .send({ message: postService.message });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -143,7 +115,6 @@ const postBackend = {
   createPost,
   editPost,
   updatePost,
-  patchPost,
   deletePost,
 };
 

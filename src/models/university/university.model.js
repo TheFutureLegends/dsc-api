@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import slug from "mongoose-slug-generator";
+
+mongoose.plugin(slug);
 
 const University = mongoose.model(
   "University",
@@ -6,7 +9,8 @@ const University = mongoose.model(
     name: String,
     slug: {
       type: String,
-      index: true,
+      slug: "name",
+      unique: true,
     },
     description: String,
     address: String,

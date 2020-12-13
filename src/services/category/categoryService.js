@@ -25,7 +25,7 @@ const readCategory = (categories) => {
     };
   } catch (error) {
     return {
-      status: 400,
+      status: 500,
       message: error.message,
       data: null,
     };
@@ -34,10 +34,8 @@ const readCategory = (categories) => {
 
 const createCategory = (body) => {
   //Creates a new category
-  // slug: utilities.converter.converStringToSlug(body.title),
   var category = new Category({
     title: body.title,
-
     description: body.description,
   });
 
@@ -69,9 +67,41 @@ const editCategory = (category) => {
   };
 };
 
-const updateCategory = () => {};
+const updateCategory = (category, body) => {
+  if (body.title) {
+    body.slug = utilities.converter.converStringToSlug(body.title);
+  }
 
-const deleteCategory = () => {};
+  category.updateOne(body, (err, category) => {
+    if (err) {
+      return {
+        status: 400,
+        message: err.message,
+      };
+    }
+  });
+
+  return {
+    status: 204,
+    message: "Category Updated Successfully!",
+  };
+};
+
+const deleteCategory = (category) => {
+  category.deleteOne((err, category) => {
+    if (err) {
+      return {
+        status: 400,
+        message: err.message,
+      };
+    }
+  });
+
+  return {
+    status: 204,
+    message: "Category Deleted Successfully!",
+  };
+};
 
 const categoryService = {
   readCategory,

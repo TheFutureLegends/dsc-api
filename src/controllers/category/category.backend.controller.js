@@ -14,30 +14,63 @@ const createCategory = (req, res) => {
 };
 
 const readCategory = async (req, res) => {
-  const categories = await Category.find().exec();
+  try {
+    const categories = await Category.find().exec();
 
-  const categoryService = service.categoryService.readCategory(categories);
+    const categoryService = service.categoryService.readCategory(categories);
 
-  return res
-    .status(categoryService.status)
-    .send({ message: categoryService.message, data: categoryService.data });
+    return res
+      .status(categoryService.status)
+      .send({ message: categoryService.message, data: categoryService.data });
+  } catch (error) {
+    return res.status(error.status).send({ message: error.message });
+  }
 };
 
 const editCategory = async (req, res) => {
-  const category = await Category.findOne({
-    slug: req.params.slug,
-  }).exec();
+  try {
+    const category = await Category.findById(req.params.category_id).exec();
 
-  const categoryService = service.categoryService.editCategory(category);
+    const categoryService = service.categoryService.editCategory(category);
 
-  return res
-    .status(categoryService.status)
-    .send({ message: categoryService.message, data: categoryService.data });
+    return res
+      .status(categoryService.status)
+      .send({ message: categoryService.message, data: categoryService.data });
+  } catch (error) {
+    return res.status(error.status).send({ message: error.message });
+  }
 };
 
-const updateCategory = (req, res) => {};
+const updateCategory = async (req, res) => {
+  try {
+    const category = await Category.findById(req.params.category_id).exec();
 
-const deleteCategory = (req, res) => {};
+    const categoryService = service.categoryService.updateCategory(
+      category,
+      req.body
+    );
+
+    return res
+      .status(categoryService.status)
+      .send({ message: categoryService.message });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+const deleteCategory = async (req, res) => {
+  try {
+    const category = await Category.findById(req.params.category_id).exec();
+
+    const categoryService = service.categoryService.deleteCategory(category);
+
+    return res
+      .status(categoryService.status)
+      .send({ message: categoryService.message });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
 
 const categoryBackend = {
   createCategory,

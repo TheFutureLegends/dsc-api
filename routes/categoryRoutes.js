@@ -50,13 +50,14 @@ router.post(
 /**
  * Get specific category for editing
  *
- * @params String slug
+ * @params Object ID: category_id
  * @return
  *   - status 200 (OK) - Object has key:message and data (data is an object)
  *   - status 404 (Not found) - Object has key: message and data (data is null)
+ *   - status 500 (Internal Server Error) - Check your console and internet connection
  */
 router.get(
-  "/edit/:slug",
+  "/edit/:category_id",
   [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
   categoryBackend.editCategory
 );
@@ -64,26 +65,33 @@ router.get(
 /**
  * Update specific category
  *
- * @params category_id
+ * Inside controller will use put methodology
+ * Inside categoryService will use patch method: updateOne
+ *
+ * @params Object ID: category_id
  * @return
- *   - status 200 (OK) - Object has key:message and data (data is an array of object)
- *   - status 400 (Bad request) - Object has key: message and data (data is null)
+ *   - status 204 (No Content) - Object has key:message
+ *   - status 400 (Bad request) - Object has key: message
  */
-router.patch("/update/:slug", [
-  middleware.authJwt.verifyToken,
-  middleware.permission.isAdmin,
-]);
+router.patch(
+  "/update/:category_id",
+  [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
+  categoryBackend.updateCategory
+);
 
 /**
  * Delete specific category
  *
- * @params category_id
- * @return status 204 (No content) - Object has key: message and value of string
+ * @params Object ID: category_id
+ * @return
+ *   - status 204 (No Content) - Object has key: message
+ *   - status 400 (Bad request) - Object has key: message
  */
-router.delete("/delete/:id", [
-  middleware.authJwt.verifyToken,
-  middleware.permission.isAdmin,
-]);
+router.delete(
+  "/delete/:category_id",
+  [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
+  categoryBackend.deleteCategory
+);
 /**
  * End router that only admin can do
  */
