@@ -50,13 +50,19 @@
 **To read markdown from description of database if have any**
 - [markdown-js](https://www.npmjs.com/package/markdown-js)
 
-## Dev Package
+## Unit Testing Package
 
 **To run unit test**
 - [mocha](https://www.npmjs.com/package/mocha)
 
 **To assert status and response**
 - [chai](https://www.npmjs.com/package/chai)
+
+**To use http request via chai**
+- [chaihttp](https://www.npmjs.com/package/chai-http)
+
+**To fake the data**
+- [faker](https://www.npmjs.com/package/chai-http)
 
 
 ## Structure

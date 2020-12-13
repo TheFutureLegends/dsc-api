@@ -1,7 +1,7 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import app from "../index.js";
-import faker from "faker";
+import faker from "faker"; // to generate random value
 
 
 let should = chai.should();
@@ -56,10 +56,11 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
     describe("As an unregistered user," +
         " I want to register, " +
         "so that I can use the study-guide.", () => {
+        // Test case: register with enough requirements: username, email is a string without special letter
         it("it should create (POST) a new user", (done) => {
             let mockUser = {
-                username: faker.name.firstName(),
-                email: faker.internet.email(),
+                username: faker.name.firstName(), // to generate the random string without special letter
+                email: faker.internet.email(), // to generate the random email format: example@example.com without special letter
                 password: "testpassword"
             };
             chai
@@ -67,7 +68,7 @@ describe("Let's run unit test for CRUD Users feature !!", () => {
                 .post("/api/auth/signup")
                 .send(mockUser)
                 .end((err, res) => {
-                    res.should.have.status(201)
+                    res.should.have.status(201) // Means added successfully
                     res.body.should.be.a("object")
                     done()
                 })
