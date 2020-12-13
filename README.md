@@ -124,7 +124,7 @@ Configuration
 | `/api/users/:username` | Get user                      | `username` `email` `posts` | x                  | GET    |
 | `/api/users/profile`   | Get profile of logged in user | `username` `email` `roles` | **Yes**            | GET    |
 
-### [Categories]((https://rmit-dsc-api.herokuapp.com/api/categories))
+### [Categories](https://rmit-dsc-api.herokuapp.com/api/categories)
 
 | Api name                              | Description                               | Role needed | Method |
 | ------------------------------------- | ----------------------------------------- | ----------- | ------ |
