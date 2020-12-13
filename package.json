@@ -1,4 +1,7 @@
 {
+  "//": [
+    "If you want to read details about packages, please view README.md"
+  ],
   "name": "dsc",
   "version": "1.0.0",
   "description": "",
@@ -44,12 +47,11 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
-    "isodate": "^0.1.4",
     "joi": "^17.2.1",
     "jsonwebtoken": "^8.5.1",
     "markdown-js": "0.0.4",
     "moment-timezone": "^0.5.31",
-    "mongoose": "^5.10.9",
+    "mongoose": "^5.11.7",
     "mongoose-slug-generator": "^1.0.4",
     "multer": "^1.4.2",
     "path": "^0.12.7",

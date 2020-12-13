@@ -63,10 +63,6 @@ export const signup = async (req, res) => {
           if (err) {
             return res.status(500).send({ message: err });
           }
-
-          return res
-            .status(201)
-            .send({ message: "User was registered successfully!" });
         });
       });
     }

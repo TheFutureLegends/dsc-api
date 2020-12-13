@@ -1,7 +1,5 @@
-process.env.NODE_ENV = "test";
 import chai from "chai";
 import chaiHttp from "chai-http";
-import db from "../src/models/index.js";
 import app from "../index.js";
 import faker from "faker";
 
@@ -9,8 +7,6 @@ import faker from "faker";
 let should = chai.should();
 let expect = chai.expect;
 let token;
-
-const User = db.category;
 
 chai.use(chaiHttp);
 
