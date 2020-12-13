@@ -32,7 +32,7 @@ app.use("/static", express.static("public")); //to access the files in public fo
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  res.header(
+  res.setHeader(
     "Access-Control-Allow-Headers",
     "x-access-token, Origin, Content-Type, Accept"
   );

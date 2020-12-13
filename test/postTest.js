@@ -1,16 +1,10 @@
-process.env.NODE_ENV = "test";
-
-import mongoose from "mongoose";
 import chai from "chai";
 import chaiHttp from "chai-http";
-import db from "../src/models/index.js";
 import app from "../index.js";
 
 let should = chai.should();
 let expect = chai.expect;
 let token
-
-const Post = db.post;
 
 chai.use(chaiHttp);
 

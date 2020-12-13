@@ -50,6 +50,15 @@
 **To read markdown from description of database if have any**
 - [markdown-js](https://www.npmjs.com/package/markdown-js)
 
+## Dev Package
+
+**To run unit test**
+- [mocha](https://www.npmjs.com/package/mocha)
+
+**To assert status and response**
+- [chai](https://www.npmjs.com/package/chai)
+
+
 ## Structure
 
 Router -> Middleware -> Controller -> Service
