@@ -1,7 +1,5 @@
 {
-  "//": [
-    "If you want to read details about packages, please view README.md"
-  ],
+  "//": ["If you want to read details about packages, dependencies please view README.md"],
   "name": "dsc",
   "version": "1.0.0",
   "description": "",
@@ -11,7 +9,7 @@
     "start": "nodemon index.js",
     "start:prod": "node .",
     "lint": "./node_modules/.bin/eslint --init",
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 10000 --exit"
   },
   "keywords": [
     "RMIT University",
