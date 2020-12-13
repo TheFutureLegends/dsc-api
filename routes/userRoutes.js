@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * Get profile of logged in
- * 
+ *
  * @return Object
  */
 router.get(

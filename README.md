@@ -2,29 +2,108 @@
 
 ## Package
 
+**Encode and decode password**
 - bcryptjs
+
+**For application to use body of request in POST - PUT method**
 - body-parser
+
+**To set cookie and get cookie from request**
 - cookie-parser
+
+**To authorize specific IP**
 - cors
+
+**To define secure variable that will not available on public**
 - dotenv
+
+**Core package to use express**
 - express
+
+**To validate input of body**
 - joi
+
+**To create and verify token from request header**
 - jsonwebtoken
+
+**To recognize and converting corresponding timezone of user**
 - moment-timezone
+
+**Core package to use MongoDB**
 - mongoose
+
+**To check - verify - upload image file to server**
 - multer
+
+**To get static path**
 - path
+
+**Transform string to slug**
 - slugify
+
+**To read file input**
 - fs
+
+**To read markdown from description of database if have any**
 - markdown-js
 
 ## Structure
 
 Router -> Middleware -> Controller -> Service
 
-| Router                             | Middleware                                           | Controller                        | Service                                             |
-| ---------------------------------- | ---------------------------------------------------- | --------------------------------- | --------------------------------------------------- |
-| Define url and routing application | Checking and verify token, roles and file input mime | Fetching data from params if have | Execute read - insert - update - delete of database |
+### Router
+
+Define which url to use and routing to corresponding controller
+
+### Middleware
+
+Checking and verify: token, roles and file input mime type if have
+
+### Controller
+
+**Controller with .frontend** does not require authentication token
+**Controller with .backend** requires authentication token
+
+Fetching data from router params if have any
+
+Pass data to service to execute
+
+### Service
+
+Execute Create - Read - Update - Delete
+
+Format data to return back to controller
+
+**Return in service**
+object that has status code and message
+**_Read_ & _Edit_**: Include in the object that it will return (with key named data)
+
+### Other folders
+
+#### Containers
+
+Get, Set and Convert data to desire type
+
+#### Utilities
+
+**Usage:** Converting and checking array or object
+**Condition** Alway return only true or false
+
+#### Validations
+
+Validate from body inside controller before sending it to service
+
+#### Models
+
+Define Schema
+
+#### Seeder
+
+Seeding dummy data to database
+
+#### Config
+
+Configuration
 
 ## Api
 

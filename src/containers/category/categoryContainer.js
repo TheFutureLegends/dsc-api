@@ -1,4 +1,4 @@
-import utils from "../../utils/index.js";
+import utilities from "../../utilities/index.js";
 
 class categoryContainer {
   constructor() {}
@@ -32,7 +32,9 @@ class categoryContainer {
       title: this._category.title,
       slug: this._category.slug,
       description: this._category.description,
-      createdAt: utils.format.date(this._category.createdAt),
+      createdAt: utilities.converter.convertDateToString(
+        this._category.createdAt
+      ),
     };
   }
 }

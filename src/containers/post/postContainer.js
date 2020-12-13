@@ -1,4 +1,4 @@
-import utils from "../../utils/index.js";
+import utilities from "../../utilities/index.js";
 
 class postContainer {
   constructor() {}
@@ -18,7 +18,7 @@ class postContainer {
   getPostArray() {
     const result = [];
 
-    if (!utils.condition.isEmptyArray(this._post_array)) {
+    if (!utilities.condition.isEmptyArray(this._post_array)) {
       this._post_array.forEach((value, index) => {
         this.setPost = value;
 
@@ -44,7 +44,7 @@ class postContainer {
         username: this._post.author.username,
         avatar: this._post.author.avatar,
       },
-      createdAt: utils.format.date(this._post.createdAt),
+      createdAt: utilities.converter.convertDateToString(this._post.createdAt),
     };
   }
 }

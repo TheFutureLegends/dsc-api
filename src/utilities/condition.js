@@ -8,6 +8,8 @@ const isEmptyArray = (array) => {
   return false;
 };
 
-const condition = { isEmptyArray };
+const isEmptyObject = (object) => {};
+
+const condition = { isEmptyArray, isEmptyObject };
 
 export default condition;

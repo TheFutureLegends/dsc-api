@@ -10,14 +10,14 @@ const router = express.Router();
 
 /**
  * Get all categories
- * 
+ *
  * @return Object
  */
 router.get("/", categoryFrontend.getAllCategories);
 
 /**
  * Begin router that only admin can do
- * 
+ *
  * All routes below will go through middleware to do:
  *   - verify if token pass in header is valid or not
  *   - check if logged in user has associate role to begin action or not
@@ -25,7 +25,7 @@ router.get("/", categoryFrontend.getAllCategories);
 
 /**
  * Create new category
- * 
+ *
  * @return status 204 (No content) - Object has key: message and value of string
  */
 router.post(
@@ -36,7 +36,7 @@ router.post(
 
 /**
  * Get specific category for editing
- * 
+ *
  * @params String slug
  * @return Object
  */
@@ -47,26 +47,26 @@ router.get("/edit/:slug", [
 
 /**
  * Update specific category
- * 
+ *
  * @params category_id
  * @return status 204 (No content) - Object has key: message and value of string
  */
-router.patch();
+router.patch("/update/:id");
 
 /**
  * Delete specific category
- * 
+ *
  * @params category_id
  * @return status 204 (No content) - Object has key: message and value of string
  */
-router.delete()
+router.delete("/delete/:id");
 /**
  * End router that only admin can do
  */
 
 /**
  * Get specific category
- * 
+ *
  * @params String category_name
  * @return Object
  */

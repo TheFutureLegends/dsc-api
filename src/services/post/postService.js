@@ -1,10 +1,27 @@
-import slugify from "slugify";
+import utilities from "../../utilities/index.js";
 import db from "../../models/index.js";
 import postContainer from "../../containers/post/postContainer.js";
 
 const Post = db.post;
 
 const postContainers = new postContainer();
+
+/**
+ *
+ * @param {Array} posts
+ * @return {Array of Object} result
+ */
+const readPost = (posts) => {
+  const result = [];
+
+  posts.forEach((value, index) => {
+    postContainers.setPost = value;
+
+    result.push(postContainers.getPost());
+  });
+
+  return result;
+};
 
 /**
  *
@@ -16,7 +33,7 @@ const postContainers = new postContainer();
 const createPost = (body, userId, categoryId) => {
   const post = new Post({
     title: body.title,
-    slug: slugify(body.title.toLowerCase()),
+    slug: utilities.converter.converStringToSlug(body.title),
     description: body.description,
     image: body.imageFile,
     author: userId,
@@ -40,18 +57,6 @@ const createPost = (body, userId, categoryId) => {
   };
 };
 
-const readPost = (posts) => {
-  const result = [];
-
-  posts.forEach((value, index) => {
-    postContainers.setPost = value;
-
-    result.push(postContainers.getPost());
-  });
-
-  return result;
-};
-
 const editPost = (post) => {
   postContainers.setPost = post;
 
@@ -59,7 +64,7 @@ const editPost = (post) => {
 };
 
 const updatePost = (post, body) => {
-  body.slug = slugify(body.title.toLowerCase());
+  body.slug = utilities.converter.converStringToSlug(body.title);
 
   post.updateOne(body, (err, post) => {
     if (err) {

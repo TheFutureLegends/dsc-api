@@ -22,9 +22,20 @@ const convertDateToString = (input) => {
   return date;
 };
 
+/**
+ * 
+ * @param {String} input 
+ * @return {Number} x
+ */
+const convertStringToNumber = (input) => {
+  x = Number(input);
+  return x >= 0 ? Math.floor(x) : Math.ceil(x);
+}
+
 const converter = {
   converStringToSlug,
   convertDateToString,
+  convertStringToNumber,
 };
 
 export default converter;

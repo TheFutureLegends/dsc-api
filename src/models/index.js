@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
+/**
+ * Import MongoDB Schema
+ */
 import User from "./user/user.model.js";
 import Role from "./role/role.model.js";
-
 // import University from "./university/university.model.js";
 // import Club from "./club/club.model.js";
-
 import Post from "./post/post.model.js";
 import Comment from "./comment/comment.model.js";
-
 import Category from "./category/category.model.js";
 
 mongoose.Promise = global.Promise;
@@ -16,6 +16,10 @@ mongoose.Promise = global.Promise;
 const db = {};
 
 db.mongoose = mongoose;
+
+/**
+ * Initialize model schema
+ */
 
 db.user = User;
 
@@ -31,7 +35,9 @@ db.comment = Comment;
 
 db.category = Category;
 
-// Initialize Default Value
+/**
+ * Initialize Default Value
+ */
 db.ROLES = ["super-admin", "admin", "moderator", "author", "member", "user"];
 
 db.UNIVERSITIES = [

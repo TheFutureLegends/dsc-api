@@ -1,4 +1,4 @@
-import utils from "../../utils/index.js";
+import utilities from "../../utilities/index.js";
 
 class commentContainer {
   constructor() {}
@@ -18,7 +18,9 @@ class commentContainer {
         username: this._comment.author.username,
         avatar: this._comment.author.avatar,
       },
-      createdAt: utils.format.date(this._comment.createdAt),
+      createdAt: utilities.converter.convertDateToString(
+        this._comment.createdAt
+      ),
     };
   }
 }
