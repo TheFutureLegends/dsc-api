@@ -10,7 +10,7 @@ let should = chai.should();
 let expect = chai.expect;
 let token
 
-const PostTest = db.post;
+const Post = db.post;
 
 chai.use(chaiHttp);
 

@@ -8,7 +8,7 @@ let should = chai.should();
 let expect = chai.expect;
 let token;
 
-const CategoryTest = db.category;
+const Category = db.category;
 
 chai.use(chaiHttp);
 
