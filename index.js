@@ -37,7 +37,6 @@ app.use((req, res, next) => {
     "x-access-token, Origin, Content-Type, Accept"
   );
   next();
-  return;
 }); // to use header
 
 // Define route

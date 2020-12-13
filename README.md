@@ -135,7 +135,7 @@ Configuration
 | `/api/categories/update/:category_id` | Update existing category                  | **Admin**   | PATCH  |
 | `/api/categories/delete/:category_id` | Delete existing category                  | **Admin**   | DELETE |
 
-### [Post](https://rmit-dsc-api.herokuapp.com/api/posts)
+### [PostTest](https://rmit-dsc-api.herokuapp.com/api/posts)
 
 | Api name                | Query                                                                                                                           | Params | Description                       | Role needed | Method |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------------------- | ----------- | ------ |

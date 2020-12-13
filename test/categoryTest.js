@@ -8,7 +8,7 @@ let should = chai.should();
 let expect = chai.expect;
 let token;
 
-const Category = db.category;
+const CategoryTest = db.category;
 
 chai.use(chaiHttp);
 
@@ -79,7 +79,7 @@ describe("Let's run unit test for CRUD Categories feature !!", () => {
         .set("x-access-token", token)
         .send(category)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.body.should.be.a("object");
           done();
         });
