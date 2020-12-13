@@ -14,7 +14,7 @@ const Post = db.post;
 
 chai.use(chaiHttp);
 
-describe("Let's run the unit test for CRUD Post feature", () => {
+describe("Let's run the unit test for CRUD PostTest feature", () => {
     //Before each test we empty the database
    beforeEach((done) => {
         let user = {
@@ -90,7 +90,7 @@ describe("Let's run the unit test for CRUD Post feature", () => {
         "I want to update my study guide, " +
         "so that I can share the most updated resources with my clubmate.", () => {
         it("it should edit (PATCH) an existing post", (done) => {
-            let test_id = "111aaa"
+            let test_id = "5fd5ff9a49be26300febf862"
             let post = {
                 title: "Edited title 1",
                 description: "Edited description 1",
@@ -104,8 +104,8 @@ describe("Let's run the unit test for CRUD Post feature", () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a("object");
-                    done();
                 });
+            done();
         });
     });
 });

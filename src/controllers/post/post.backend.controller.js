@@ -89,7 +89,7 @@ const updatePost = async (req, res) => {
       .status(postService.status)
       .send({ message: postService.message });
   } catch (error) {
-    return res.status(500).send({ message: error.message });
+    return res.status(error.status).send({ message: error.message });
   }
 };
 
