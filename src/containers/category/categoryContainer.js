@@ -7,6 +7,14 @@ class categoryContainer {
     return this._category;
   }
 
+  get isAdmin() {
+    return this._isAdmin;
+  }
+
+  set setIsAdmin(isAdmin = false) {
+    this._isAdmin = isAdmin;
+  }
+
   set setCategoryArray(categoryArray) {
     this._category_array = categoryArray;
   }
@@ -28,7 +36,7 @@ class categoryContainer {
   }
 
   getCategory() {
-    return {
+    const result = {
       title: this._category.title,
       slug: this._category.slug,
       description: this._category.description,
@@ -36,6 +44,12 @@ class categoryContainer {
         this._category.createdAt
       ),
     };
+
+    if (this._isAdmin) {
+      result._id = this._category._id;
+    }
+
+    return result;
   }
 }
 

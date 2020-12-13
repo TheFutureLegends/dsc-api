@@ -9,7 +9,7 @@ import categoryBackend from "../src/controllers/category/category.backend.contro
 const router = express.Router();
 
 /**
- * Get all categories
+ * Get all categories without _id
  *
  * @return Object
  */
@@ -22,6 +22,19 @@ router.get("/", categoryFrontend.getAllCategories);
  *   - verify if token pass in header is valid or not
  *   - check if logged in user has associate role to begin action or not
  */
+
+/**
+ * Read all categories from database along with _id
+ *
+ * @return
+ *   - status 200 (OK) - Object has key:message and data (data is an array of object)
+ *   - status 400 (Bad request) - Object has key: message and data (data is null)
+ */
+router.get(
+  "/read",
+  [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
+  categoryBackend.readCategory
+);
 
 /**
  * Create new category
@@ -38,7 +51,9 @@ router.post(
  * Get specific category for editing
  *
  * @params String slug
- * @return Object
+ * @return
+ *   - status 200 (OK) - Object has key:message and data (data is an object)
+ *   - status 404 (Not found) - Object has key: message and data (data is null)
  */
 router.get("/edit/:slug", [
   middleware.authJwt.verifyToken,
@@ -49,9 +64,14 @@ router.get("/edit/:slug", [
  * Update specific category
  *
  * @params category_id
- * @return status 204 (No content) - Object has key: message and value of string
+  * @return
+ *   - status 200 (OK) - Object has key:message and data (data is an array of object)
+ *   - status 400 (Bad request) - Object has key: message and data (data is null)
  */
-router.patch("/update/:id");
+router.patch("/update/:id",  [
+  middleware.authJwt.verifyToken,
+  middleware.permission.isAdmin,
+]);
 
 /**
  * Delete specific category
@@ -59,7 +79,10 @@ router.patch("/update/:id");
  * @params category_id
  * @return status 204 (No content) - Object has key: message and value of string
  */
-router.delete("/delete/:id");
+router.delete("/delete/:id",  [
+  middleware.authJwt.verifyToken,
+  middleware.permission.isAdmin,
+]);
 /**
  * End router that only admin can do
  */
