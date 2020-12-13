@@ -7,11 +7,11 @@ import dotenv from "dotenv";
 import dbConfig from "./src/config/dbConfig.js";
 import db from "./src/models/index.js";
 
-import authRouter from "./routes/auth.routes.js";
-import userRouter from "./routes/user.routes.js";
-import categoryRouter from "./routes/category.routes.js";
-import postRouter from "./routes/post.routes.js";
-import commentRouter from "./routes/comment.routes.js";
+import authRouter from "./routes/authRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+import categoryRouter from "./routes/categoryRoutes.js";
+import postRouter from "./routes/postRoutes.js";
+import commentRouter from "./routes/commentRoutes.js";
 
 // import developmentRouter from "./routes/development.routes.js";
 
@@ -38,8 +38,9 @@ app.use((req, res, next) => {
   );
   next();
   return;
-});
+}); // to use header
 
+// Define route
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/categories", categoryRouter);
@@ -69,11 +70,5 @@ const PORT = process.env.PORT || process.env.APP_PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
-
-/**
- * Register - login
- * Homepage (display post)
- * Chatbot (can interact with it)
- */
 
 export default app;

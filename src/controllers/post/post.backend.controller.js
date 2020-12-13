@@ -1,14 +1,13 @@
 import db from "../../models/index.js";
-import postCrud from "../../actions/postCrud.action.js";
 import validationRules from "../../validations/index.js";
+import service from "../../services/index.js";
+import slugify from "slugify";
 
 const Post = db.post;
 
 const Category = db.category;
 
 const readPost = async (req, res) => {
-  // const { limit = 10, page = 1 } = req.query;
-
   try {
     const posts = await Post.find({
       author: {
@@ -18,7 +17,7 @@ const readPost = async (req, res) => {
       .populate(["author", "category"])
       .exec();
 
-    const result = postCrud.readPost(posts); // Convert to array of object
+    const result = service.postService.readPost(posts); // Convert to array of object
 
     return res.status(200).send({ posts: result });
   } catch (error) {
@@ -38,7 +37,7 @@ const createPost = async (req, res) => {
     slug: req.body.category.toLowerCase(),
   }).exec();
 
-  const postCondition = postCrud.createPost(
+  const postCondition = service.postService.createPost(
     req.body,
     // req.file,
     req.userId,
@@ -57,7 +56,37 @@ const editPost = async (req, res) => {
       author: req.userId,
     }).exec();
 
-    return res.status(200).send(postCrud.editPost(post));
+    return res.status(200).send(service.postService.editPost(post));
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+const patchPost = async (req, res) => {
+  try {
+    const body = req.body;
+
+    if (body.category) {
+      const category = await Category.findOne({
+        slug: req.body.category.toLowerCase(),
+      }).exec();
+
+      body.category = category._id;
+    }
+
+    if (body.title) {
+      body.slug = slugify(body.title.toLowerCase());
+    }
+
+    await Post.findOneAndUpdate(
+      {
+        id: req.params.id,
+        author: req.userId,
+      },
+      body
+    );
+
+    return res.status(200).send({ message: "Update Successfully!" });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -78,7 +107,11 @@ const updatePost = async (req, res) => {
 
     body.category = category._id;
 
-    const postCondition = postCrud.updatePost(post, body);
+    Post.findOneAndUpdate({
+      id: req.params.id,
+    });
+
+    const postCondition = service.postService.updatePost(post, body);
 
     return res
       .status(postCondition.status)
@@ -95,7 +128,7 @@ const deletePost = async (req, res) => {
       author: req.userId,
     }).exec();
 
-    const postCondition = postCrud.deletePost(post);
+    const postCondition = service.postService.deletePost(post);
 
     return res
       .status(postCondition.status)
@@ -105,6 +138,13 @@ const deletePost = async (req, res) => {
   }
 };
 
-const postBackend = { readPost, createPost, editPost, updatePost, deletePost };
+const postBackend = {
+  readPost,
+  createPost,
+  editPost,
+  updatePost,
+  patchPost,
+  deletePost,
+};
 
 export default postBackend;

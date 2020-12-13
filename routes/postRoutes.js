@@ -8,17 +8,22 @@ import postBackend from "../src/controllers/post/post.backend.controller.js";
 
 const router = express.Router();
 
-// api/posts?latest=true&asc=false
+// get all posts
+// default: /api/posts?latest=false&asc=true&sortBy=createdAt&limit=10&page=1
 router.get("/", postFrontend.getAllPosts);
 
+// Get top author
+// default: /api/posts/top-author?limit=10&asc=false
 router.get("/top-author", postFrontend.getTopAuthors);
 
+// get post
 router.get(
   "/read",
   [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
   postBackend.readPost
 );
 
+// Create post
 router.post(
   "/create",
   [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
@@ -26,10 +31,17 @@ router.post(
   postBackend.createPost
 );
 
+// Get post for update
 router.get(
   "/edit/:id",
   [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
   postBackend.editPost
+);
+
+router.patch(
+  "/patch/:id",
+  [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
+  postBackend.patchPost
 );
 
 router.put(

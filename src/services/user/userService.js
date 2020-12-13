@@ -1,18 +1,18 @@
 import bcrypt from "bcryptjs";
-import db from "../models/index.js";
-import userClasses from "../classes/user.class.js";
+import db from "../../models/index.js";
+import userContainer from "../../containers/user/userContainer.js";
 
 const User = db.user;
 
-const userClass = new userClasses();
+const userContainers = new userContainer();
 
 const readUser = (users) => {
   const result = [];
 
   users.forEach((value, index) => {
-    userClass.userAPI = value;
+    userContainers.userAPI = value;
 
-    result.push(userClass.getUser());
+    result.push(userContainers.getUser());
   });
 
   return result;

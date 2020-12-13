@@ -1,5 +1,5 @@
 import db from "../../models/index.js";
-import postCrud from "../../actions/postCrud.action.js";
+import service from "../../services/index.js";
 import validationRules from "../../validations/index.js";
 import slugify from "slugify";
 

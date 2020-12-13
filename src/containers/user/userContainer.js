@@ -1,7 +1,6 @@
-import db from "../models/index.js";
-import postClasses from "../classes/post.class.js";
+import postContainer from "../post/postContainer.js";
 
-class userClasses {
+class userContainer {
   constructor() {
     // this.user = user;
   }
@@ -19,7 +18,7 @@ class userClasses {
   }
 
   getProfile() {
-    const postClass = new postClasses();
+    const postClass = new postContainer();
 
     var post_result = [];
 
@@ -55,4 +54,4 @@ class userClasses {
   }
 }
 
-export default userClasses;
+export default userContainer;

@@ -1,10 +1,10 @@
 import slugify from "slugify";
-import db from "../models/index.js";
-import commentClasses from "../classes/comment.class.js";
+import db from "../../models/index.js";
+import commentContainer from "../../containers/comment/commentContainer.js";
 
 const Comment = db.comment;
 
-const commentClass = new commentClasses();
+const commentContainers = new commentContainer();
 
 const createComment = (body, postId, userId) => {
   const comment = new Comment({
@@ -32,9 +32,9 @@ const readComment = (comments) => {
   const result = [];
 
   comments.forEach((value, index) => {
-    commentClass.setComment = value;
+    commentContainers.setComment = value;
 
-    result.push(commentClass.getComment());
+    result.push(commentContainers.getComment());
   });
 
   return result;

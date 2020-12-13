@@ -1,9 +1,9 @@
 import db from "../../models/index.js";
-import postClasses from "../../classes/post.class.js";
+import postContainer from "../../containers/post/postContainer.js";
 
 const Post = db.post;
 
-const postClass = new postClasses();
+const postContainers = new postContainer();
 
 const getAllPosts = async (req, res) => {
   const query = req.query;
@@ -56,14 +56,14 @@ const getAllPosts = async (req, res) => {
         .exec();
     }
 
-    postClass.setPostArray = posts;
+    postContainers.setPostArray = posts;
 
     // get total documents in the Post collection
     const count = await Post.countDocuments();
 
     // return response with posts, total pages, and current page
     return res.json({
-      posts: postClass.getPostArray(),
+      posts: postContainers.getPostArray(),
       totalPages: Math.ceil(count / limit),
       currentPage: page,
     });
@@ -145,7 +145,7 @@ const getPostDetail = async (req, res) => {
       .populate(["author", "category"])
       .exec();
 
-    postClass.setPost = post;
+    postContainers.setPost = post;
 
     return res.status(200).send({ post: postClass.getPost() });
   } catch (error) {

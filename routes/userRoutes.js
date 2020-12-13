@@ -8,7 +8,7 @@ const router = express.Router();
 router.get(
   "/profile",
   [middleware.authJwt.verifyToken],
-  userController.getUser
+  userController.getUserProfile
 );
 
 router.get(

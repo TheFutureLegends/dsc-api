@@ -1,13 +1,13 @@
 import db from "../../models/index.js";
 import validationRules from "../../validations/index.js";
-import commentCrud from "../../actions/commentCrud.action.js";
-import commentClasses from "../../classes/comment.class.js";
+import service from "../../services/comment/commentService.js";
+import commentContainer from "../../containers/comment/commentContainer.js";
 
 const Post = db.post;
 
 const Comment = db.comment;
 
-const commentClass = new commentClasses();
+const commentContainers = new commentContainer();
 
 const readComment = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ const readComment = async (req, res) => {
       .populate("author")
       .exec();
 
-    const result = commentCrud.readComment(comments);
+    const result = service.commentService.readComment(comments);
 
     return res.status(200).send({ comments: result });
   } catch (error) {
@@ -36,7 +36,7 @@ const createComment = async (req, res) => {
   try {
     const post = await Post.findById(req.params.post_id).exec();
 
-    const commentCondition = commentCrud.createComment(
+    const commentCondition = service.commentService.createComment(
       req.body,
       post._id,
       req.userId
@@ -58,9 +58,9 @@ const editComment = async (req, res) => {
       author: req.userId,
     });
 
-    commentClass.setComment = comment;
+    commentContainers.setComment = comment;
 
-    return res.status(200).send({ comment: commentClass.getComment() });
+    return res.status(200).send({ comment: commentContainers.getComment() });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -78,7 +78,10 @@ const updateComment = async (req, res) => {
       _id: req.params.comment_id,
     }).exec();
 
-    const commentCondition = commentCrud.updateComment(req.body, comment);
+    const commentCondition = service.commentService.updateComment(
+      req.body,
+      comment
+    );
 
     return res
       .status(commentCondition.status)
@@ -101,7 +104,7 @@ const deleteComment = async (req, res) => {
 
     // console.log(reply);
 
-    const commentCondition = commentCrud.deleteComment(comment);
+    const commentCondition = service.commentService.deleteComment(comment);
 
     return res
       .status(commentCondition.status)

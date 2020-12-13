@@ -1,10 +1,10 @@
 import db from "../../models/index.js";
-import categoryClasses from "../../classes/category.class.js";
+import categoryContainer from "../../containers/category/categoryContainer.js";
 import slugify from "slugify";
 
 const Category = db.category;
 
-const categoryClass = new categoryClasses();
+const categoryContainers = new categoryContainer();
 
 const getAllCategories = async (req, res) => {
   const { limit = 10, page = 1 } = req.query;
@@ -14,9 +14,11 @@ const getAllCategories = async (req, res) => {
     .skip((parseInt(page) - 1) * parseInt(limit))
     .exec();
 
-  categoryClass.setCategoryArray = categories;
+  categoryContainers.setCategoryArray = categories;
 
-  return res.status(200).send({ categories: categoryClass.getCategoryArray() });
+  return res
+    .status(200)
+    .send({ categories: categoryContainers.getCategoryArray() });
 };
 
 const getCategoryByName = async (req, res) => {
@@ -24,9 +26,9 @@ const getCategoryByName = async (req, res) => {
     slug: slugify(req.params.category_name.toLowerCase()),
   });
 
-  categoryClass.setCategory = category;
+  categoryContainers.setCategory = category;
 
-  return res.status(200).send(categoryClass.getCategory());
+  return res.status(200).send(categoryContainers.getCategory());
 };
 
 const categoryFrontend = {

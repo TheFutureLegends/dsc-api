@@ -1,6 +1,6 @@
-import utils from "../utils/index.js";
+import utils from "../../utils/index.js";
 
-class commentClasess {
+class commentContainer {
   constructor() {}
 
   get comments() {
@@ -23,4 +23,4 @@ class commentClasess {
   }
 }
 
-export default commentClasess;
+export default commentContainer;

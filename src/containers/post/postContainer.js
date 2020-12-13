@@ -1,6 +1,6 @@
-import utils from "../utils/index.js";
+import utils from "../../utils/index.js";
 
-class postClasses {
+class postContainer {
   constructor() {}
 
   get post() {
@@ -49,4 +49,4 @@ class postClasses {
   }
 }
 
-export default postClasses;
+export default postContainer;

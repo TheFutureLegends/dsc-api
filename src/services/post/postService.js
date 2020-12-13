@@ -1,10 +1,10 @@
 import slugify from "slugify";
-import db from "../models/index.js";
-import postClasses from "../classes/post.class.js";
+import db from "../../models/index.js";
+import postContainer from "../../containers/post/postContainer.js";
 
 const Post = db.post;
 
-const postClass = new postClasses();
+const postContainers = new postContainer();
 
 /**
  *
@@ -44,18 +44,18 @@ const readPost = (posts) => {
   const result = [];
 
   posts.forEach((value, index) => {
-    postClass.setPost = value;
+    postContainers.setPost = value;
 
-    result.push(postClass.getPost());
+    result.push(postContainers.getPost());
   });
 
   return result;
 };
 
 const editPost = (post) => {
-  postClass.setPost = post;
+  postContainers.setPost = post;
 
-  return postClass.getPost();
+  return postContainers.getPost();
 };
 
 const updatePost = (post, body) => {
@@ -92,7 +92,7 @@ const deletePost = (post) => {
   };
 };
 
-const postCrud = {
+const postServices = {
   createPost,
   readPost,
   editPost,
@@ -100,4 +100,4 @@ const postCrud = {
   deletePost,
 };
 
-export default postCrud;
+export default postServices;

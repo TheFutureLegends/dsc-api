@@ -1,6 +1,6 @@
 import db from "../../models/index.js";
-import userCrud from "../../actions/userCrud.action.js";
-import userClasses from "../../classes/user.class.js";
+import service from "../../services/index.js";
+import userContainer from "../../containers/user/userContainer.js";
 
 const User = db.user;
 
@@ -10,7 +10,7 @@ const Post = db.post;
 
 // const Club = db.club;
 
-const userClass = new userClasses();
+const userContainers = new userContainer();
 
 const getProfile = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
@@ -28,53 +28,23 @@ const getProfile = async (req, res) => {
       .populate(["category", "author"])
       .exec();
 
-    userClass.userAPI = user;
+    userContainers.userAPI = user;
 
-    userClass.userPosts = posts;
+    userContainers.userPosts = posts;
 
-    // const user = await User.aggregate([
-    //   {
-    //     $match: {
-    //       username: req.params.username,
-    //     },
-    //   },
-    //   {
-    //     $lookup: {
-    //       from: "posts",
-    //       localField: "_id",
-    //       foreignField: "author",
-    //       as: "posts",
-    //     },
-    //   },
-    //   {
-    //     $unwind: "$posts.category",
-    //   },
-    //   {
-    //     $lookup: {
-    //       from: "categories",
-    //       localField: "posts.category",
-    //       foreignField: "_id",
-    //       as: "posts.category",
-    //     },
-    //   },
-    //   {
-    //     $limit: 1,
-    //   },
-    // ]).exec();
-
-    return res.status(200).send({ users: userClass.getProfile() });
+    return res.status(200).send({ users: userContainers.getProfile() });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
 };
 
-const getUser = async (req, res) => {
+const getUserProfile = async (req, res) => {
   const user = await User.findById(req.userId).populate("roles").exec();
 
   if (user) {
-    userClass.userAPI = user;
+    userContainers.userAPI = user;
 
-    return res.status(200).send(userClass.getUser());
+    return res.status(200).send(userContainers.getUser());
   }
 
   return res.status(500).send({
@@ -83,25 +53,17 @@ const getUser = async (req, res) => {
 };
 
 const readUser = async (req, res) => {
-  const logged_user = await User.findById(req.userId).populate("roles").exec();
+  const users = await User.findById(req.userId).populate("roles").exec();
 
-  const users = await User.find({
-    university: logged_user.university,
-  })
-    .populate("roles")
-    .exec();
-
-  const result = userCrud.readUser(users);
+  const result = service.userService.readUser(users);
 
   return res.status(200).send({ users: result });
 };
 
 const createUser = async (req, res) => {
-  const userCondition = userCrud.createUser(req.body);
+  const userService = service.userService.createUser(req.body);
 
-  return res
-    .status(userCondition.status)
-    .send({ message: userCondition.message });
+  return res.status(userService.status).send({ message: userService.message });
 };
 
 const editUser = async (req, res) => {};
@@ -110,7 +72,7 @@ const deleteUser = async (req, res) => {};
 
 const userController = {
   getProfile,
-  getUser,
+  getUserProfile,
   readUser,
   createUser,
   editUser,
