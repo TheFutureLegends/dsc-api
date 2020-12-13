@@ -22,9 +22,9 @@
 
 Router -> Middleware -> Controller -> Service
 
-| Router                             | Middleware                                           | Controller                        | Service                                                 |
-| ---------------------------------- | ---------------------------------------------------- | --------------------------------- | ------------------------------------------------------- |
-| Define url and routing application | Checking and verify token, roles and file input mime | Fetching data from params if have | Execute read - insert - update - delete inside database |
+| Router                             | Middleware                                           | Controller                        | Service                                             |
+| ---------------------------------- | ---------------------------------------------------- | --------------------------------- | --------------------------------------------------- |
+| Define url and routing application | Checking and verify token, roles and file input mime | Fetching data from params if have | Execute read - insert - update - delete of database |
 
 ## Api
 
