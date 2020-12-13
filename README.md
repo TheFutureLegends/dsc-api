@@ -150,7 +150,7 @@ Configuration
 
 ## Api Domain:
 
-`https://rmit-dsc-api.herokuapp.com`
+[`https://rmit-dsc-api.herokuapp.com`](https://rmit-dsc-api.herokuapp.com)
 
 ## Development
 
