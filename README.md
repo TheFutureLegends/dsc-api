@@ -117,14 +117,14 @@ Configuration
 | `/api/auth/signin` | Login       | `email` `password`            | POST   |
 | `/api/auth/signup` | Register    | `username` `email` `password` | POST   |
 
-### Users
+### [Users](https://rmit-dsc-api.herokuapp.com/api/users/admin)
 
 | Api name               | Description                   | Return data                | Required logged in | Method |
 | ---------------------- | ----------------------------- | -------------------------- | ------------------ | ------ |
 | `/api/users/:username` | Get user                      | `username` `email` `posts` | x                  | GET    |
 | `/api/users/profile`   | Get profile of logged in user | `username` `email` `roles` | **Yes**            | GET    |
 
-### Categories
+### [Categories]((https://rmit-dsc-api.herokuapp.com/api/categories))
 
 | Api name                              | Description                               | Role needed | Method |
 | ------------------------------------- | ----------------------------------------- | ----------- | ------ |
@@ -135,7 +135,7 @@ Configuration
 | `/api/categories/update/:category_id` | Update existing category                  | **Admin**   | PATCH  |
 | `/api/categories/delete/:category_id` | Delete existing category                  | **Admin**   | DELETE |
 
-### Post
+### [Post](https://rmit-dsc-api.herokuapp.com/api/posts)
 
 | Api name                | Query                                                                                                                           | Params | Description                       | Role needed | Method |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------------------- | ----------- | ------ |
