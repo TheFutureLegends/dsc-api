@@ -144,8 +144,8 @@ Configuration
 | `/api/posts/:slug`      | x                                                                                                                               | `slug` | Get single post based on slug     | x           | GET    |
 | `/api/posts`            | x                                                                                                                               | x      | Create new post                   | **Author**  | POST   |
 | `/api/posts/read`       | x                                                                                                                               | x      | Display all posts that owned      | **Author**  | GET    |
-| `/api/posts/edit/:slug` | x                                                                                                                               | `slug` | Show logged in user existing post | **Author**  | GET    |
-| `/api/posts/update/:id` | x                                                                                                                               | `id`   | Update existing post              | **Author**  | PUT    |
+| `/api/posts/edit/:id`   | x                                                                                                                               | `id`   | Show logged in user existing post | **Author**  | GET    |
+| `/api/posts/update/:id` | x                                                                                                                               | `id`   | Update existing post              | **Author**  | PATCH  |
 | `/api/posts/delete/:id` | x                                                                                                                               | `id`   | Delete existing post              | **Author**  | DELETE |
 
 ## Api Domain:
