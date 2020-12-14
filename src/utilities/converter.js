@@ -29,7 +29,7 @@ const convertDateToString = (input) => {
  * @return {Number} x
  */
 const convertStringToNumber = (input) => {
-  x = Number(input);
+  let x = Number(input);
   return x >= 0 ? Math.floor(x) : Math.ceil(x);
 };
 
