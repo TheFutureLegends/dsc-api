@@ -1,10 +1,6 @@
 import express from "express";
-
 import middleware from "../src/middleware/index.js";
-
-import categoryFrontend from "../src/controllers/category/category.frontend.controller.js";
-
-import categoryBackend from "../src/controllers/category/category.backend.controller.js";
+import categoryController from "../src/controllers/category/categoryController.js";
 
 const router = express.Router();
 
@@ -13,7 +9,7 @@ const router = express.Router();
  *
  * @return Object
  */
-router.get("/", categoryFrontend.getAllCategories);
+router.get("/", categoryController.getAllCategories);
 
 /**
  * Begin router that only admin can do
@@ -33,7 +29,7 @@ router.get("/", categoryFrontend.getAllCategories);
 router.get(
   "/read",
   [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
-  categoryBackend.readCategory
+  categoryController.readCategory
 );
 
 /**
@@ -44,7 +40,7 @@ router.get(
 router.post(
   "/create",
   [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
-  categoryBackend.createCategory
+  categoryController.createCategory
 );
 
 /**
@@ -59,7 +55,7 @@ router.post(
 router.get(
   "/edit/:category_id",
   [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
-  categoryBackend.editCategory
+  categoryController.editCategory
 );
 
 /**
@@ -76,7 +72,7 @@ router.get(
 router.patch(
   "/update/:category_id",
   [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
-  categoryBackend.updateCategory
+  categoryController.updateCategory
 );
 
 /**
@@ -90,7 +86,7 @@ router.patch(
 router.delete(
   "/delete/:category_id",
   [middleware.authJwt.verifyToken, middleware.permission.isAdmin],
-  categoryBackend.deleteCategory
+  categoryController.deleteCategory
 );
 /**
  * End router that only admin can do
@@ -102,6 +98,6 @@ router.delete(
  * @params String category_name
  * @return Object
  */
-router.get("/:category_name", categoryFrontend.getCategoryByName);
+router.get("/:category_name", categoryController.getCategoryByName);
 
 export default router;
