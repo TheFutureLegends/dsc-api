@@ -7,6 +7,14 @@ class postContainer {
     return this._post;
   }
 
+  get isList() {
+    return this._isList;
+  }
+
+  set setIsList(isList = false) {
+    this._isList = isList;
+  }
+
   set setPostArray(postArray) {
     this._post_array = postArray;
   }
@@ -30,7 +38,7 @@ class postContainer {
   }
 
   getPost() {
-    return {
+    const result = {
       title: this._post.title,
       slug: this._post.slug,
       description: this._post.description,
@@ -46,6 +54,12 @@ class postContainer {
       },
       createdAt: utilities.converter.convertDateToString(this._post.createdAt),
     };
+
+    if (this._isList) {
+      result._id = this._post._id;
+    }
+
+    return result;
   }
 }
 

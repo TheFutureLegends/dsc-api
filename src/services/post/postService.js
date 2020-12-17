@@ -14,6 +14,8 @@ const postContainers = new postContainer();
 const readPost = (posts) => {
   const result = [];
 
+  postContainers.setIsList = true;
+
   posts.forEach((value, index) => {
     postContainers.setPost = value;
 

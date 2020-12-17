@@ -1,10 +1,6 @@
 import express from "express";
-
 import middleware from "../src/middleware/index.js";
-
-import postFrontend from "../src/controllers/post/post.frontend.controller.js";
-
-import postBackend from "../src/controllers/post/post.backend.controller.js";
+import postController from "../src/controllers/post/postController.js";
 
 const router = express.Router();
 
@@ -15,7 +11,7 @@ const router = express.Router();
  *
  * @return Object (Array of Object posts - Integer currentPage - Integer totalPage)
  */
-router.get("/", postFrontend.getAllPosts);
+router.get("/", postController.getAllPosts);
 
 /**
  * Get top author
@@ -24,12 +20,12 @@ router.get("/", postFrontend.getAllPosts);
  *
  * @return Object
  */
-router.get("/top-author", postFrontend.getTopAuthors);
+router.get("/top-author", postController.getTopAuthors);
 
 /**
- * Begin router that only author can do
+ * Begin router that only authenticated user can do
  *
- * Only authenticated user with role author can do
+ * Only authenticated user with role author can do (Later version for only author)
  *
  * All routes below will go through middleware to do:
  *   - verify if token pass in header is valid or not
@@ -43,8 +39,8 @@ router.get("/top-author", postFrontend.getTopAuthors);
  */
 router.get(
   "/read",
-  [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
-  postBackend.readPost
+  [middleware.authJwt.verifyToken],
+  postController.readPost
 );
 
 /**
@@ -54,9 +50,9 @@ router.get(
  */
 router.post(
   "/create",
-  [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
+  [middleware.authJwt.verifyToken],
   // [middleware.checkFileAndUpload.single("imageFile")],
-  postBackend.createPost
+  postController.createPost
 );
 
 /**
@@ -67,8 +63,8 @@ router.post(
  */
 router.get(
   "/edit/:id",
-  [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
-  postBackend.editPost
+  [middleware.authJwt.verifyToken],
+  postController.editPost
 );
 
 /**
@@ -84,8 +80,8 @@ router.get(
  */
 router.patch(
   "/update/:id",
-  [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
-  postBackend.updatePost
+  [middleware.authJwt.verifyToken],
+  postController.updatePost
 );
 
 /**
@@ -96,8 +92,8 @@ router.patch(
  */
 router.delete(
   "/delete/:id",
-  [middleware.authJwt.verifyToken, middleware.permission.isAuthor],
-  postBackend.deletePost
+  [middleware.authJwt.verifyToken],
+  postController.deletePost
 );
 
 /**
@@ -110,6 +106,6 @@ router.delete(
  * @params slug
  * @return Object
  */
-router.get("/:slug", postFrontend.getPostDetail);
+router.get("/:slug", postController.getPostDetail);
 
 export default router;
