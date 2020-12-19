@@ -6,19 +6,19 @@ const User = db.user;
 
 const checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Username
-  User.findOne({
-    username: req.body.username,
-  }).exec((err, user) => {
-    if (err) {
-      return res.status(500).send({ message: err });
-    }
+  // User.findOne({
+  //   username: req.body.username,
+  // }).exec((err, user) => {
+  //   if (err) {
+  //     return res.status(500).send({ message: err });
+  //   }
 
-    if (user) {
-      return res
-        .status(400)
-        .send({ title: "Failed", message: "Username is already registered!" });
-    }
-  });
+  //   if (user) {
+  //     return res
+  //       .status(400)
+  //       .send({ title: "Failed", message: "Username is already registered!" });
+  //   }
+  // });
 
   // Email
   User.findOne({
