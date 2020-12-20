@@ -9,22 +9,19 @@ const expect = chai.expect
 
 // Create variable to store token:
 let token
-
-
 // Use http in chai
 chai.use(chaiHttp)
-
 // Fake category to test: Create, Read, Update then Delete
 let fakePost = {
-    title: "Post for testing",
-    description: "Post for testing",
-    imageFile:
+    "title": "Post for testing",
+    "description": "Post for testing",
+    "imageFile":
         "https://i.pinimg.com/originals/f8/b6/9e/f8b69e6156999b84137f3f0a23701b75.jpg",
-    category:"web-development"
+    "category":"web-development"
 }
 
 describe('CRUD post', () => {
-    before((done) =>{
+    beforeEach((done) =>{
         let user = {
             email: "admin@admin.com",
             password: "123456789",
@@ -65,29 +62,34 @@ describe('CRUD post', () => {
     // TEST UPDATE
     it('should update a SINGLE post on /api/posts/update/<id> PATCH', (done) => {
         let post = new Post(fakePost);
-        post.save((error, data)  => {
+        console.log(post)
+        // post.save((error, data)  => {
+        //    console.log(data)
             chai.request(app)
-                .patch(`/api/posts/update/${data._id}?_method=PATCH`)
+                .patch(`/api/posts/update/${post._id}?_method=PATCH`)
                 .set("x-access-token", token)
                 .send({"description": "Just test the PATCH request"})
                 .end((error, response) => {
                     response.should.have.status(204)
-                    done()
                 })
-        })
+            done()
+
+        // })
     })
 
     // TEST DELETE
     it('should delete a SINGLE post on /api/posts/delete/<id> DELETE', (done) => {
-        let category = new Post(fakePost);
-        category.save((error, data)  => {
+        let post = new Post(fakePost);
+        console.log(post)
+       // post.save((error, data)  => {
+           // console.log(data)
             chai.request(app)
-                .delete(`/api/posts/delete/${data._id}?_method=DELETE`)
+                .delete(`/api/posts/delete/${post._id}?_method=DELETE`)
                 .set("x-access-token", token)
                 .end((error, response) => {
                     response.should.have.status(204);
-                    done()
                 })
-        })
+            done()
+        // })
     })
 })

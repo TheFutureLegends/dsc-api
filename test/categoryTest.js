@@ -64,6 +64,7 @@ describe('CRUD category', () => {
     it('should update a SINGLE category on /api/categories/update/<id> PATCH', (done) => {
         let category = new Category(fakeCategory);
         category.save((error, data)  => {
+            console.log(data)
             chai.request(app)
                 .patch(`/api/categories/update/${data._id}?_method=PATCH`)
                 .set("x-access-token", token)
@@ -78,7 +79,9 @@ describe('CRUD category', () => {
     // TEST DELETE
     it('should delete a SINGLE category on /api/categories/delete/<id> DELETE', (done) => {
         let category = new Category(fakeCategory);
+        console.log(category)
         category.save((error, data)  => {
+            console.log(data)
             chai.request(app)
                 .delete(`/api/categories/delete/${data._id}?_method=DELETE`)
                 .set("x-access-token", token)
