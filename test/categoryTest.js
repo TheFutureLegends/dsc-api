@@ -1,112 +1,94 @@
-import chai from "chai";
-import chaiHttp from "chai-http";
-import app from "../index.js";
+import chai from "chai"
+import chaiHttp from "chai-http"
+import app from "../index.js"
+import Category from "../src/models/category/category.model.js"
 
-let should = chai.should();
-let expect = chai.expect;
-let token;
+// Using Assertion from chai:
+const should = chai.should()
+const expect = chai.expect
 
-chai.use(chaiHttp);
+// Create variable to store token:
+let token
 
-describe("Let's run unit test for CRUD Categories feature !!", () => {
-  //Before each test we have to sign in (authentication) to get token
-  beforeEach((done) => {
-    let user = {
-      email: "admin@admin.com",
-      password: "123456789",
-    };
-    chai
-      .request(app)
-      .post("/api/auth/signin")
-      .send(user)
-      .end((err, res) => {
-        res.should.have.status(200); // Means get successfully
-        res.body.should.be.a("object");
-        token = res.body.accessToken.token;
-        done();
-      });
-  });
 
-  /*
-   * Test the /GET route
-   */
-  describe("/GET category", () => {
-      // Test case: get all the categories
-    it("it should show (GET) all the categories", (done) => {
-      chai
-        .request(app)
-        .get("/api/categories")
-        .end((err, res) => {
-          res.should.have.status(200); // Means get successfully
-          res.body.should.be.a("object");
+// Use http in chai
+chai.use(chaiHttp)
 
-          // res.body.length.should.be.eql(0);
+// Fake category to test: Create, Read, Update then Delete
+let fakeCategory = {
+    "title":"Fake Category",
+    "description":"This is the fake category to test"
+}
 
-          done();
-        });
-    });
-  });
-  describe("/GET categories by name", () => {
-      // Test case: get the category by the existed name
-    it("it should show (GET) categories with the given name", (done) => {
-      const mockCategory = "Mobile Development";
-      chai
-        .request(app)
-        .get("/api/categories/" + mockCategory)
-        .end((err, res) => {
-          res.should.have.status(200); // means update successfully
+describe('CRUD category', () => {
+    // Sign in before test
+    before((done) =>{
+        let user = {
+            email: "admin@admin.com",
+            password: "123456789",
+        }
+        chai
+            .request(app)
+            .post("/api/auth/signin")
+            .send(user)
+            .end((error, response) => {
+                response.should.have.status(200) // Means get successfully
+                response.body.should.be.a("object")
+                token = response.body.accessToken.token
+                done()
+            })
+    })
+    // TEST GET ALL
+    it('should index ALL category on /api/categories', (done) => {
+        chai.request(app)
+            .get('/api/categories')
+            .end((error, response) => {
+                response.should.have.status(200)
+                done()
+            })
+    })
 
-          res.body.should.be.a("object");
+    // TEST CREATE
+    it('should create a SINGLE category on /api/categories/create', (done) => {
+        chai.request(app)
+            .post('/api/categories/create')
+            .send(fakeCategory)
+            .set("x-access-token", token)
+            .end((error, response) => {
+                response.should.have.status(201)
+                done()
+            })
+    })
 
-          done();
-        });
-    });
-  });
-  /*
-   * Test the /POST route
-   */
-  describe("/POST category", () => {
-      // Test case: create a new category with title and description are strings
-    it("it should create (POST) new category", (done) => {
-      let category = {
-        title: "New category title 2",
-        description: "New category description 2",
-      };
-      chai
-        .request(app)
-        .post("/api/categories/create")
-        .set("x-access-token", token)
-        .send(category)
-        .end((err, res) => {
-          res.should.have.status(201); // means added successfully
-          res.body.should.be.a("object");
-          done();
-        });
-    });
-  });
-    /*
-     * Test the /PATCH route
-     */
-    describe("As an admin user, " +
-        "I want to update category name," +
-        " so that user can recognize the new category easily", () => {
-        // Test case: update a category which is existed in the database
-        it("it should edit (PATCH) new category", (done) => {
-            let testId = "5fd636b137f3701556749c86"
-            let category = { // create a fake object to inject into the database
-                title: "Edited title",
-                description: "Edited title",
-            };
-            chai
-                .request(app)
-                .patch("/api/categories/update/" + testId)
+    // TEST UPDATE
+    it('should update a SINGLE category on /api/categories/update/<id> PATCH', (done) => {
+        let category = new Category(fakeCategory);
+        category.save((error, data)  => {
+            console.log(data)
+            chai.request(app)
+                .patch(`/api/categories/update/${data._id}?_method=PATCH`)
                 .set("x-access-token", token)
-                .send(category)
-                .end((err, res) => {
-                    res.should.have.status(204); // means update successfully
-                    res.body.should.be.a("object");
-                    done();
+                .send({"description": "Just test the PATCH request"})
+                .end((error, response) => {
+                    response.should.have.status(204)
+                    done()
                 });
         });
     });
-});
+
+    // TEST DELETE
+    it('should delete a SINGLE category on /api/categories/delete/<id> DELETE', (done) => {
+        let category = new Category(fakeCategory);
+        console.log(category)
+        category.save((error, data)  => {
+            console.log(data)
+            chai.request(app)
+                .delete(`/api/categories/delete/${data._id}?_method=DELETE`)
+                .set("x-access-token", token)
+                .end((error, response) => {
+                    response.should.have.status(204);
+                    done()
+                })
+        })
+    })
+})

@@ -39,4 +39,19 @@ const Post = mongoose.model(
   })
 );
 
+// Sets the createdAt parameter equal to the current time
+Post.schema.pre("save", (next) => {
+  let now = new Date();
+
+  if (!this.createdAt) {
+    this.createdAt = now;
+  }
+
+  if (!this.updatedAt) {
+    this.updatedAt = now;
+  }
+
+  next();
+});
+
 export default Post;
