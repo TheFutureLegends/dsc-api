@@ -11,7 +11,7 @@ const Category = db.category;
 const postSeeder = () => {
   const max = 20;
   Post.estimatedDocumentCount((err, postCount) => {
-    if (!err && postCount < max) {
+    if (!err) {
       for (let index = 0; index < max; index++) {
         const sentence = faker.lorem.sentence();
 

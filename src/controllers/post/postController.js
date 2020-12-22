@@ -253,7 +253,9 @@ const editPost = async (req, res) => {
     const post = await Post.findOne({
       _id: req.params.id,
       author: req.userId,
-    }).exec();
+    })
+      .populate("category")
+      .exec();
 
     const postService = service.postService.editPost(post);
 
