@@ -72,11 +72,11 @@ const getAllPosts = async (req, res) => {
 
   try {
     posts = await Post.find({})
-        .sort([[column, order]])
-        .limit(limit * 1)
-        .skip((page - 1) * limit)
-        .populate(["category", "author"])
-        .exec();
+      .sort([[column, order]])
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .populate(["category", "author"])
+      .exec();
 
     /**
      * Set posts get from query
@@ -199,6 +199,50 @@ const getPostDetail = async (req, res) => {
   }
 };
 
+const getMorePostsWithSameCategory = async (req, res) => {
+  const query = req.query;
+
+  /**
+   * If there is query of limit
+   *
+   * Get corresponding number of posts
+   *
+   * Default: 10
+   */
+  let limit = query.limit
+    ? utilities.converter.convertStringToNumber(query.limit)
+    : 3;
+
+  try {
+    const category = await Category.findOne({
+      slug: req.params.category,
+    }).exec();
+
+    const count = await Post.find({
+      category: category._id,
+    }).countDocuments();
+
+    const posts = await Post.find({
+      category: category._id,
+    })
+      .limit(limit)
+      .skip(utilities.random.randomBetween(0, count - 3))
+      .populate(["author", "category"])
+      .exec();
+
+    /**
+     * Set posts get from query
+     *
+     * Convert to array of object with selected field
+     */
+    postContainers.setPostArray = posts;
+
+    return res.status(200).send({ posts: postContainers.getPostArray() });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
 const readPost = async (req, res) => {
   try {
     const posts = await Post.find({
@@ -306,6 +350,7 @@ const postController = {
   getAllPosts,
   getTopAuthors,
   getPostDetail,
+  getMorePostsWithSameCategory,
   readPost,
   createPost,
   editPost,

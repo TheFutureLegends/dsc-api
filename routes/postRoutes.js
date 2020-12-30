@@ -37,11 +37,7 @@ router.get("/top-author", postController.getTopAuthors);
  *
  * @return Object
  */
-router.get(
-  "/read",
-  [middleware.authJwt.verifyToken],
-  postController.readPost
-);
+router.get("/read", [middleware.authJwt.verifyToken], postController.readPost);
 
 /**
  * Create new post
@@ -99,6 +95,18 @@ router.delete(
 /**
  * End router that only author can do
  */
+
+/**
+ * Get specific post
+ *
+ * @params category slug
+ * @return Object
+ */
+
+router.get(
+  "/getMorePostsWithSameCategory/:category",
+  postController.getMorePostsWithSameCategory
+);
 
 /**
  * Get specific post

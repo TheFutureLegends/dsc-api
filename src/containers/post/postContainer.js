@@ -2,7 +2,7 @@ import utilities from "../../utilities/index.js";
 
 class postContainer {
   constructor() {
-    this._isList = false
+    this._isList = false;
   }
 
   get post() {
@@ -40,28 +40,33 @@ class postContainer {
   }
 
   getPost() {
-    const result = {
-      title: this._post.title,
-      slug: this._post.slug,
-      description: this._post.description,
-      visit: this._post.visit,
-      image: this._post.image,
-      category: {
-        title: this._post.category.title,
-        slug: this._post.category.slug,
-      },
-      author: {
-        username: this._post.author.username,
-        avatar: this._post.author.avatar,
-      },
-      createdAt: utilities.converter.convertDateToString(this._post.createdAt),
-    };
+    let result = {};
 
-    /*if (this._isList) {
+    if (this._post) {
+      result = {
+        title: this._post.title,
+        slug: this._post.slug,
+        description: this._post.description,
+        visit: this._post.visit,
+        image: this._post.image,
+        category: {
+          title: this._post.category.title,
+          slug: this._post.category.slug,
+        },
+        author: {
+          username: this._post.author.username,
+          avatar: this._post.author.avatar,
+        },
+        createdAt: utilities.converter.convertDateToString(
+          this._post.createdAt
+        ),
+      };
+
+      /*if (this._isList) {
       result._id = this._post._id;
     }*/
-    result._id = this._post._id;
-
+      result._id = this._post._id;
+    }
 
     return result;
   }
