@@ -1,7 +1,9 @@
 import utilities from "../../utilities/index.js";
 
 class postContainer {
-  constructor() {}
+  constructor() {
+    this._isList = false
+  }
 
   get post() {
     return this._post;
@@ -11,7 +13,7 @@ class postContainer {
     return this._isList;
   }
 
-  set setIsList(isList = false) {
+  set setIsList(isList) {
     this._isList = isList;
   }
 
@@ -55,9 +57,11 @@ class postContainer {
       createdAt: utilities.converter.convertDateToString(this._post.createdAt),
     };
 
-    if (this._isList) {
+    /*if (this._isList) {
       result._id = this._post._id;
-    }
+    }*/
+    result._id = this._post._id;
+
 
     return result;
   }
