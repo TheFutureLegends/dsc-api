@@ -71,19 +71,26 @@ const getAllPosts = async (req, res) => {
   }
 
   try {
-    if (latest) {
-      posts = await Post.find({})
+    posts = await Post.find({})
         .sort([[column, order]])
-        .limit(limit)
-        .populate(["category", "author"])
-        .exec();
-    } else {
-      posts = await Post.find({})
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .populate(["category", "author"])
         .exec();
-    }
+    // if (latest) {
+    //   posts = await Post.find({})
+    //     .sort([[column, order]])
+    //     .limit(limit)
+    //     .populate(["category", "author"])
+    //     .exec();
+    // } else {
+    //   posts = await Post.find({})
+    //     .sort([[column, order]])
+    //     .limit(limit * 1)
+    //     .skip((page - 1) * limit)
+    //     .populate(["category", "author"])
+    //     .exec();
+    // }
 
     /**
      * Set posts get from query
