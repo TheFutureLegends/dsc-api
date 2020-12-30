@@ -28,7 +28,7 @@ const getAllPosts = async (req, res) => {
    *
    * Default: false
    */
-  let latest = query.latest ? (query.latest == "true" ? true : false) : false;
+  // let latest = query.latest ? (query.latest == "true" ? true : false) : false;
 
   /**
    * Sort by column if provided
