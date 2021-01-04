@@ -62,7 +62,9 @@ const getAllPosts = async (req, res) => {
    *
    * Default 1
    */
-  let page = query.page ? query.page : 1;
+  let page = query.page
+    ? utilities.converter.convertStringToNumber(query.page)
+    : 1;
 
   if (column == "author") {
     column = "author.username";
@@ -223,10 +225,13 @@ const getMorePostsWithSameCategory = async (req, res) => {
     }).countDocuments();
 
     const posts = await Post.find({
+      _id: {
+        $ne: req.params.postId,
+      },
       category: category._id,
     })
       .limit(limit)
-      .skip(utilities.random.randomBetween(0, count - 3))
+      .skip(utilities.random.randomBetweenInclusive(0, count - 3))
       .populate(["author", "category"])
       .exec();
 

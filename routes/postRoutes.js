@@ -104,7 +104,7 @@ router.delete(
  */
 
 router.get(
-  "/getMorePostsWithSameCategory/:category",
+  "/:postId/getMorePostsWithSameCategory/:category",
   postController.getMorePostsWithSameCategory
 );
 
